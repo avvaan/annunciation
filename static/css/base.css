@@ -696,3 +696,31 @@ button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-visible { filter: b
 .portal-nav a:hover, .portal-nav a[aria-current="page"] {
   color: var(--accent); border-bottom-color: var(--accent);
 }
+
+/* --------------------------------------------------------------------------
+   Commemoration note — the form is laid out like the paper note it replaces:
+   the living on the left, the departed on the right, side by side.
+   -------------------------------------------------------------------------- */
+.note-form { max-width: 56rem; }
+.note-form fieldset { border: 0; padding: 0; margin: 0 0 var(--sp-5); }
+.note-form legend {
+  padding: 0; margin-bottom: var(--sp-2);
+  font-family: var(--font-display); font-size: var(--fs-lg); font-weight: 700;
+}
+
+.note-form__names { display: grid; gap: var(--sp-4); margin-bottom: var(--sp-5); }
+@media (min-width: 44rem) { .note-form__names { grid-template-columns: 1fr 1fr; } }
+/* A note holds a column of names, not a paragraph — a monospaced-ish rhythm
+   and generous leading make a long list scannable while typing it. */
+.note-form__names textarea { min-height: 12rem; line-height: 1.9; }
+.note-form__names .helptext { margin-top: var(--sp-1); }
+
+.note-form__contact { display: grid; gap: 0 var(--sp-3); }
+@media (min-width: 44rem) { .note-form__contact { grid-template-columns: repeat(3, 1fr); } }
+
+/* The honeypot must be reachable by a bot reading the markup and by nothing
+   else — off-canvas rather than display:none, which some bots skip. */
+.honeypot-wrap {
+  position: absolute; left: -9999px; top: -9999px;
+  width: 1px; height: 1px; overflow: hidden;
+}

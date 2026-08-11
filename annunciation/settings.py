@@ -56,6 +56,7 @@ INSTALLED_APPS = [
     "newsletter",
     "ministries",
     "council",
+    "commemorations",
 ]
 
 MIDDLEWARE = [
