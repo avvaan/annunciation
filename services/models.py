@@ -1,0 +1,136 @@
+import datetime
+
+from django.db import models
+from django.utils.translation import gettext_lazy as _
+
+
+class ServiceType(models.Model):
+    """Lookup list of service kinds — Утреня, Часы, Литургия, Всенощное бдение, Акафист…
+
+    A separate table (not free text) so the composition of a service day is picked
+    from a controlled list and stays consistent across the whole schedule.
+    """
+
+    name = models.CharField(max_length=100)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order", "name"]
+        verbose_name = "Тип службы"
+        verbose_name_plural = "Типы служб"
+
+    def __str__(self):
+        return self.name
+
+
+class FastingLevel(models.TextChoices):
+    NONE = "none", _("Обычный день")
+    FAST = "fast", _("Пост")
+    FISH_WINE_OIL = "fish_wine_oil", _("Разрешается рыба, вино и елей")
+    WINE_OIL = "wine_oil", _("Разрешается вино и елей")
+    STRICT = "strict", _("Строгий пост (сухоядение)")
+
+
+# The Julian/Gregorian gap is 13 days for the whole 20th–21st century and only
+# widens to 14 days from 1 March 2100 (new style) onward.
+_JULIAN_GAP_CHANGE_DATE = datetime.date(2100, 3, 1)
+
+
+def gregorian_to_julian_label(date):
+    """Return the Julian ("old style") calendar date as a 'D month' Russian string."""
+    gap = datetime.timedelta(days=13 if date < _JULIAN_GAP_CHANGE_DATE else 14)
+    old_style = date - gap
+    return old_style
+
+
+class RecurringServiceRule(models.Model):
+    """
+    A weekly template ("every Saturday: Всенощное бдение 18:00; every Sunday: Часы
+    9:00, Литургия 9:30") that the secretary can generate a month of ServiceDay
+    entries from in one click, then adjust individual days for feasts and fasts.
+    """
+
+    WEEKDAY_CHOICES = [
+        (0, _("Понедельник")), (1, _("Вторник")), (2, _("Среда")),
+        (3, _("Четверг")), (4, _("Пятница")), (5, _("Суббота")), (6, _("Воскресенье")),
+    ]
+
+    title = models.CharField(max_length=200, help_text="Для себя, в списке правил — например «Воскресное»")
+    weekday = models.PositiveSmallIntegerField(choices=WEEKDAY_CHOICES)
+    default_fasting_level = models.CharField(
+        max_length=20, choices=FastingLevel.choices, default=FastingLevel.NONE
+    )
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["weekday"]
+        verbose_name = "Регулярное правило расписания"
+        verbose_name_plural = "Регулярные правила расписания"
+
+    def __str__(self):
+        return f"{self.title} ({self.get_weekday_display()})"
+
+
+class RecurringServiceItem(models.Model):
+    rule = models.ForeignKey(RecurringServiceRule, on_delete=models.CASCADE, related_name="items")
+    service_type = models.ForeignKey(ServiceType, on_delete=models.PROTECT)
+    time = models.TimeField()
+    note = models.CharField(max_length=200, blank=True)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order", "time"]
+        verbose_name = "Служба в правиле"
+        verbose_name_plural = "Службы в правиле"
+
+    def __str__(self):
+        return f"{self.service_type} {self.time:%H:%M}"
+
+
+class ServiceDay(models.Model):
+    """One card on the public schedule page."""
+
+    date = models.DateField(db_index=True)
+    feast_title = models.CharField("Праздник/память", max_length=300, blank=True)
+    fasting_level = models.CharField(
+        max_length=20, choices=FastingLevel.choices, default=FastingLevel.NONE
+    )
+    note = models.TextField(blank=True)
+    is_published = models.BooleanField(default=True)
+    generated_from_rule = models.ForeignKey(
+        RecurringServiceRule, null=True, blank=True,
+        on_delete=models.SET_NULL, related_name="generated_days",
+    )
+
+    class Meta:
+        ordering = ["date"]
+        unique_together = ("date",)
+        verbose_name = "День службы"
+        verbose_name_plural = "Расписание богослужений"
+
+    def __str__(self):
+        return f"{self.date:%d.%m.%Y} — {self.feast_title or self.get_fasting_level_display()}"
+
+    @property
+    def old_style_date(self):
+        return gregorian_to_julian_label(self.date)
+
+    @property
+    def weekday(self):
+        return self.date.weekday()
+
+
+class ServiceItem(models.Model):
+    day = models.ForeignKey(ServiceDay, on_delete=models.CASCADE, related_name="items")
+    service_type = models.ForeignKey(ServiceType, on_delete=models.PROTECT)
+    time = models.TimeField()
+    note = models.CharField(max_length=200, blank=True)
+    order = models.PositiveIntegerField(default=0)
+
+    class Meta:
+        ordering = ["order", "time"]
+        verbose_name = "Служба"
+        verbose_name_plural = "Службы"
+
+    def __str__(self):
+        return f"{self.service_type} {self.time:%H:%M}"
