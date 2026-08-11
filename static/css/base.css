@@ -351,6 +351,13 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
   padding: var(--sp-4);
   margin-bottom: var(--sp-3);
 }
+/* the card keeps its parchment surface on a dark band, so it must keep its
+   ink too — inheriting the band's light text renders it invisible */
+.band--deep .service-day { color: var(--ink); border-color: var(--line); }
+.band--deep .service-day .service-day__weekday,
+.band--deep .service-day .service-day__old,
+.band--deep .service-day .service-day__note,
+.band--deep .service-day .meta { color: var(--ink-2); }
 .service-day__date {
   display: flex; align-items: baseline; gap: var(--sp-2); flex-wrap: wrap;
   margin-bottom: var(--sp-1);
@@ -364,6 +371,14 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
 .service-day__feast {
   font-family: var(--font-display); font-size: var(--fs-lg); font-weight: 700;
   margin: var(--sp-1) 0 var(--sp-2);
+}
+/* A great feast is what the parish calendar sets in capitals — carried here by
+   the same convention, plus a brass rule, rather than by another colour. */
+.service-day--major { border-color: var(--brass); }
+.service-day--major .service-day__feast {
+  text-transform: uppercase; letter-spacing: 0.02em;
+  font-size: var(--fs-xl); line-height: 1.15;
+  padding-bottom: var(--sp-2); border-bottom: 1px solid var(--brass);
 }
 .service-day__items { list-style: none; margin: 0; padding: 0; }
 .service-day__items li {
@@ -491,6 +506,20 @@ input, textarea, select {
 input:focus, textarea:focus, select:focus { border-color: var(--accent); }
 input::placeholder, textarea::placeholder { color: var(--ink-2); }
 textarea { min-height: 7rem; resize: vertical; }
+
+/* Django 5 renders a RadioSelect as a bare <div> of <div><label><input>…;
+   give each option a real row with the control beside its label, sized as a
+   tap target. */
+.radio-group > div { margin-bottom: var(--sp-1); }
+.radio-group label {
+  display: flex; align-items: center; gap: var(--sp-2);
+  font-weight: 400; margin: 0; min-height: var(--tap);
+  cursor: pointer;
+}
+input[type="radio"], input[type="checkbox"] {
+  width: 1.25rem; height: 1.25rem; min-height: 0; flex: none;
+  accent-color: var(--accent); margin: 0; padding: 0;
+}
 .helptext, .helptext li { font-size: var(--fs-sm); color: var(--ink-2); }
 ul.helptext, form ul { padding-left: 1.2em; }
 .errorlist { list-style: none; padding: 0; margin: 0 0 var(--sp-2); color: var(--accent-deep); font-size: var(--fs-sm); font-weight: 700; }

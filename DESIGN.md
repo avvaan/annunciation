@@ -51,7 +51,7 @@ Base size 19px, line-height 1.65 — the audience skews elderly. Hero display is
 
 - **`.hero`** — full-bleed photograph, `min-height: min(86svh, 46rem)`, bottom-weighted three-stop scrim, content bottom-aligned with 8.5rem (mobile) / 11rem (desktop) top padding so it clears the transparent header. `.hero__media--empty` is the ruled fallback ground when no photograph exists.
 - **`.page-head`** — deep umber block for inner pages that carry no photograph.
-- **`.service-day`** — the schedule card: Old Standard tabular date, uppercase weekday, italic old-style date, feast title, hairline-divided time rows with a fixed 4.25rem time column, `.fast-flag` when applicable. No colored side rail — the flag itself carries the signal.
+- **`.service-day`** — the schedule card: Old Standard tabular date, uppercase weekday, italic old-style date, feast title, hairline-divided time rows with a fixed 4.25rem time column, `.fast-flag` when applicable. No colored side rail — the flag itself carries the signal. `.service-day--major` marks a great feast the way a parish wall calendar does: the title set in capitals over a brass rule, and the card's border in brass — not a second accent colour. On a `.band--deep` the card keeps its parchment surface, so it re-asserts its own ink; inheriting the band's light text rendered it invisible.
 - **`.tile`** — image + heading + line; the 3/2 media well scales its image 1.04 on hover.
 - **`.doc-list`** — hairline-ruled rows for PDFs, icon + title + period.
 - **`.btn`** — wears a drawn letterpress plate as a 9-slice `border-image` (`plate-light.png` / `plate-accent.png`), uppercase tracked label, 48px min height. The plate supplies the printed surface and its impressed inner rule; the label stays live text, so it scales with OS text size, translates between RU and EN, and is read by screen readers. `.btn--light` (on dark grounds) drops the plate for a plain hairline — a parchment plate glares against umber. `button[type=submit]` inherits the accent plate, explicitly excluding `.lang-switch__btn`, whose job is to show the active language rather than look like a primary action.
@@ -103,6 +103,12 @@ Generated at the user's request in this design's palette, then trimmed, downscal
 | `border-strip.png` | Byzantine band along the footer's top edge, 1.75rem tall, nowhere else |
 
 Two further generations — a corner interlace flourish and a wheat-and-vine motif — were rendered well but not installed: both are dense enough to read as the gilt-scrollwork the brief rules out, and neither had a place the design actually needed. They remain in the Higgsfield history if a use appears.
+
+## Coverage against the brief
+
+Every section the brief names now exists and is admin-fillable: schedule, calendar & bulletin, building project, Russian school, parish history, **first visit**, **clergy**, newsletter sign-up, **donations**, and the ministries portal. The last three arrived after the donor site-map became readable; before that the clergy cards lived inside the About page and giving was only a pair of footer links.
+
+The `Inquiry` form on the first-visit page is the one place a stranger can start a conversation: name, what brings them (Orthodox / curious / wants to speak with a priest), contact preference, best time, message. It refuses to submit with neither an e-mail nor a phone, since a reply would be impossible.
 
 ## Known gaps / next steps
 

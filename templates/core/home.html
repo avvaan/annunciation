@@ -14,9 +14,7 @@
     <p class="hero__lede">{{ site_settings.hero_lede|default:site_settings.city }}</p>
     <div class="hero__actions">
       <a href="{% url 'services:schedule' %}" class="btn btn--light">{% trans "Расписание богослужений" %}</a>
-      {% if site_settings.realm_giving_url %}
-        <a href="{{ site_settings.realm_giving_url }}" class="btn btn--accent">{% trans "Пожертвовать" %}</a>
-      {% endif %}
+      <a href="{% url 'core:first_visit' %}" class="btn btn--accent">{% trans "Впервые здесь?" %}</a>
     </div>
   </div>
 </section>

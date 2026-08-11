@@ -1,0 +1,98 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Впервые здесь?" %} — {{ block.super }}{% endblock %}
+{% block body_class %}has-hero{% endblock %}
+{% block content %}
+
+<section class="hero">
+  <div class="hero__media">
+    <img src="/static/images/photos/font-candles.jpg" alt="" fetchpriority="high">
+  </div>
+  <div class="hero__inner">
+    <h1 class="hero__title">{% trans "Впервые здесь?" %}</h1>
+    <p class="hero__lede">
+      {% if page.when_text %}{{ page.when_text }}
+      {% else %}{% trans "Приходите на воскресную службу — вам будут рады, и не нужно ничего знать заранее." %}{% endif %}
+    </p>
+    <div class="hero__actions">
+      <a href="#inquiry" class="btn btn--light">{% trans "Написать нам" %}</a>
+    </div>
+  </div>
+</section>
+
+{% if next_service %}
+<section class="band--deep">
+  <div class="shell">
+    <h2>{% trans "Ближайшая служба" %}</h2>
+    {% include "services/_service_day.html" with day=next_service %}
+    <p style="margin-top:var(--sp-3)">
+      <a href="{% url 'services:schedule' %}" class="link-more">
+        {% trans "Всё расписание" %}{% include "_icons.html" with icon="arrow" %}
+      </a>
+    </p>
+  </div>
+</section>
+{% endif %}
+
+{% if page.intro %}
+<section class="band">
+  <div class="shell prose">{{ page.intro|linebreaks }}</div>
+</section>
+{% endif %}
+
+<section class="band">
+  <div class="shell">
+    <div class="grid grid--2">
+      {% if page.what_to_expect %}
+        <div>
+          <h2>{% trans "Как проходит служба" %}</h2>
+          <div class="prose">{{ page.what_to_expect|linebreaks }}</div>
+        </div>
+      {% endif %}
+      {% if page.practical %}
+        <div>
+          <h2>{% trans "Что нужно знать" %}</h2>
+          <div class="prose">{{ page.practical|linebreaks }}</div>
+        </div>
+      {% endif %}
+    </div>
+
+    {% if page.communion_note %}
+      <div class="ornament" role="presentation"></div>
+      <div class="prose">
+        <h2>{% trans "О причастии" %}</h2>
+        {{ page.communion_note|linebreaks }}
+      </div>
+    {% endif %}
+  </div>
+</section>
+
+<section class="band--deep" id="inquiry">
+  <div class="shell">
+    <h2>{% trans "Напишите нам" %}</h2>
+    <p style="max-width:36rem">{% trans "Ответим на любой вопрос — о службе, о вере или о том, как до нас доехать." %}</p>
+    <form method="post" style="max-width:36rem;margin-top:var(--sp-4)">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">{% trans "Отправить" %}</button>
+    </form>
+  </div>
+</section>
+
+<section class="band">
+  <div class="shell">
+    <dl class="facts">
+      {% if site_settings.address %}
+        <div><dt>{% trans "Адрес" %}</dt><dd>{{ site_settings.address }}<br>{{ site_settings.city }}</dd></div>
+      {% endif %}
+      {% if site_settings.phone %}
+        <div><dt>{% trans "Телефон" %}</dt><dd>{{ site_settings.phone }}</dd></div>
+      {% endif %}
+      {% if site_settings.email %}
+        <div><dt>{% trans "Почта" %}</dt><dd><a href="mailto:{{ site_settings.email }}">{{ site_settings.email }}</a></dd></div>
+      {% endif %}
+    </dl>
+  </div>
+</section>
+
+{% endblock %}

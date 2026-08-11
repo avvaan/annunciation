@@ -1,12 +1,14 @@
 {% load i18n %}
-<article class="service-day">
+<article class="service-day{% if day.is_major %} service-day--major{% endif %}">
   <div class="service-day__date">
     <span class="service-day__day">{{ day.date|date:"d.m.Y" }}</span>
     <span class="service-day__weekday">{{ day.weekday_label }}</span>
     <span class="service-day__old">{% trans "ст. ст." %} {{ day.old_style_date|date:"d.m" }}</span>
   </div>
 
-  {% if day.feast_title %}<p class="service-day__feast">{{ day.feast_title }}</p>{% endif %}
+  {% if day.feast_title %}
+    <p class="service-day__feast">{{ day.feast_title }}</p>
+  {% endif %}
 
   <ul class="service-day__items">
     {% for item in day.items.all %}

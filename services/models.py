@@ -24,11 +24,14 @@ class ServiceType(models.Model):
 
 
 class FastingLevel(models.TextChoices):
+    """The six gradations a Russian parish calendar actually marks."""
+
     NONE = "none", _("Обычный день")
     FAST = "fast", _("Пост")
-    FISH_WINE_OIL = "fish_wine_oil", _("Разрешается рыба, вино и елей")
-    WINE_OIL = "wine_oil", _("Разрешается вино и елей")
-    STRICT = "strict", _("Строгий пост (сухоядение)")
+    FISH_WINE_OIL = "fish_wine_oil", _("Рыба, вино и елей")
+    WINE_OIL = "wine_oil", _("Вино и елей")
+    DRY = "dry", _("Сухоядение")
+    STRICT = "strict", _("Строгий пост")
 
 
 WEEKDAY_NAMES_RU = [
@@ -96,6 +99,10 @@ class ServiceDay(models.Model):
 
     date = models.DateField(db_index=True)
     feast_title = models.CharField("Праздник/память", max_length=300, blank=True)
+    is_major = models.BooleanField(
+        "Великий праздник", default=False,
+        help_text="Двунадесятый или престольный праздник — название выделяется на карточке.",
+    )
     fasting_level = models.CharField(
         max_length=20, choices=FastingLevel.choices, default=FastingLevel.NONE
     )

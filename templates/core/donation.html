@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Пожертвования" %} — {{ block.super }}{% endblock %}
+{% block content %}
+
+<section class="page-head">
+  <div class="shell">
+    <h1>{% trans "Пожертвования" %}</h1>
+    <p>{% trans "Приход живёт приношением прихожан — им оплачивается всё, от свечей до строительства." %}</p>
+  </div>
+</section>
+
+{% if page.intro %}
+<section class="band">
+  <div class="shell prose">{{ page.intro|linebreaks }}</div>
+</section>
+{% endif %}
+
+<section class="band">
+  <div class="shell">
+    <div class="stack" style="max-width:44rem">
+      {% for m in methods %}
+        <article class="card">
+          <h3>{{ m.title }}</h3>
+          {% if m.description %}<p>{{ m.description }}</p>{% endif %}
+          {% if m.url %}
+            <a href="{{ m.url }}" class="btn btn--accent">
+              {{ m.button_label|default:_("Перейти") }}
+            </a>
+          {% endif %}
+        </article>
+      {% empty %}
+        {% if site_settings.realm_giving_url %}
+          <article class="card">
+            <h3>{% trans "Онлайн" %}</h3>
+            <p>{% trans "Разовое или регулярное пожертвование через систему прихода." %}</p>
+            <a href="{{ site_settings.realm_giving_url }}" class="btn btn--accent">{% trans "Пожертвовать" %}</a>
+          </article>
+        {% else %}
+          <p class="empty">{% trans "Способы пожертвования пока не настроены." %}</p>
+        {% endif %}
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="band--deep">
+  <div class="shell">
+    <h2>{% trans "На что идут средства" %}</h2>
+    <div class="grid grid--2">
+      <div class="card">
+        <h3>{% trans "Строительство храма" %}</h3>
+        <p>{% trans "Отдельный сбор с открытым отчётом о ходе работ." %}</p>
+        <a href="{% url 'building:project' %}" class="link-more">
+          {% trans "Смотреть проект" %}{% include "_icons.html" with icon="arrow" %}
+        </a>
+      </div>
+      <div class="card">
+        <h3>{% trans "Членство в приходе" %}</h3>
+        <p>{% trans "Регулярное участие в жизни и содержании прихода." %}</p>
+        {% if site_settings.realm_membership_url %}
+          <a href="{{ site_settings.realm_membership_url }}" class="link-more">
+            {% trans "Стать членом прихода" %}{% include "_icons.html" with icon="arrow" %}
+          </a>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

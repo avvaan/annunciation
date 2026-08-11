@@ -85,9 +85,10 @@ class ServiceItemInline(admin.TabularInline):
 
 @admin.register(ServiceDay)
 class ServiceDayAdmin(TranslationAdmin):
-    list_display = ["date", "weekday_label", "old_style_label", "feast_title", "fasting_level", "is_published"]
-    list_editable = ["is_published"]
-    list_filter = ["fasting_level", "is_published"]
+    list_display = ["date", "weekday_label", "old_style_label", "feast_title",
+                    "is_major", "fasting_level", "is_published"]
+    list_editable = ["is_major", "is_published"]
+    list_filter = ["fasting_level", "is_major", "is_published"]
     search_fields = ["feast_title", "note"]
     date_hierarchy = "date"
     inlines = [ServiceItemInline]

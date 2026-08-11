@@ -122,6 +122,108 @@ class ClergyMember(models.Model):
         return self.name
 
 
+class FirstVisitPage(SingletonModel):
+    """The "coming for the first time?" page — the one that decides whether a
+    newcomer walks in or closes the tab. Every block is admin-editable."""
+
+    intro = models.TextField(
+        "Приветствие", blank=True,
+        help_text="Первые два-три абзаца: кто мы и почему вам здесь рады.",
+    )
+    when_text = models.CharField(
+        "Когда приходить", max_length=300, blank=True,
+        help_text="Например «Часы и Литургия — в 9:30 утра по воскресеньям».",
+    )
+    what_to_expect = models.TextField(
+        "Как проходит служба", blank=True,
+        help_text="Сколько идёт, на каком языке, что бывает после.",
+    )
+    practical = models.TextField(
+        "Практическое", blank=True,
+        help_text="Парковка, как одеться, к кому подойти с вопросом.",
+    )
+    communion_note = models.TextField(
+        "О причастии", blank=True,
+        help_text="Кто может причащаться и что сделать заранее.",
+    )
+
+    class Meta:
+        verbose_name = "Страница «Впервые здесь?»"
+        verbose_name_plural = "Страница «Впервые здесь?»"
+
+    def __str__(self):
+        return "Впервые здесь?"
+
+
+class Inquiry(models.Model):
+    """A newcomer reaching out from the first-visit page."""
+
+    class About(models.TextChoices):
+        ORTHODOX = "orthodox", "Я православный христианин"
+        CURIOUS = "curious", "Я не православный, но хочу узнать больше"
+        PRIEST = "priest", "Хочу поговорить со священником"
+
+    class Contact(models.TextChoices):
+        EMAIL = "email", "Электронная почта"
+        PHONE = "phone", "Телефон"
+        EITHER = "either", "Всё равно"
+
+    name = models.CharField("Имя", max_length=200)
+    email = models.EmailField("E-mail", blank=True)
+    phone = models.CharField("Телефон", max_length=50, blank=True)
+    about = models.CharField("О себе", max_length=20, choices=About.choices)
+    preferred_contact = models.CharField(
+        "Как удобнее связаться", max_length=20, choices=Contact.choices, default=Contact.EITHER
+    )
+    best_time = models.CharField("Удобное время", max_length=200, blank=True)
+    message = models.TextField("Сообщение", blank=True)
+    submitted_at = models.DateTimeField(auto_now_add=True)
+    is_handled = models.BooleanField("Отвечено", default=False)
+
+    class Meta:
+        ordering = ["-submitted_at"]
+        verbose_name = "Обращение новичка"
+        verbose_name_plural = "Обращения новичков"
+
+    def __str__(self):
+        return f"{self.name} — {self.get_about_display()}"
+
+
+class DonationPage(SingletonModel):
+    intro = models.TextField(
+        "Вступление", blank=True,
+        help_text="Коротко: на что идут пожертвования.",
+    )
+
+    class Meta:
+        verbose_name = "Страница пожертвований"
+        verbose_name_plural = "Страница пожертвований"
+
+    def __str__(self):
+        return "Пожертвования"
+
+
+class DonationMethod(models.Model):
+    """One way to give — Realm, PayPal, Zelle, a cheque by post. Ordered list,
+    so the parish can add or retire a channel without a developer."""
+
+    page = models.ForeignKey(DonationPage, on_delete=models.CASCADE, related_name="methods")
+    title = models.CharField("Название", max_length=120)
+    description = models.TextField("Пояснение", blank=True)
+    url = models.URLField("Ссылка", blank=True)
+    button_label = models.CharField("Надпись на кнопке", max_length=60, blank=True)
+    order = models.PositiveIntegerField(default=0)
+    is_active = models.BooleanField(default=True)
+
+    class Meta:
+        ordering = ["order"]
+        verbose_name = "Способ пожертвования"
+        verbose_name_plural = "Способы пожертвования"
+
+    def __str__(self):
+        return self.title
+
+
 class ContactMessage(models.Model):
     name = models.CharField(max_length=200)
     email = models.EmailField()

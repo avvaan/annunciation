@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Духовенство" %} — {{ block.super }}{% endblock %}
+{% block content %}
+
+<section class="page-head">
+  <div class="shell">
+    <h1>{% trans "Духовенство" %}</h1>
+    <p>{% trans "Настоятель и клир прихода." %}</p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="shell">
+    <div class="grid grid--3">
+      {% for c in clergy %}
+        <article class="portrait">
+          <div class="portrait__media">
+            {% if c.photo %}
+              <img src="{{ c.photo.url }}" alt="{{ c.name }}" loading="lazy">
+            {% else %}
+              <div class="photo-placeholder" style="aspect-ratio:3/4">
+                {% include "_icons.html" with icon="image" %}<span>{% trans "Фото появится позже" %}</span>
+              </div>
+            {% endif %}
+          </div>
+          <h3>{{ c.name }}</h3>
+          <p class="portrait__role">{{ c.title }}</p>
+          {% if c.bio %}<div class="prose" style="margin-top:var(--sp-2)">{{ c.bio|linebreaks }}</div>{% endif %}
+        </article>
+      {% empty %}
+        <p class="empty">{% trans "Информация о духовенстве появится позже." %}</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="band--deep">
+  <div class="shell">
+    <h2>{% trans "Связаться со священником" %}</h2>
+    <p>{% trans "Об исповеди, крещении, венчании, отпевании и любом другом требе — напишите или позвоните." %}</p>
+    <div class="site-footer__actions" style="margin-top:var(--sp-3)">
+      <a href="{% url 'core:contact' %}" class="btn btn--light">{% trans "Написать" %}</a>
+      {% if site_settings.phone %}
+        <a href="tel:{{ site_settings.phone }}" class="btn btn--light">{{ site_settings.phone }}</a>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% endblock %}

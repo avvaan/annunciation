@@ -7,8 +7,8 @@ from building.models import BuildingProject
 from school.models import RussianSchoolPage
 from services.models import ServiceDay
 
-from .forms import ContactForm
-from .models import Announcement, ClergyMember
+from .forms import ContactForm, InquiryForm
+from .models import Announcement, ClergyMember, DonationPage, FirstVisitPage
 
 
 def home(request):
@@ -23,6 +23,47 @@ def home(request):
         "upcoming_days": upcoming_days,
         "building_project": BuildingProject.get_solo(),
         "school_page": RussianSchoolPage.get_solo(),
+        "first_visit": FirstVisitPage.get_solo(),
+    })
+
+
+def first_visit(request):
+    """The newcomer's page — and the enquiry that starts a conversation."""
+    if request.method == "POST":
+        form = InquiryForm(request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(
+                request,
+                "Спасибо! Мы получили ваше сообщение и свяжемся с вами.",
+            )
+            return redirect("core:first_visit")
+    else:
+        form = InquiryForm()
+
+    page = FirstVisitPage.get_solo()
+    next_service = (
+        ServiceDay.objects.filter(is_published=True, date__gte=datetime.date.today())
+        .prefetch_related("items__service_type")
+        .order_by("date")
+        .first()
+    )
+    return render(request, "core/first_visit.html", {
+        "page": page, "form": form, "next_service": next_service,
+    })
+
+
+def clergy(request):
+    return render(request, "core/clergy.html", {
+        "clergy": ClergyMember.objects.filter(is_active=True),
+    })
+
+
+def donation(request):
+    page = DonationPage.get_solo()
+    return render(request, "core/donation.html", {
+        "page": page,
+        "methods": page.methods.filter(is_active=True),
     })
 
 
