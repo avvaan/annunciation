@@ -1,8 +1,10 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block content %}
+<div class="board-texture" style="margin: calc(var(--sp-4) * -1) calc(var(--sp-3) * -1) 0; padding: var(--sp-4) var(--sp-3) var(--sp-1);">
 <h1>{{ site_settings.parish_name }}</h1>
 <p>{{ site_settings.city }}</p>
+</div>
 
 <section aria-label="{% trans "Ближайшие службы" %}">
   <h2 style="margin-top:0">{% trans "Ближайшие службы" %}</h2>

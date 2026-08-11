@@ -55,6 +55,14 @@ Mobile-first; `max-width: 62rem` content column; single breakpoint at `56rem` un
 
 None beyond a 0.2s fade-in on card mount (`prefers-reduced-motion` respected) and default browser focus/hover transitions. No sliders, no scroll-triggered choreography — matches the brief's "no heavy sliders" constraint directly.
 
+## Imagery
+
+Favicon, OG/social-share image, empty-state "photo coming soon" tile, and the
+header's faint ruled texture are hand-authored (SVG, plus one Playwright-
+rendered PNG for the OG card) — Higgsfield access was blocked in the session
+that built this, so `design/higgsfield-prompts.md` documents the intended
+prompts for regenerating richer versions later without touching templates.
+
 ## Known gaps / next steps
 
 - Real photography (clergy, building, parishioners, ministry activity) is entirely absent — every image field is empty until the parish supplies real photos (see PRODUCT.md § Evidence on Hand). Decorative-only imagery is scoped for a later pass (Higgsfield prompts) and must never stand in for documentary photos.

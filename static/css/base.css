@@ -246,6 +246,22 @@ main { max-width: var(--content-width); margin: 0 auto; padding: var(--sp-4) var
 }
 .tag--accent { border-color: var(--color-red); color: var(--color-red); background: var(--color-red-soft); }
 
+/* the one ornamental touch in the whole system: a near-invisible ruled
+   texture standing in for gold — used behind the home hero only */
+.board-texture { background-image: url("/static/images/board-texture.svg"); background-repeat: repeat; }
+
+.photo-placeholder {
+  display: flex; flex-direction: column; align-items: center; justify-content: center;
+  gap: var(--sp-2);
+  aspect-ratio: 1;
+  border: 1px dashed var(--color-line);
+  color: var(--color-ink-soft);
+  font-size: var(--fs-sm);
+  text-align: center;
+  padding: var(--sp-3);
+}
+.photo-placeholder img { width: 3rem; opacity: 0.6; margin: 0; }
+
 /* ==========================================================================
    Buttons & forms
    ========================================================================== */

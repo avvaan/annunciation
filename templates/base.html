@@ -4,6 +4,13 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{% block title %}{{ site_settings.parish_name }}{% endblock %}</title>
+<meta name="description" content="{% block meta_description %}{{ site_settings.parish_name }} — {{ site_settings.city }}{% endblock %}">
+<meta property="og:title" content="{{ site_settings.parish_name }}">
+<meta property="og:description" content="{{ site_settings.parish_name }} — {{ site_settings.city }}">
+<meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% block og_image %}/static/images/og-image.png{% endblock %}">
+<meta property="og:type" content="website">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg">
 <link rel="stylesheet" href="/static/css/base.css">
 </head>
 <body>

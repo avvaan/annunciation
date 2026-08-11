@@ -97,6 +97,12 @@
   <h2>{% trans "Фото" %}</h2>
   <div class="photo-grid">
     {% for p in photos %}<img src="{{ p.image.url }}" alt="{{ p.caption }}">{% endfor %}
+    {% if not photos %}
+      <div class="photo-placeholder">
+        <img src="/static/images/photo-placeholder.svg" alt="">
+        <span>{% trans "Фото появится позже" %}</span>
+      </div>
+    {% endif %}
   </div>
   {% if is_member %}
     <form method="post" enctype="multipart/form-data">
