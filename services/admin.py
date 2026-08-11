@@ -4,7 +4,7 @@ from django.contrib import admin, messages
 from modeltranslation.admin import TranslationAdmin
 
 from .models import (
-    WEEKDAY_NAMES_RU,
+    WEEKDAY_NAMES,
     RecurringServiceItem,
     RecurringServiceRule,
     ServiceDay,
@@ -96,7 +96,7 @@ class ServiceDayAdmin(TranslationAdmin):
 
     @admin.display(description="День недели")
     def weekday_label(self, obj):
-        return WEEKDAY_NAMES_RU[obj.date.weekday()]
+        return WEEKDAY_NAMES[obj.date.weekday()]
 
     @admin.display(description="Ст. стиль")
     def old_style_label(self, obj):

@@ -34,8 +34,11 @@ class FastingLevel(models.TextChoices):
     STRICT = "strict", _("Строгий пост")
 
 
-WEEKDAY_NAMES_RU = [
-    "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье",
+# Marked for translation: the card shows the weekday, and on /en/ it must read
+# "Friday", not "Пятница". Kept lazy so the active language is resolved at render.
+WEEKDAY_NAMES = [
+    _("Понедельник"), _("Вторник"), _("Среда"), _("Четверг"),
+    _("Пятница"), _("Суббота"), _("Воскресенье"),
 ]
 
 # The Julian/Gregorian gap is 13 days for the whole 20th–21st century and only
@@ -132,7 +135,7 @@ class ServiceDay(models.Model):
 
     @property
     def weekday_label(self):
-        return WEEKDAY_NAMES_RU[self.date.weekday()]
+        return WEEKDAY_NAMES[self.date.weekday()]
 
 
 class ServiceItem(models.Model):

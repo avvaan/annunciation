@@ -10,3 +10,6 @@ db.sqlite3
 node_modules/
 package.json
 package-lock.json
+
+# locale/*.mo is deliberately NOT ignored: it is committed so the English
+# site works on hosts whose build image has no gettext to compile it.

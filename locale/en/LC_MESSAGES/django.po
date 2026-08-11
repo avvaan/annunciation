@@ -1,0 +1,583 @@
+# English translation for the Annunciation parish site.
+# Source language is Russian; this catalogue carries the English UI.
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: PACKAGE VERSION\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2026-08-11 18:22-0400\n"
+"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
+"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: en\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1);\n"
+
+msgid "Имя"
+msgstr "Idea"
+
+msgid "E-mail"
+msgstr "Email"
+
+msgid "Телефон"
+msgstr "Phone"
+
+msgid "Сообщение"
+msgstr "Xerophagy"
+
+msgid "Например, будни после 18:00"
+msgstr "For example, weekdays after 6 pm"
+
+msgid "Оставьте e-mail или телефон — иначе мы не сможем вам ответить."
+msgstr "Please leave an email or a phone number — otherwise we cannot reply."
+
+msgid "Я православный христианин"
+msgstr "I am an Orthodox Christian"
+
+msgid "Я не православный, но хочу узнать больше"
+msgstr "I am not Orthodox, but I would like to know more"
+
+msgid "Хочу поговорить со священником"
+msgstr "Reach a priest"
+
+msgid "Электронная почта"
+msgstr "Email"
+
+msgid "Всё равно"
+msgstr "Full schedule"
+
+msgid "О себе"
+msgstr "About you"
+
+msgid "Как удобнее связаться"
+msgstr "How best to reach you"
+
+msgid "Удобное время"
+msgstr "Best time"
+
+msgid "Фамилия"
+msgstr "Surname"
+
+msgid "Логин"
+msgstr "Username"
+
+msgid "Пароль"
+msgstr "Password"
+
+msgid "Повторите пароль"
+msgstr "Parish history"
+
+msgid "Коротко о себе (необязательно)"
+msgstr "A few words about yourself (optional)"
+
+msgid "Сообщение лидеру"
+msgstr "Message to the leader"
+
+msgid "Заголовок темы"
+msgstr "Topic title"
+
+msgid "Текст"
+msgstr "Text"
+
+msgid "Ваш ответ"
+msgstr "%(n)s reply"
+
+msgid "Фотография"
+msgstr "Photographs"
+
+msgid "Подпись"
+msgstr "Subscribe"
+
+msgid "Что нужно купить"
+msgstr "What to know"
+
+msgid "Комментарий"
+msgstr "Note"
+
+msgid "Дата"
+msgstr "Date"
+
+msgid "Ответственный"
+msgstr "Reply"
+
+msgid "Второй ответственный"
+msgstr "Second person"
+
+msgid "Участник"
+msgstr "Member"
+
+msgid "Лидер"
+msgstr "Leader"
+
+msgid "Заявка на рассмотрении"
+msgstr "Request pending"
+
+msgid "Активен"
+msgstr "Active"
+
+msgid "Все посетители портала"
+msgstr "Everyone on the portal"
+
+msgid "Только участники служения"
+msgstr "Ministry members only"
+
+msgid "Только лидеры служения"
+msgstr "Ministry leaders only"
+
+msgid "Идея"
+msgstr "Idea"
+
+msgid "Запланирован"
+msgstr "Planned"
+
+msgid "В работе"
+msgstr "In progress"
+
+msgid "Завершён"
+msgstr "Finished"
+
+msgid "Общее"
+msgstr "General"
+
+msgid "Финансы"
+msgstr "Finance"
+
+msgid "План/протокол"
+msgstr "Plan / minutes"
+
+msgid "Фото"
+msgstr "Photo"
+
+msgid "Другое"
+msgstr "Other"
+
+msgid "Нужно купить"
+msgstr "To buy"
+
+msgid "Куплено"
+msgstr "Bought"
+
+msgid "Календарь"
+msgstr "Calendar"
+
+msgid "Бюллетень"
+msgstr "Bulletin"
+
+msgid "Обычный день"
+msgstr "No fast"
+
+msgid "Пост"
+msgstr "Fast"
+
+msgid "Рыба, вино и елей"
+msgstr "Fish, wine and oil"
+
+msgid "Вино и елей"
+msgstr "Wine and oil"
+
+msgid "Сухоядение"
+msgstr "Xerophagy"
+
+msgid "Строгий пост"
+msgstr "Strict fast"
+
+msgid "Понедельник"
+msgstr "Monday"
+
+msgid "Вторник"
+msgstr "Tuesday"
+
+msgid "Среда"
+msgstr "Wednesday"
+
+msgid "Четверг"
+msgstr "Thursday"
+
+msgid "Пятница"
+msgstr "Friday"
+
+msgid "Суббота"
+msgstr "Saturday"
+
+msgid "Воскресенье"
+msgstr "Sunday"
+
+msgid "Перейти к содержимому"
+msgstr "Skip to content"
+
+msgid "Меню"
+msgstr "Menu"
+
+msgid "Основная навигация"
+msgstr "Main navigation"
+
+msgid "Впервые здесь?"
+msgstr "First time here?"
+
+msgid "Расписание"
+msgstr "Services"
+
+msgid "Духовенство"
+msgstr "Clergy"
+
+msgid "Строительство"
+msgstr "Building"
+
+msgid "Русская школа"
+msgstr "Russian School"
+
+msgid "Служения"
+msgstr "Ministries"
+
+msgid "О приходе"
+msgstr "About"
+
+msgid "Контакты"
+msgstr "Contact"
+
+msgid "Пожертвовать"
+msgstr "Give"
+
+msgid "Стать членом прихода"
+msgstr "Become a member"
+
+msgid "Приход"
+msgstr "Parish"
+
+msgid "Расписание богослужений"
+msgstr "Schedule of services"
+
+msgid "Календарь и бюллетень"
+msgstr "Calendar and bulletin"
+
+msgid "История прихода"
+msgstr "Parish history"
+
+msgid "Участие"
+msgstr "Take part"
+
+msgid "Пожертвования"
+msgstr "Giving"
+
+msgid "Строительство храма"
+msgstr "Building the church"
+
+msgid "Подписка на новости"
+msgstr "Newsletter"
+
+msgid "Поддержать строительство"
+msgstr "Support the building fund"
+
+#, python-format
+msgid "из %(goal)s $"
+msgstr "of $%(goal)s"
+
+#, python-format
+msgid "Собрано %(percent)s%%"
+msgstr "%(percent)s%% raised"
+
+msgid "Ход работ"
+msgstr "Progress"
+
+msgid "Новостей о стройке пока нет."
+msgstr "No building updates yet."
+
+msgid "Фотографии"
+msgstr "Photographs"
+
+msgid "Фото появится позже"
+msgstr "Photograph coming later"
+
+msgid "Информация о духовенстве появится позже."
+msgstr "Clergy details will appear here soon."
+
+msgid "Как нас найти"
+msgstr "Finding us"
+
+msgid "Адрес"
+msgstr "Address"
+
+msgid "Почта"
+msgstr "Email"
+
+msgid "Написать нам"
+msgstr "Write to us"
+
+msgid "Настоятель и клир прихода."
+msgstr "The rector and clergy of the parish."
+
+msgid "Связаться со священником"
+msgstr "Reach a priest"
+
+msgid "Об исповеди, крещении, венчании, отпевании и любом другом требе — напишите или позвоните."
+msgstr "For confession, baptism, marriage, funerals or any other need — write or call."
+
+msgid "Написать"
+msgstr "Write"
+
+msgid "Напишите нам — настоятель или секретарь прихода ответит вам."
+msgstr "Write to us — the rector or the parish secretary will reply."
+
+msgid "Отправить"
+msgstr "Send"
+
+msgid "Приход живёт приношением прихожан — им оплачивается всё, от свечей до строительства."
+msgstr "The parish lives on the offerings of its people — everything from candles to construction."
+
+msgid "Перейти"
+msgstr "Go"
+
+msgid "Онлайн"
+msgstr "Online"
+
+msgid "Разовое или регулярное пожертвование через систему прихода."
+msgstr "A one-off or recurring gift through the parish's giving system."
+
+msgid "Способы пожертвования пока не настроены."
+msgstr "No ways to give have been set up yet."
+
+msgid "На что идут средства"
+msgstr "Where the money goes"
+
+msgid "Отдельный сбор с открытым отчётом о ходе работ."
+msgstr "A separate fund, with the progress reported openly."
+
+msgid "Смотреть проект"
+msgstr "See the project"
+
+msgid "Членство в приходе"
+msgstr "Parish membership"
+
+msgid "Регулярное участие в жизни и содержании прихода."
+msgstr "Regular participation in the life and upkeep of the parish."
+
+msgid "Приходите на воскресную службу — вам будут рады, и не нужно ничего знать заранее."
+msgstr "Come to a Sunday service — you are welcome, and you need not know anything in advance."
+
+msgid "Ближайшая служба"
+msgstr "The next service"
+
+msgid "Всё расписание"
+msgstr "Full schedule"
+
+msgid "Как проходит служба"
+msgstr "What the service is like"
+
+msgid "Что нужно знать"
+msgstr "What to know"
+
+msgid "О причастии"
+msgstr "About Communion"
+
+msgid "Напишите нам"
+msgstr "Write to us"
+
+msgid "Ответим на любой вопрос — о службе, о вере или о том, как до нас доехать."
+msgstr "We will answer any question — about the service, the faith, or simply how to find us."
+
+msgid "Ближайшие службы"
+msgstr "Upcoming services"
+
+msgid "Расписание пока не заполнено."
+msgstr "The schedule has not been filled in yet."
+
+msgid "Объявления"
+msgstr "Announcements"
+
+msgid "Подробнее"
+msgstr "Read more"
+
+msgid "Жизнь прихода"
+msgstr "Parish life"
+
+msgid "Как идёт стройка и на чём мы сейчас стоим."
+msgstr "How the building work is going, and where we stand."
+
+msgid "Язык, история и традиции для детей прихожан."
+msgstr "Language, history and tradition for the children of the parish."
+
+msgid "Чем живёт приход между службами и как присоединиться."
+msgstr "What the parish does between services, and how to join in."
+
+msgid "Вехи истории пока не заполнены."
+msgstr "The history has not been filled in yet."
+
+msgid "Вход"
+msgstr "Sign in"
+
+msgid "Вход в портал служений"
+msgstr "Sign in to the ministries portal"
+
+msgid "Портал для участников служений прихода."
+msgstr "A portal for members of the parish ministries."
+
+msgid "Войти"
+msgstr "Sign in"
+
+msgid "Зарегистрироваться"
+msgstr "Create an account"
+
+msgid "Все служения"
+msgstr "All ministries"
+
+msgid "Войти, чтобы присоединиться"
+msgstr "Sign in to join"
+
+msgid "Выйти из служения"
+msgstr "Leave this ministry"
+
+msgid "Присоединиться"
+msgstr "Join"
+
+msgid "Заявки на участие"
+msgstr "Requests to join"
+
+msgid "Принять"
+msgstr "Approve"
+
+msgid "Заявок нет."
+msgstr "No requests."
+
+msgid "График"
+msgstr "Rota"
+
+msgid "График пока не составлен."
+msgstr "The rota has not been drawn up yet."
+
+msgid "Добавить в график"
+msgstr "Add to the rota"
+
+msgid "Добавить"
+msgstr "Add"
+
+msgid "Проекты"
+msgstr "Projects"
+
+msgid "Проектов пока нет."
+msgstr "No projects yet."
+
+msgid "Добавить заявку"
+msgstr "Add a request"
+
+msgid "Документы и отчёты"
+msgstr "Documents and reports"
+
+msgid "Файлов пока нет."
+msgstr "No files yet."
+
+msgid "Загрузить фото"
+msgstr "Upload a photograph"
+
+msgid "Загрузить"
+msgstr "Upload"
+
+msgid "Обсуждение"
+msgstr "Discussion"
+
+#, python-format
+msgid "%(n)s ответ"
+msgid_plural "%(n)s ответов"
+msgstr[0] "%(n)s reply"
+msgstr[1] "%(n)s replies"
+
+msgid "Тем пока нет."
+msgstr "No topics yet."
+
+msgid "Создать тему"
+msgstr "Start a topic"
+
+msgid "Создать"
+msgstr "Create"
+
+msgid "Служения прихода"
+msgstr "Parish ministries"
+
+msgid "Хор, воскресная школа, трапеза, помощь храму — то, чем приход живёт между службами."
+msgstr "Choir, church school, the shared meal, help around the church — what the parish does between services."
+
+msgid "Мои служения"
+msgstr "My ministries"
+
+msgid "Другие служения"
+msgstr "Other ministries"
+
+msgid "Служения пока не заведены."
+msgstr "No ministries have been set up yet."
+
+msgid "Это закрытое служение — его содержимое видно только участникам."
+msgstr "This ministry is closed — its contents are visible to members only."
+
+msgid "Подать заявку на участие"
+msgstr "Request to join"
+
+msgid "Регистрация"
+msgstr "Register"
+
+msgid "Регистрация в портале служений"
+msgstr "Register for the ministries portal"
+
+msgid "Ответов пока нет."
+msgstr "No replies yet."
+
+msgid "Ответить"
+msgstr "Reply"
+
+msgid "Подписка на новости прихода"
+msgstr "Parish newsletter"
+
+msgid "Расписание, объявления и новости строительства — письмом на почту."
+msgstr "Services, announcements and building news — by email."
+
+msgid "Подписаться"
+msgstr "Subscribe"
+
+msgid "После отправки мы пришлём письмо со ссылкой для подтверждения. Отписаться можно в один клик из любого письма."
+msgstr "We will send you an email with a confirmation link. You can unsubscribe in one click from any message."
+
+msgid "Приходские листки и календарь богослужений — для чтения и печати."
+msgstr "Parish bulletins and the calendar of services — to read or to print."
+
+msgid "Бюллетени"
+msgstr "Bulletins"
+
+msgid "Пока нет опубликованных бюллетеней."
+msgstr "No bulletins published yet."
+
+msgid "Календари"
+msgstr "Calendars"
+
+msgid "Пока нет опубликованных календарей."
+msgstr "No calendars published yet."
+
+msgid "Идёт запись на новый учебный год."
+msgstr "Enrolment for the new school year is open."
+
+msgid "Записаться"
+msgstr "Enrol"
+
+msgid "Возраст"
+msgstr "Age"
+
+#, python-format
+msgid "от %(age)s лет"
+msgstr "from %(age)s years"
+
+msgid "Расписание занятий"
+msgstr "Class times"
+
+msgid "Учебный год"
+msgstr "School year"
+
+msgid "Оплата"
+msgstr "Fees"
+
+msgid "ст. ст."
+msgstr "O.S."
+
+msgid "Даты нового и старого стиля, состав службы и указание о посте."
+msgstr "New- and old-style dates, what is served, and the fasting rule."
+
+msgid "Календарь и бюллетень в PDF"
+msgstr "Calendar and bulletin as PDF"

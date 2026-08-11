@@ -1,4 +1,5 @@
 from django import forms
+from django.utils.translation import gettext_lazy as _
 
 from .models import ContactMessage, Inquiry
 
@@ -8,7 +9,8 @@ class ContactForm(forms.ModelForm):
         model = ContactMessage
         fields = ["name", "email", "phone", "message"]
         widgets = {"message": forms.Textarea(attrs={"rows": 5})}
-        labels = {"name": "Имя", "email": "E-mail", "phone": "Телефон", "message": "Сообщение"}
+        labels = {"name": _("Имя"), "email": _("E-mail"),
+                  "phone": _("Телефон"), "message": _("Сообщение")}
 
 
 class InquiryForm(forms.ModelForm):
@@ -18,7 +20,7 @@ class InquiryForm(forms.ModelForm):
         widgets = {
             "about": forms.RadioSelect(attrs={"class": "radio-group"}),
             "message": forms.Textarea(attrs={"rows": 4}),
-            "best_time": forms.TextInput(attrs={"placeholder": "Например, будни после 18:00"}),
+            "best_time": forms.TextInput(attrs={"placeholder": _("Например, будни после 18:00")}),
         }
 
     def __init__(self, *args, **kwargs):
@@ -32,6 +34,6 @@ class InquiryForm(forms.ModelForm):
         cleaned = super().clean()
         if not cleaned.get("email") and not cleaned.get("phone"):
             raise forms.ValidationError(
-                "Оставьте e-mail или телефон — иначе мы не сможем вам ответить."
+                _("Оставьте e-mail или телефон — иначе мы не сможем вам ответить.")
             )
         return cleaned

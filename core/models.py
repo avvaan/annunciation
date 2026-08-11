@@ -1,4 +1,5 @@
 from django.db import models
+from django.utils.translation import gettext_lazy as _
 
 
 class SingletonModel(models.Model):
@@ -16,7 +17,8 @@ class SingletonModel(models.Model):
 
     @classmethod
     def get_solo(cls):
-        obj, _ = cls.objects.get_or_create(pk=1)
+        # not `obj, _ = ...` — that would shadow the gettext alias imported above
+        obj, _created = cls.objects.get_or_create(pk=1)
         return obj
 
 
@@ -159,24 +161,24 @@ class Inquiry(models.Model):
     """A newcomer reaching out from the first-visit page."""
 
     class About(models.TextChoices):
-        ORTHODOX = "orthodox", "Я православный христианин"
-        CURIOUS = "curious", "Я не православный, но хочу узнать больше"
-        PRIEST = "priest", "Хочу поговорить со священником"
+        ORTHODOX = "orthodox", _("Я православный христианин")
+        CURIOUS = "curious", _("Я не православный, но хочу узнать больше")
+        PRIEST = "priest", _("Хочу поговорить со священником")
 
     class Contact(models.TextChoices):
-        EMAIL = "email", "Электронная почта"
-        PHONE = "phone", "Телефон"
-        EITHER = "either", "Всё равно"
+        EMAIL = "email", _("Электронная почта")
+        PHONE = "phone", _("Телефон")
+        EITHER = "either", _("Всё равно")
 
-    name = models.CharField("Имя", max_length=200)
-    email = models.EmailField("E-mail", blank=True)
-    phone = models.CharField("Телефон", max_length=50, blank=True)
-    about = models.CharField("О себе", max_length=20, choices=About.choices)
+    name = models.CharField(_("Имя"), max_length=200)
+    email = models.EmailField(_("E-mail"), blank=True)
+    phone = models.CharField(_("Телефон"), max_length=50, blank=True)
+    about = models.CharField(_("О себе"), max_length=20, choices=About.choices)
     preferred_contact = models.CharField(
-        "Как удобнее связаться", max_length=20, choices=Contact.choices, default=Contact.EITHER
+        _("Как удобнее связаться"), max_length=20, choices=Contact.choices, default=Contact.EITHER
     )
-    best_time = models.CharField("Удобное время", max_length=200, blank=True)
-    message = models.TextField("Сообщение", blank=True)
+    best_time = models.CharField(_("Удобное время"), max_length=200, blank=True)
+    message = models.TextField(_("Сообщение"), blank=True)
     submitted_at = models.DateTimeField(auto_now_add=True)
     is_handled = models.BooleanField("Отвечено", default=False)
 
