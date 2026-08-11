@@ -54,8 +54,8 @@ Base size 19px, line-height 1.65 — the audience skews elderly. Hero display is
 - **`.service-day`** — the schedule card: Old Standard tabular date, uppercase weekday, italic old-style date, feast title, hairline-divided time rows with a fixed 4.25rem time column, `.fast-flag` when applicable. No colored side rail — the flag itself carries the signal.
 - **`.tile`** — image + heading + line; the 3/2 media well scales its image 1.04 on hover.
 - **`.doc-list`** — hairline-ruled rows for PDFs, icon + title + period.
-- **`.btn`** — flat, 1px border, uppercase tracked label, 48px min height. `--accent` (oxblood fill), `--light` (on dark grounds).
-- **`.ornament`** — the entire ornamental budget: a brass rule with a centred diamond.
+- **`.btn`** — wears a drawn letterpress plate as a 9-slice `border-image` (`plate-light.png` / `plate-accent.png`), uppercase tracked label, 48px min height. The plate supplies the printed surface and its impressed inner rule; the label stays live text, so it scales with OS text size, translates between RU and EN, and is read by screen readers. `.btn--light` (on dark grounds) drops the plate for a plain hairline — a parchment plate glares against umber. `button[type=submit]` inherits the accent plate, explicitly excluding `.lang-switch__btn`, whose job is to show the active language rather than look like a primary action.
+- **`.ornament`** — the entire ornamental budget: a drawn brass rule with a centred diamond (`divider-light.png`; `divider-dark.png` swaps in on dark bands, since each asset carries its own ground).
 - **`.timeline`**, **`.facts`**, **`.rota`**, **`.photo-grid`**, **`.portrait`**, **`.status`**, **`.fund`** — see `static/css/base.css`.
 - **Icons** — authored SVG set in `templates/_icons.html`, one 1.5px stroke on a 24×24 grid, sized to the surrounding text. No emoji (the previous build used 🔒 in ministry templates; replaced).
 - **Nav** — transparent over a hero (`body.has-hero`), solid otherwise. Checkbox toggle with an always-visible "Меню" text label; the checkbox is a sibling of both the header row and the nav, which the `~` selector requires.
@@ -91,9 +91,20 @@ A seventh supplied file — an Annunciation icon graphic — was **not** used: i
 
 Favicon and OG card are hand-authored assets from the previous pass and are due a refresh into this world.
 
+### Drawn ornament (Higgsfield)
+
+Generated at the user's request in this design's palette, then trimmed, downscaled and palette-quantised into `static/images/ornament/` — 140KB for the whole set, against the brief's loading budget. The Higgsfield CDN is blocked by this session's egress policy, so the user exported them and handed them back as files.
+
+| File | Use |
+|---|---|
+| `divider-light.png` / `divider-dark.png` | `.ornament` on parchment / on umber |
+| `plate-light.png` / `plate-accent.png` | 9-slice button plates |
+| `cross.png` | three-bar cross emblem in the footer |
+| `border-strip.png` | Byzantine band along the footer's top edge, 1.75rem tall, nowhere else |
+
+Two further generations — a corner interlace flourish and a wheat-and-vine motif — were rendered well but not installed: both are dense enough to read as the gilt-scrollwork the brief rules out, and neither had a place the design actually needed. They remain in the Higgsfield history if a use appears.
+
 ## Known gaps / next steps
 
-- **Higgsfield ornament set is generated but not installed.** Nine assets (brass divider on parchment and on umber, corner flourish, three-bar cross emblem, parchment texture, Byzantine border strip, wheat-and-vine motif, two empty button plates) were generated at the user's request. The Higgsfield CDN (`d8j0ntlcm91z4.cloudfront.net`) is blocked by this session's egress policy, so they could not be downloaded into the repo; the proxy README forbids routing around it. They need to be downloaded from the Higgsfield UI and handed back as files, same route the photographs took.
-- **Buttons are CSS, not images.** The user asked for buttons to be drawn in Higgsfield; the plates were generated but not adopted, because text baked into an image does not scale with OS text size (the elderly-reader requirement), needs a second file per language on a bilingual site, is invisible to screen readers, and is not editable by the secretary. Raised once, flagged again here; the plates are ready if the user still wants them.
 - `icon-trinity.jpg` and `parishioners.jpg` have no home yet — candidates for the history page and the about page once real captions exist.
 - Clergy portraits, exterior shots of the building, and construction-progress photos are still absent; those fields fall back to a drawn placeholder tile.

@@ -185,17 +185,17 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
 }
 .section-head h2 { margin-bottom: 0; }
 
-/* Ornament: one restrained brass rule with a centred diamond — the whole
-   ornamental budget of the design, standing in for gilt scrollwork. */
+/* Ornament: a drawn brass rule with a centred diamond — the whole ornamental
+   budget of the design, standing in for gilt scrollwork. The asset carries its
+   own ground, so the dark variant swaps the file rather than inverting it. */
 .ornament {
-  display: flex; align-items: center; gap: var(--sp-2);
-  color: var(--brass);
-  margin-block: var(--sp-4);
+  height: 2.75rem;
+  margin-block: var(--sp-5);
+  background: url("/static/images/ornament/divider-light.png") center / contain no-repeat;
 }
-.ornament::before, .ornament::after {
-  content: ""; height: 1px; background: currentColor; flex: 1; opacity: 0.55;
+.band--deep .ornament, .ornament--dark {
+  background-image: url("/static/images/ornament/divider-dark.png");
 }
-.ornament svg { width: 1.25rem; height: 1.25rem; flex: none; }
 
 /* --------------------------------------------------------------------------
    Header / navigation — transparent over a hero, solid elsewhere
@@ -430,23 +430,38 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
 /* --------------------------------------------------------------------------
    Buttons
    -------------------------------------------------------------------------- */
+/* Buttons wear a drawn letterpress plate as a 9-slice border-image: the
+   printed surface and its impressed inner rule come from the asset, while the
+   label stays live text — so it scales with the reader's font size, translates
+   between RU and EN, and is announced by screen readers. */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5em;
-  min-height: var(--tap); padding: 0.7em 1.6em;
+  min-height: var(--tap); padding: 0.75em 1.75em;
   font-family: var(--font-body); font-size: var(--fs-sm); font-weight: 700;
   letter-spacing: 0.06em; text-transform: uppercase;
   text-decoration: none; cursor: pointer;
-  border: 1px solid var(--ink); background: transparent; color: inherit;
-  transition: background-color 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+  color: var(--ink); background: transparent;
+  border: 10px solid transparent;
+  border-image: url("/static/images/ornament/plate-light.png") 60 fill / 10px / 0 repeat;
+  transition: filter 0.18s ease, color 0.18s ease;
 }
-.btn:hover, .btn:focus-visible { background: var(--ink); color: var(--surface); border-color: var(--ink); }
+.btn:hover, .btn:focus-visible { filter: brightness(0.94); }
 .btn svg { width: 1rem; height: 1rem; }
 
-.btn--accent { background: var(--accent); border-color: var(--accent); color: var(--surface); }
-.btn--accent:hover, .btn--accent:focus-visible { background: var(--accent-deep); border-color: var(--accent-deep); color: var(--surface); }
+.btn--accent {
+  color: #fdf6ef;
+  border-image-source: url("/static/images/ornament/plate-accent.png");
+}
+.btn--accent:hover, .btn--accent:focus-visible { filter: brightness(1.12); color: #fff; }
 
-.btn--light { border-color: var(--ink-on-deep); color: var(--ink-on-deep); }
-.btn--light:hover, .btn--light:focus-visible { background: var(--ink-on-deep); color: var(--deep); }
+/* On a dark ground the parchment plate would glare; the light button keeps a
+   plain hairline instead of a printed plate. */
+.btn--light {
+  border: 1px solid var(--ink-on-deep); border-image: none;
+  color: var(--ink-on-deep); background: transparent;
+  padding: 0.75em 1.75em;
+}
+.btn--light:hover, .btn--light:focus-visible { background: var(--ink-on-deep); color: var(--deep); filter: none; }
 
 .btn[disabled], .btn[aria-disabled="true"] { opacity: 0.45; pointer-events: none; }
 
@@ -480,15 +495,20 @@ textarea { min-height: 7rem; resize: vertical; }
 ul.helptext, form ul { padding-left: 1.2em; }
 .errorlist { list-style: none; padding: 0; margin: 0 0 var(--sp-2); color: var(--accent-deep); font-size: var(--fs-sm); font-weight: 700; }
 
-button[type="submit"] {
+/* form submits wear the same drawn plate — but not the language switch, whose
+   job is to show which language is active, not to look like a primary action */
+button[type="submit"]:not(.lang-switch__btn):not(.btn) {
   display: inline-flex; align-items: center; justify-content: center;
-  min-height: var(--tap); padding: 0.7em 1.6em;
+  min-height: var(--tap); padding: 0.75em 1.75em;
   font-family: var(--font-body); font-size: var(--fs-sm); font-weight: 700;
   letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer;
-  background: var(--accent); border: 1px solid var(--accent); color: var(--surface);
-  transition: background-color 0.18s ease;
+  background: transparent; color: #fdf6ef;
+  border: 10px solid transparent;
+  border-image: url("/static/images/ornament/plate-accent.png") 60 fill / 10px / 0 repeat;
+  transition: filter 0.18s ease;
 }
-button[type="submit"]:hover, button[type="submit"]:focus-visible { background: var(--accent-deep); }
+button[type="submit"]:not(.lang-switch__btn):not(.btn):hover,
+button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-visible { filter: brightness(1.12); }
 
 .messages { list-style: none; margin: 0; padding: var(--sp-3) var(--sp-3) 0; max-width: var(--wide); margin-inline: auto; }
 .message {
@@ -593,7 +613,19 @@ button[type="submit"]:hover, button[type="submit"]:focus-visible { background: v
 /* --------------------------------------------------------------------------
    Footer
    -------------------------------------------------------------------------- */
-.site-footer { background: var(--deep); color: var(--ink-on-deep); padding-block: var(--sp-7) var(--sp-5); margin-top: var(--sp-7); }
+.site-footer {
+  background: var(--deep); color: var(--ink-on-deep);
+  padding-block: var(--sp-7) var(--sp-5); margin-top: var(--sp-7);
+  position: relative;
+}
+/* drawn Byzantine band along the footer's top edge — woven-textile weight,
+   not applied anywhere else in the design */
+.site-footer::before {
+  content: ""; position: absolute; inset: 0 0 auto; height: 1.75rem;
+  background: url("/static/images/ornament/border-strip.png") center / auto 100% repeat-x;
+  opacity: 0.85;
+}
+.site-footer__emblem { width: 2.25rem; height: auto; margin-bottom: var(--sp-3); }
 .site-footer a { color: var(--ink-on-deep); }
 .site-footer a:hover { color: #e8b877; }
 .site-footer__grid { display: grid; gap: var(--sp-5); }

@@ -15,7 +15,7 @@
   <div class="shell" style="max-width:44rem">
     {% if topic.body %}<div class="prose">{{ topic.body|linebreaks }}</div>{% endif %}
 
-    <div class="ornament">{% include "_icons.html" with icon="diamond" %}</div>
+    <div class="ornament" role="presentation"></div>
 
     <div class="stack">
       {% for c in comments %}

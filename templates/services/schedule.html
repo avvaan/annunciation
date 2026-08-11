@@ -18,7 +18,7 @@
       <p class="empty">{% trans "Расписание пока не заполнено." %}</p>
     {% endfor %}
 
-    <div class="ornament">{% include "_icons.html" with icon="diamond" %}</div>
+    <div class="ornament" role="presentation"></div>
 
     <p><a href="{% url 'publications:list' %}" class="link-more">
       {% trans "Календарь и бюллетень в PDF" %}{% include "_icons.html" with icon="arrow" %}
