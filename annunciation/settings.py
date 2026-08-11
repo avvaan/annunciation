@@ -6,6 +6,8 @@ Django settings for the Annunciation of the Most Holy Theotokos parish site
 import os
 from pathlib import Path
 
+import dj_database_url
+
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 SECRET_KEY = os.environ.get(
@@ -15,6 +17,23 @@ SECRET_KEY = os.environ.get(
 DEBUG = os.environ.get("DJANGO_DEBUG", "1") == "1"
 
 ALLOWED_HOSTS = [h for h in os.environ.get("ALLOWED_HOSTS", "*").split(",") if h]
+CSRF_TRUSTED_ORIGINS = [
+    o for o in os.environ.get("CSRF_TRUSTED_ORIGINS", "").split(",") if o
+]
+
+# Render sets this to the service's *.onrender.com hostname; add it automatically
+# so ALLOWED_HOSTS/CSRF_TRUSTED_ORIGINS don't need to be set by hand for it.
+RENDER_EXTERNAL_HOSTNAME = os.environ.get("RENDER_EXTERNAL_HOSTNAME")
+if RENDER_EXTERNAL_HOSTNAME:
+    ALLOWED_HOSTS.append(RENDER_EXTERNAL_HOSTNAME)
+    CSRF_TRUSTED_ORIGINS.append(f"https://{RENDER_EXTERNAL_HOSTNAME}")
+
+# Render terminates TLS at its proxy and talks plain HTTP to the app.
+SECURE_PROXY_SSL_HEADER = ("HTTP_X_FORWARDED_PROTO", "https")
+if not DEBUG:
+    SECURE_SSL_REDIRECT = True
+    SESSION_COOKIE_SECURE = True
+    CSRF_COOKIE_SECURE = True
 
 
 # Application definition
@@ -40,6 +59,7 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.locale.LocaleMiddleware",
     "django.middleware.common.CommonMiddleware",
@@ -72,12 +92,14 @@ WSGI_APPLICATION = "annunciation.wsgi.application"
 
 
 # Database
+# DATABASE_URL is set automatically by Render when a Postgres instance is
+# attached to this service; without it, falls back to local sqlite.
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
-    }
+    "default": dj_database_url.config(
+        default=f"sqlite:///{BASE_DIR / 'db.sqlite3'}",
+        conn_max_age=600,
+    )
 }
 
 
@@ -123,12 +145,24 @@ STATIC_URL = "static/"
 STATICFILES_DIRS = [BASE_DIR / "static"]
 STATIC_ROOT = BASE_DIR / "staticfiles"
 
+STORAGES = {
+    "default": {"BACKEND": "django.core.files.storage.FileSystemStorage"},
+    "staticfiles": {"BACKEND": "whitenoise.storage.CompressedManifestStaticFilesStorage"},
+}
+
+# Render's own filesystem is wiped on every deploy/restart — uploaded media
+# (schedule/publication PDFs, ministry documents, photos) only survives
+# across deploys if this points at a mounted Render Disk. Set
+# RENDER_DISK_MOUNT_PATH to that mount path (e.g. "/var/data") once a Disk is
+# attached to the service; until then media uploads WILL be lost on redeploy.
+_media_root = Path(os.environ.get("RENDER_DISK_MOUNT_PATH", BASE_DIR))
+
 MEDIA_URL = "media/"
-MEDIA_ROOT = BASE_DIR / "media"
+MEDIA_ROOT = _media_root / "media"
 
 # Private, non-web-served storage for ministry documents (membership/leader-gated
 # downloads only, never served directly by the webserver).
-PRIVATE_MEDIA_ROOT = BASE_DIR / "private_media"
+PRIVATE_MEDIA_ROOT = _media_root / "private_media"
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 
