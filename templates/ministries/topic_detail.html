@@ -2,22 +2,38 @@
 {% load i18n %}
 {% block title %}{{ topic.title }} — {{ block.super }}{% endblock %}
 {% block content %}
-<a href="{% url 'ministries:ministry_detail' slug=ministry.slug %}">← {{ ministry.name }}</a>
-<h1>{{ topic.title }}</h1>
-<p><em>{{ topic.author }}, {{ topic.created_at|date:"d.m.Y H:i" }}</em></p>
-<p>{{ topic.body|linebreaks }}</p>
 
-<h2>{% trans "Комментарии" %}</h2>
-{% for c in comments %}
-  <div class="card">
-    <p><em>{{ c.author }}, {{ c.created_at|date:"d.m.Y H:i" }}</em></p>
-    <p>{{ c.body|linebreaks }}</p>
+<section class="page-head">
+  <div class="shell">
+    <p><a href="{% url 'ministries:ministry_detail' slug=ministry.slug %}" class="link-more" style="color:var(--ink-on-deep-2)">{{ ministry.name }}</a></p>
+    <h1>{{ topic.title }}</h1>
+    <p>{{ topic.author.get_full_name|default:topic.author }} · {{ topic.created_at|date:"d.m.Y H:i" }}</p>
   </div>
-{% empty %}<p>{% trans "Пока нет комментариев." %}</p>{% endfor %}
+</section>
 
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">{% trans "Ответить" %}</button>
-</form>
+<section class="band">
+  <div class="shell" style="max-width:44rem">
+    {% if topic.body %}<div class="prose">{{ topic.body|linebreaks }}</div>{% endif %}
+
+    <div class="ornament">{% include "_icons.html" with icon="diamond" %}</div>
+
+    <div class="stack">
+      {% for c in comments %}
+        <article class="card">
+          <p class="meta">{{ c.author.get_full_name|default:c.author }} · {{ c.created_at|date:"d.m.Y H:i" }}</p>
+          <div class="prose">{{ c.body|linebreaks }}</div>
+        </article>
+      {% empty %}
+        <p class="empty">{% trans "Ответов пока нет." %}</p>
+      {% endfor %}
+    </div>
+
+    <form method="post" style="margin-top:var(--sp-5)">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">{% trans "Ответить" %}</button>
+    </form>
+  </div>
+</section>
+
 {% endblock %}

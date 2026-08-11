@@ -2,11 +2,27 @@
 {% load i18n %}
 {% block title %}{% trans "Вход" %} — {{ block.super }}{% endblock %}
 {% block content %}
-<h1>{% trans "Вход в портал служений" %}</h1>
-<form method="post">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">{% trans "Войти" %}</button>
-</form>
-<p><a href="{% url 'ministries:signup' %}">{% trans "Ещё нет аккаунта? Зарегистрироваться" %}</a></p>
+
+<section class="page-head">
+  <div class="shell">
+    <h1>{% trans "Вход в портал служений" %}</h1>
+    <p>{% trans "Портал для участников служений прихода." %}</p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="shell" style="max-width:28rem">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">{% trans "Войти" %}</button>
+    </form>
+    <p style="margin-top:var(--sp-4)">
+      <a href="{% url 'ministries:signup' %}" class="link-more">
+        {% trans "Зарегистрироваться" %}{% include "_icons.html" with icon="arrow" %}
+      </a>
+    </p>
+  </div>
+</section>
+
 {% endblock %}

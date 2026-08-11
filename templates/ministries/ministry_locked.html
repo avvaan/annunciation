@@ -1,14 +1,26 @@
 {% extends "base.html" %}
 {% load i18n %}
+{% block title %}{{ ministry.name }} — {{ block.super }}{% endblock %}
 {% block content %}
-<a href="{% url 'ministries:ministry_list' %}">← {% trans "Все служения" %}</a>
-<h1>{{ ministry.name }} 🔒</h1>
-<p>{% trans "Это закрытое служение. Содержимое видно только участникам." %}</p>
-{% if user.is_authenticated %}
-  <form method="post" action="{% url 'ministries:ministry_join' slug=ministry.slug %}">
-    {% csrf_token %}<button type="submit">{% trans "Подать заявку на участие" %}</button>
-  </form>
-{% else %}
-  <a href="{% url 'ministries:login' %}">{% trans "Войдите" %}</a>
-{% endif %}
+
+<section class="page-head">
+  <div class="shell">
+    <p><a href="{% url 'ministries:ministry_list' %}" class="link-more" style="color:var(--ink-on-deep-2)">{% trans "Все служения" %}</a></p>
+    <h1>{{ ministry.name }} {% include "_icons.html" with icon="lock" %}</h1>
+    <p>{% trans "Это закрытое служение — его содержимое видно только участникам." %}</p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="shell">
+    {% if user.is_authenticated %}
+      <form method="post" action="{% url 'ministries:ministry_join' slug=ministry.slug %}">
+        {% csrf_token %}<button type="submit">{% trans "Подать заявку на участие" %}</button>
+      </form>
+    {% else %}
+      <a href="{% url 'ministries:login' %}" class="btn btn--accent">{% trans "Войти" %}</a>
+    {% endif %}
+  </div>
+</section>
+
 {% endblock %}

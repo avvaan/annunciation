@@ -2,19 +2,66 @@
 {% load i18n editable %}
 {% block title %}{% trans "О приходе" %} — {{ block.super }}{% endblock %}
 {% block content %}
-<h1>{% trans "О приходе" %}</h1>
 
-{% editable "about" "intro" "Вступление" %}
-<p>Наш приход объединяет русскоязычных православных христиан Джексонвилла и окрестностей.</p>
-{% endeditable %}
-
-<h2>{% trans "Духовенство" %}</h2>
-{% for c in clergy %}
-  <div class="card">
-    {% if c.photo %}<img src="{{ c.photo.url }}" alt="{{ c.name }}" style="max-width:160px">{% endif %}
-    <h3>{{ c.name }}</h3>
-    <p>{{ c.title }}</p>
-    {% if c.bio %}<p>{{ c.bio }}</p>{% endif %}
+<section class="page-head">
+  <div class="shell">
+    <h1>{% trans "О приходе" %}</h1>
+    <p>{{ site_settings.city }}{% if site_settings.address %} · {{ site_settings.address }}{% endif %}</p>
   </div>
-{% endfor %}
+</section>
+
+<section class="band">
+  <div class="shell prose">
+    {% editable "about" "intro" "Вступление" %}
+    <p>Наш приход объединяет русскоязычных православных христиан Джексонвилла и окрестностей.</p>
+    {% endeditable %}
+  </div>
+</section>
+
+<section class="band">
+  <div class="shell">
+    <h2>{% trans "Духовенство" %}</h2>
+    <div class="grid grid--3">
+      {% for c in clergy %}
+        <article class="portrait">
+          <div class="portrait__media">
+            {% if c.photo %}
+              <img src="{{ c.photo.url }}" alt="{{ c.name }}" loading="lazy">
+            {% else %}
+              <div class="photo-placeholder" style="aspect-ratio:3/4">
+                {% include "_icons.html" with icon="image" %}<span>{% trans "Фото появится позже" %}</span>
+              </div>
+            {% endif %}
+          </div>
+          <h3>{{ c.name }}</h3>
+          <p class="portrait__role">{{ c.title }}</p>
+          {% if c.bio %}<div class="prose" style="margin-top:var(--sp-2)">{{ c.bio|linebreaks }}</div>{% endif %}
+        </article>
+      {% empty %}
+        <p class="empty">{% trans "Информация о духовенстве появится позже." %}</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="band--deep">
+  <div class="shell">
+    <h2>{% trans "Как нас найти" %}</h2>
+    <dl class="facts">
+      {% if site_settings.address %}
+        <div><dt>{% trans "Адрес" %}</dt><dd>{{ site_settings.address }}, {{ site_settings.city }}</dd></div>
+      {% endif %}
+      {% if site_settings.phone %}
+        <div><dt>{% trans "Телефон" %}</dt><dd>{{ site_settings.phone }}</dd></div>
+      {% endif %}
+      {% if site_settings.email %}
+        <div><dt>{% trans "Почта" %}</dt><dd><a href="mailto:{{ site_settings.email }}">{{ site_settings.email }}</a></dd></div>
+      {% endif %}
+    </dl>
+    <p style="margin-top:var(--sp-4)">
+      <a href="{% url 'core:contact' %}" class="btn btn--light">{% trans "Написать нам" %}</a>
+    </p>
+  </div>
+</section>
+
 {% endblock %}

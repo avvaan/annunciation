@@ -2,21 +2,39 @@
 {% load i18n %}
 {% block title %}{% trans "Служения" %} — {{ block.super }}{% endblock %}
 {% block content %}
-<h1>{% trans "Служения прихода" %}</h1>
 
-{% if not user.is_authenticated %}
-  <p><a href="{% url 'ministries:login' %}">{% trans "Войдите" %}</a> {% trans "чтобы присоединиться к служению." %}</p>
-{% endif %}
+<section class="page-head">
+  <div class="shell">
+    <h1>{% trans "Служения прихода" %}</h1>
+    <p>{% trans "Хор, воскресная школа, трапеза, помощь храму — то, чем приход живёт между службами." %}</p>
+    {% if not user.is_authenticated %}
+      <p style="margin-top:var(--sp-3)">
+        <a href="{% url 'ministries:login' %}" class="btn btn--light">{% trans "Войти" %}</a>
+      </p>
+    {% endif %}
+  </div>
+</section>
 
 {% if my_ministries %}
-<h2>{% trans "Мои служения" %}</h2>
-<div class="ministry-grid">
-  {% for m in my_ministries %}{% include "ministries/_ministry_card.html" %}{% endfor %}
-</div>
+<section class="band">
+  <div class="shell">
+    <h2>{% trans "Мои служения" %}</h2>
+    <div class="grid grid--3">
+      {% for m in my_ministries %}{% include "ministries/_ministry_card.html" %}{% endfor %}
+    </div>
+  </div>
+</section>
 {% endif %}
 
-<h2>{% trans "Все служения" %}</h2>
-<div class="ministry-grid">
-  {% for m in other_ministries %}{% include "ministries/_ministry_card.html" %}{% endfor %}
-</div>
+<section class="band">
+  <div class="shell">
+    <h2>{% if my_ministries %}{% trans "Другие служения" %}{% else %}{% trans "Все служения" %}{% endif %}</h2>
+    <div class="grid grid--3">
+      {% for m in other_ministries %}{% include "ministries/_ministry_card.html" %}{% empty %}
+        <p class="empty">{% trans "Служения пока не заведены." %}</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
 {% endblock %}

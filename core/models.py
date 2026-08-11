@@ -29,6 +29,15 @@ class SiteSettings(SingletonModel):
     phone = models.CharField(max_length=50, blank=True)
     email = models.EmailField(blank=True)
 
+    # Full-bleed photograph behind the homepage headline. Horizontal, at least
+    # 2000px wide — it is cropped to the viewport. Until one is uploaded the
+    # hero falls back to a ruled dark ground so the composition still holds.
+    hero_image = models.ImageField("Фото на главной", upload_to="hero/", blank=True)
+    hero_lede = models.CharField(
+        "Подпись на главной", max_length=300, blank=True,
+        help_text="Одна-две строки под названием прихода на первом экране.",
+    )
+
     # External membership/giving system (Realm) — no data sync, just outbound links.
     realm_giving_url = models.URLField(
         "Ссылка на пожертвования (Realm)", blank=True,

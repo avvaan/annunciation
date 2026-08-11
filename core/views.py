@@ -3,6 +3,8 @@ import datetime
 from django.contrib import messages
 from django.shortcuts import redirect, render
 
+from building.models import BuildingProject
+from school.models import RussianSchoolPage
 from services.models import ServiceDay
 
 from .forms import ContactForm
@@ -16,7 +18,12 @@ def home(request):
         .prefetch_related("items__service_type")
         .order_by("date")[:3]
     )
-    return render(request, "core/home.html", {"announcements": announcements, "upcoming_days": upcoming_days})
+    return render(request, "core/home.html", {
+        "announcements": announcements,
+        "upcoming_days": upcoming_days,
+        "building_project": BuildingProject.get_solo(),
+        "school_page": RussianSchoolPage.get_solo(),
+    })
 
 
 def about(request):

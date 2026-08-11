@@ -2,26 +2,28 @@
 {% load i18n %}
 {% block title %}{% trans "Расписание богослужений" %} — {{ block.super }}{% endblock %}
 {% block content %}
-<h1>{% trans "Расписание богослужений" %}</h1>
 
-{% for day in days %}
-  <article class="card service-day{% if day.fasting_level != 'none' %} service-day--fasting{% endif %}">
-    <header>
-      <strong>{{ day.date|date:"d.m.Y" }}</strong> — {{ day.weekday_label }}
-      <span class="service-day__old-style">({% trans "ст. ст." %} {{ day.old_style_date|date:"d.m" }})</span>
-    </header>
-    {% if day.feast_title %}<h3>{{ day.feast_title }}</h3>{% endif %}
-    <ul class="service-day__items">
-      {% for item in day.items.all %}
-        <li>{{ item.time|time:"H:i" }} — {{ item.service_type.name }}{% if item.note %} ({{ item.note }}){% endif %}</li>
-      {% endfor %}
-    </ul>
-    {% if day.fasting_level != "none" %}
-      <p class="service-day__fasting">{{ day.get_fasting_level_display }}</p>
-    {% endif %}
-    {% if day.note %}<p>{{ day.note }}</p>{% endif %}
-  </article>
-{% empty %}
-  <p>{% trans "Расписание пока не заполнено." %}</p>
-{% endfor %}
+<section class="page-head">
+  <div class="shell">
+    <h1>{% trans "Расписание богослужений" %}</h1>
+    <p>{% trans "Даты нового и старого стиля, состав службы и указание о посте." %}</p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="shell">
+    {% for day in days %}
+      {% include "services/_service_day.html" with day=day %}
+    {% empty %}
+      <p class="empty">{% trans "Расписание пока не заполнено." %}</p>
+    {% endfor %}
+
+    <div class="ornament">{% include "_icons.html" with icon="diamond" %}</div>
+
+    <p><a href="{% url 'publications:list' %}" class="link-more">
+      {% trans "Календарь и бюллетень в PDF" %}{% include "_icons.html" with icon="arrow" %}
+    </a></p>
+  </div>
+</section>
+
 {% endblock %}

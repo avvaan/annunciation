@@ -1,38 +1,74 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block title %}{% trans "Русская школа" %} — {{ block.super }}{% endblock %}
+{% block body_class %}has-hero{% endblock %}
 {% block content %}
-<h1>{% trans "Русская школа" %}</h1>
-{% if page.cover_image %}<img src="{{ page.cover_image.url }}" alt="" style="max-width:100%">{% endif %}
-<p>{{ page.description|linebreaks }}</p>
 
-<dl>
-  <dt>{% trans "Возраст" %}</dt><dd>{% blocktrans with age=page.age_from %}от {{ age }} лет{% endblocktrans %}</dd>
-  {% if page.schedule_text %}<dt>{% trans "Расписание занятий" %}</dt><dd>{{ page.schedule_text }}</dd>{% endif %}
-  {% if page.term_start %}
-    <dt>{% trans "Учебный год" %}</dt>
-    <dd>{{ page.term_start|date:"d.m.Y" }} — {{ page.term_end|date:"d.m.Y" }}</dd>
-  {% endif %}
-  {% if page.tuition_note %}<dt>{% trans "Оплата" %}</dt><dd>{{ page.tuition_note }}</dd>{% endif %}
-</dl>
+<section class="hero">
+  <div class="hero__media">
+    <img src="{% if page.cover_image %}{{ page.cover_image.url }}{% else %}/static/images/photos/school-eggs.jpg{% endif %}"
+         alt="" fetchpriority="high">
+  </div>
+  <div class="hero__inner">
+    <h1 class="hero__title">{% trans "Русская школа" %}</h1>
+    {% if page.enrollment_open %}
+      <p class="hero__lede">{% trans "Идёт запись на новый учебный год." %}</p>
+    {% endif %}
+    {% if page.contact_email %}
+      <div class="hero__actions">
+        <a href="mailto:{{ page.contact_email }}" class="btn btn--accent">{% trans "Записаться" %}</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
 
-{% if page.enrollment_open %}
-  <p><strong>{% trans "Идёт запись на новый учебный год." %}</strong></p>
-{% endif %}
+<section class="band">
+  <div class="shell">
+    <div class="prose">{{ page.description|linebreaks }}</div>
 
-<p>
-  {% if page.contact_email %}<a href="mailto:{{ page.contact_email }}">{{ page.contact_email }}</a>{% endif %}
-  {% if page.contact_phone %} · {{ page.contact_phone }}{% endif %}
-</p>
+    <dl class="facts" style="margin-top:var(--sp-5)">
+      <div>
+        <dt>{% trans "Возраст" %}</dt>
+        <dd>{% blocktrans with age=page.age_from %}от {{ age }} лет{% endblocktrans %}</dd>
+      </div>
+      {% if page.schedule_text %}
+        <div><dt>{% trans "Расписание занятий" %}</dt><dd>{{ page.schedule_text }}</dd></div>
+      {% endif %}
+      {% if page.term_start %}
+        <div>
+          <dt>{% trans "Учебный год" %}</dt>
+          <dd>{{ page.term_start|date:"d.m.Y" }} — {{ page.term_end|date:"d.m.Y" }}</dd>
+        </div>
+      {% endif %}
+      {% if page.tuition_note %}
+        <div><dt>{% trans "Оплата" %}</dt><dd>{{ page.tuition_note }}</dd></div>
+      {% endif %}
+      {% if page.contact_email or page.contact_phone %}
+        <div>
+          <dt>{% trans "Контакты" %}</dt>
+          <dd>
+            {% if page.contact_email %}<a href="mailto:{{ page.contact_email }}">{{ page.contact_email }}</a>{% endif %}
+            {% if page.contact_phone %}{% if page.contact_email %} · {% endif %}{{ page.contact_phone }}{% endif %}
+          </dd>
+        </div>
+      {% endif %}
+    </dl>
+  </div>
+</section>
 
-<h2>{% trans "Фотографии" %}</h2>
-<div class="photo-grid">
-  {% for p in photos %}<img src="{{ p.image.url }}" alt="{{ p.caption }}">{% endfor %}
-  {% if not photos %}
-    <div class="photo-placeholder">
-      <img src="/static/images/photo-placeholder.svg" alt="">
-      <span>{% trans "Фото появится позже" %}</span>
+<section class="band">
+  <div class="shell">
+    <h2>{% trans "Фотографии" %}</h2>
+    <div class="photo-grid">
+      {% for p in photos %}
+        <img src="{{ p.image.url }}" alt="{{ p.caption }}" loading="lazy">
+      {% empty %}
+        <div class="photo-placeholder">
+          {% include "_icons.html" with icon="image" %}<span>{% trans "Фото появится позже" %}</span>
+        </div>
+      {% endfor %}
     </div>
-  {% endif %}
-</div>
+  </div>
+</section>
+
 {% endblock %}

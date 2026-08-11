@@ -2,15 +2,46 @@
 {% load i18n %}
 {% block title %}{% trans "Календарь и бюллетень" %} — {{ block.super }}{% endblock %}
 {% block content %}
-<h1>{% trans "Календарь и бюллетень" %}</h1>
 
-<h2>{% trans "Бюллетени" %}</h2>
-{% for b in bulletins %}
-  <div class="card"><strong class="tag">{{ b.period_label }}</strong> <a href="{{ b.pdf_file.url }}">{{ b.title }} (PDF)</a></div>
-{% empty %}<p>{% trans "Пока нет опубликованных бюллетеней." %}</p>{% endfor %}
+<section class="page-head">
+  <div class="shell">
+    <h1>{% trans "Календарь и бюллетень" %}</h1>
+    <p>{% trans "Приходские листки и календарь богослужений — для чтения и печати." %}</p>
+  </div>
+</section>
 
-<h2>{% trans "Календари" %}</h2>
-{% for c in calendars %}
-  <div class="card"><strong class="tag">{{ c.period_label }}</strong> <a href="{{ c.pdf_file.url }}">{{ c.title }} (PDF)</a></div>
-{% empty %}<p>{% trans "Пока нет опубликованных календарей." %}</p>{% endfor %}
+<section class="band">
+  <div class="shell">
+    <h2>{% trans "Бюллетени" %}</h2>
+    <ul class="doc-list">
+      {% for b in bulletins %}
+        <li>
+          <a href="{{ b.pdf_file.url }}">
+            {% include "_icons.html" with icon="document" %}
+            <span class="doc-list__title">{{ b.title }}</span>
+            <span class="doc-list__period">{{ b.period_label }}</span>
+          </a>
+        </li>
+      {% empty %}
+        <li><p class="empty" style="padding:var(--sp-3) 0">{% trans "Пока нет опубликованных бюллетеней." %}</p></li>
+      {% endfor %}
+    </ul>
+
+    <h2 style="margin-top:var(--sp-6)">{% trans "Календари" %}</h2>
+    <ul class="doc-list">
+      {% for c in calendars %}
+        <li>
+          <a href="{{ c.pdf_file.url }}">
+            {% include "_icons.html" with icon="document" %}
+            <span class="doc-list__title">{{ c.title }}</span>
+            <span class="doc-list__period">{{ c.period_label }}</span>
+          </a>
+        </li>
+      {% empty %}
+        <li><p class="empty" style="padding:var(--sp-3) 0">{% trans "Пока нет опубликованных календарей." %}</p></li>
+      {% endfor %}
+    </ul>
+  </div>
+</section>
+
 {% endblock %}

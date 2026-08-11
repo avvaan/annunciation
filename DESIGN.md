@@ -4,67 +4,96 @@
 
 ## Direction
 
-**Табло расписания** — Soviet/Russian departure-board information design. Chosen over two alternates (narthex bulletin board, menaion wall-calendar grid) and the standing "generic church site" convention; picked specifically because the schedule page is the site's center of gravity and this world makes the schedule read like an object the audience already trusts at a glance.
+**Editorial parish** — full-bleed photography, Russian book-printing antiqua, warm parchment ground, one liturgical oxblood accent.
 
-Refuses the AI-cliché "church site" default (cream/parchment ground, italic serif display, gold accent, ornamental card borders). Ground is true paper-white/near-white, never cream; accent is a single reserved liturgical rubric red, never gold; cards are flat and ruled, never soft/shadowed/rounded.
+Brief-pinned by the user to the Vestry church reference (Awwwards Honorable Mention, Feb 2022 — documented art direction: big background images, clean flat design, typography-led). The reference site itself is unreachable from the build sandbox (`awwwards.com` and `themeforest.net` are blocked by the egress proxy); the user chose to proceed from its documented direction rather than supply screenshots, and that substitution was disclosed before any code was written.
+
+Replaces the previous **"Табло расписания"** direction (flat ruled departure-board timetable, paper-white/black/rubric-red). That world is now an anti-reference: it is not polished, it is discarded. What survives from it is product truth only — the schedule remains the site's centre of gravity and must stay glanceable on a phone.
+
+Equally refuses the gilt-scrollwork church-template default. There is no gold fill anywhere; brass appears only as hairline ornament, and the single ornamental motif in the entire system is one rule with a centred diamond.
 
 ## Color
 
-Strategy: **Committed** — one reserved accent, used only where it means something.
+Strategy: **Committed** — deep umber bands against warm parchment, one reserved accent.
 
 | Token | Value | Use |
 |---|---|---|
-| `--color-bg` | `#f7f7f5` | page ground |
-| `--color-surface` | `#ffffff` | cards, inputs |
-| `--color-ink` | `#17181a` | body text, primary borders |
-| `--color-ink-soft` | `#47494d` | secondary text (old-style date, meta) |
-| `--color-line` | `#c9cacc` | hairline dividers |
-| `--color-line-strong` | `#17181a` | structural borders (header rule, card border, buttons) |
-| `--color-red` | `#ac2b1e` | liturgical rubric red — fasting/feast flags, primary CTA, active nav/lang state only |
-| `--color-red-soft` | `#f4e3e0` | red's background pairing (tag fill, success message) |
-| `--color-focus` | `#1457c9` | focus ring only |
-
-Rule: red never decorates. It fires on a fasting/feast day, a primary action (Пожертвовать, submit buttons), or an active state (current language). A `.service-day` card is otherwise black-on-white; only `.service-day--fasting` gets the red left rail — the accent is conditional, not a card default (an earlier pass gave every card a colored left rail regardless of meaning; the mechanical detector flagged it as the generic "side-tab" AI tell, and it was removed from the default `.card`/`.board-row` rule for exactly that reason).
+| `--paper` | `#f3ece0` | page ground |
+| `--paper-deep` | `#e9dfcd` | image wells, progress track |
+| `--surface` | `#fffdf8` | cards, inputs |
+| `--deep` | `#16120f` | dark bands, hero scrim, footer, page heads |
+| `--deep-2` | `#241d18` | cards on a dark band |
+| `--ink` | `#1c1712` | body text |
+| `--ink-2` | `#5d5346` | secondary text |
+| `--ink-on-deep` | `#f3ece0` | text on dark |
+| `--ink-on-deep-2` | `#bdb1a0` | secondary text on dark |
+| `--accent` | `#7a2230` | oxblood — fasting/feast flags, primary action, active language |
+| `--accent-deep` | `#5b1622` | accent hover/pressed |
+| `--accent-tint` | `#f0e0dc` | accent background pairing |
+| `--brass` | `#a5813f` | hairline ornament, link underlines, progress on dark — never a fill |
+| `--line` / `--line-deep` | `#d6c9b3` / `#3a2f26` | hairline rules, light and dark ground |
+| `--focus` | `#1f5fd0` | focus ring only |
 
 ## Type
 
-| Token | Stack | Use |
+| Token | Face | Use |
 |---|---|---|
-| `--font-body` | system-ui stack | body copy — zero webfont cost, matches Operate/Read guidance |
-| `--font-display` | "PT Sans" (400/700), self-hosted | headings, nav, labels, buttons — Cyrillic-native grotesk |
-| `--font-board` | "Martian Mono" (variable 400–700), self-hosted | every date/time numeral, service-item rows — geometric/constructivist, evokes split-flap and technical signage |
+| `--font-display` | **Old Standard TT** (400/700 + italic), self-hosted | every heading, hero title, feast titles, dates, timeline years, footer name |
+| `--font-body` | **PT Sans** (400/700), self-hosted | body copy, nav, labels, buttons, times |
 
-Base size 18px (`--fs-base`), line-height 1.6, for the older-skewing audience. Both display faces are self-hosted as static woff2 files under `/static/fonts/` (cyrillic + latin subsets only, 6 files, ~185KB total) rather than loaded from the Google Fonts CDN — an earlier pass linked the CDN directly and it intermittently stalled full page loads through this environment's proxy during QA, which directly conflicts with the brief's fast-loading requirement. Self-hosting removes that dependency entirely.
+Old Standard TT is a revival of the late-19th/early-20th-century Russian book typefaces — the typographic world this audience actually reads liturgical and academic books in, and a face outside the model-default display set. PT Sans is Cyrillic-native by design.
+
+Both self-hosted as woff2, Cyrillic + Latin subsets only (5 + 4 files). No Google Fonts CDN: an earlier pass linked it directly and it intermittently stalled page loads through this environment's proxy, against the brief's fast-loading constraint. The 700-weight Cyrillic display face and 400-weight Cyrillic body face are `<link rel=preload>`ed.
+
+Base size 19px, line-height 1.65 — the audience skews elderly. Hero display is `clamp(2rem, 5vw, 3.75rem)`, well under the 6rem ceiling; the parish name is four long Russian words and larger sizes collided with the header.
 
 ## Components
 
-- **`.card` / `.board-row`** — flat white surface, 1px `--color-line` border, no shadow, no default accent border.
-- **`.service-day`** — the schedule card: Martian Mono date/weekday header, old-style date in soft ink, feast title in PT Sans bold, `.service-day__items` as dashed-divided rows (time + service type + optional note), `.service-day__fasting` tag when applicable. `.service-day--fasting` adds the red left rail.
-- **`.tag`** — bordered inline label (publication period, status); `.tag--accent` for the red variant.
-- **`.btn`** — flat, 2px bordered, min 48px tap target; `.btn--accent` (red fill, primary action), `.btn--outline` (transparent).
-- **Forms** — all inputs/labels/buttons inherit the same border-and-fill language as `.btn`; no separate form skin.
-- **`.timeline`** — left-rail spine (structural connector for the history page, not a decorative card accent — kept despite the detector flagging the same border-left pattern, because it serves the standard "connecting rail" role of a timeline component rather than sitting on a card).
-- **Nav** — sticky header, always-visible "Меню" text-label toggle (never icon-only) driven by a checkbox sibling of both the header row and the nav (a same-parent requirement — an earlier structure nested the checkbox inside the header row, which silently broke the `~` sibling selector and made the menu inert; fixed and re-verified by actually clicking the rendered label, not just visual inspection).
-- **Language switch** — `RU`/`EN` buttons in the nav, POST to Django's `set_language`, active language gets ink-filled state.
+- **`.hero`** — full-bleed photograph, `min-height: min(86svh, 46rem)`, bottom-weighted three-stop scrim, content bottom-aligned with 8.5rem (mobile) / 11rem (desktop) top padding so it clears the transparent header. `.hero__media--empty` is the ruled fallback ground when no photograph exists.
+- **`.page-head`** — deep umber block for inner pages that carry no photograph.
+- **`.service-day`** — the schedule card: Old Standard tabular date, uppercase weekday, italic old-style date, feast title, hairline-divided time rows with a fixed 4.25rem time column, `.fast-flag` when applicable. No colored side rail — the flag itself carries the signal.
+- **`.tile`** — image + heading + line; the 3/2 media well scales its image 1.04 on hover.
+- **`.doc-list`** — hairline-ruled rows for PDFs, icon + title + period.
+- **`.btn`** — flat, 1px border, uppercase tracked label, 48px min height. `--accent` (oxblood fill), `--light` (on dark grounds).
+- **`.ornament`** — the entire ornamental budget: a brass rule with a centred diamond.
+- **`.timeline`**, **`.facts`**, **`.rota`**, **`.photo-grid`**, **`.portrait`**, **`.status`**, **`.fund`** — see `static/css/base.css`.
+- **Icons** — authored SVG set in `templates/_icons.html`, one 1.5px stroke on a 24×24 grid, sized to the surrounding text. No emoji (the previous build used 🔒 in ministry templates; replaced).
+- **Nav** — transparent over a hero (`body.has-hero`), solid otherwise. Checkbox toggle with an always-visible "Меню" text label; the checkbox is a sibling of both the header row and the nav, which the `~` selector requires.
 
 ## Layout
 
-Mobile-first; `max-width: 62rem` content column; single breakpoint at `56rem` un-collapses the nav from the toggle menu to an inline bar. Homepage's first viewport is the next-3-services board itself (not a photo hero) — the schedule is proven in the first screenful, not described.
+Mobile-first. `--wide: 74rem` content shell, `--measure: 38rem` prose. Single breakpoint at `60rem` un-collapses the nav. Sections alternate parchment `.band` and umber `.band--deep` to pace the scroll.
 
 ## Motion
 
-None beyond a 0.2s fade-in on card mount (`prefers-reduced-motion` respected) and default browser focus/hover transitions. No sliders, no scroll-triggered choreography — matches the brief's "no heavy sliders" constraint directly.
+One authored moment: the hero title, lede and actions rise 1.25rem out of a 6px blur on an exponential ease-out, staggered 90ms. Nothing else animates on scroll — no per-section entrances, no sliders. Tile images have a 0.6s hover scale. `prefers-reduced-motion` disables the hero entrance and smooth scrolling.
+
+## Browser surfaces
+
+Themed rather than left to the browser: `::selection` (oxblood on parchment), caret color, scrollbar track and thumb (both WebKit and standard properties), focus ring, link underline color and offset, and `font-variant-numeric: tabular-nums` on every date, time, year and money figure.
 
 ## Imagery
 
-Favicon, OG/social-share image, empty-state "photo coming soon" tile, and the
-header's faint ruled texture are hand-authored (SVG, plus one Playwright-
-rendered PNG for the OG card) — Higgsfield access was blocked in the session
-that built this, so `design/higgsfield-prompts.md` documents the intended
-prompts for regenerating richer versions later without touching templates.
+Six photographs supplied by the parish, resized and re-encoded into `static/images/photos/`:
+
+| File | Subject | Used as |
+|---|---|---|
+| `hero-gospel.jpg` | Gospel book on brocade, candles beyond | homepage hero |
+| `font-candles.jpg` | Baptismal font, three candles, iconostasis | building-project hero, homepage tile |
+| `school-eggs.jpg` | Painting Easter eggs with children | Russian-school hero, homepage tile |
+| `greenery.jpg` | Hands preparing greenery for a feast | ministries hero and cards |
+| `icon-trinity.jpg` | Rublev Trinity icon among flowers | available, not yet placed |
+| `parishioners.jpg` | Two parishioners with an analogion | available, not yet placed |
+
+Each is a shipped default that an admin upload overrides (`SiteSettings.hero_image`, `BuildingProject.cover_image`, `RussianSchoolPage.cover_image`, `Ministry.image`), so the site is never empty out of the box and never blocks the secretary from replacing a photo.
+
+A seventh supplied file — an Annunciation icon graphic — was **not** used: it carries another monastery's watermark and burnt-in lettering, so it is third-party branded artwork rather than parish material.
+
+Favicon and OG card are hand-authored assets from the previous pass and are due a refresh into this world.
 
 ## Known gaps / next steps
 
-- Real photography (clergy, building, parishioners, ministry activity) is entirely absent — every image field is empty until the parish supplies real photos (see PRODUCT.md § Evidence on Hand). Decorative-only imagery is scoped for a later pass (Higgsfield prompts) and must never stand in for documentary photos.
-- Currency formatting on the building-project page (`187500,00 $`) is Django's raw locale-aware decimal rendering, not yet dressed up with thousands separators — cosmetic, not structural.
-- `ClergyMember`/testimonial-style content has no seeded example to verify long-bio layout; revisit once real content exists.
+- **Higgsfield ornament set is generated but not installed.** Nine assets (brass divider on parchment and on umber, corner flourish, three-bar cross emblem, parchment texture, Byzantine border strip, wheat-and-vine motif, two empty button plates) were generated at the user's request. The Higgsfield CDN (`d8j0ntlcm91z4.cloudfront.net`) is blocked by this session's egress policy, so they could not be downloaded into the repo; the proxy README forbids routing around it. They need to be downloaded from the Higgsfield UI and handed back as files, same route the photographs took.
+- **Buttons are CSS, not images.** The user asked for buttons to be drawn in Higgsfield; the plates were generated but not adopted, because text baked into an image does not scale with OS text size (the elderly-reader requirement), needs a second file per language on a bilingual site, is invisible to screen readers, and is not editable by the secretary. Raised once, flagged again here; the plates are ready if the user still wants them.
+- `icon-trinity.jpg` and `parishioners.jpg` have no home yet — candidates for the history page and the about page once real captions exist.
+- Clergy portraits, exterior shots of the building, and construction-progress photos are still absent; those fields fall back to a drawn placeholder tile.

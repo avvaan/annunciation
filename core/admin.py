@@ -8,6 +8,11 @@ from .models import Announcement, ClergyMember, ContactMessage, PageText, SiteSe
 class SiteSettingsAdmin(TranslationAdmin):
     fieldsets = (
         ("Приход", {"fields": ("parish_name", "city", "address", "phone", "email")}),
+        ("Первый экран", {
+            "fields": ("hero_image", "hero_lede"),
+            "description": "Горизонтальное фото храма, шириной не меньше 2000 px — "
+                           "оно обрезается по размеру экрана.",
+        }),
         ("Realm (членство и пожертвования)", {
             "fields": ("realm_giving_url", "realm_membership_url", "realm_embed_code"),
         }),

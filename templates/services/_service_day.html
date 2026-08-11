@@ -1,0 +1,24 @@
+{% load i18n %}
+<article class="service-day">
+  <div class="service-day__date">
+    <span class="service-day__day">{{ day.date|date:"d.m.Y" }}</span>
+    <span class="service-day__weekday">{{ day.weekday_label }}</span>
+    <span class="service-day__old">{% trans "ст. ст." %} {{ day.old_style_date|date:"d.m" }}</span>
+  </div>
+
+  {% if day.feast_title %}<p class="service-day__feast">{{ day.feast_title }}</p>{% endif %}
+
+  <ul class="service-day__items">
+    {% for item in day.items.all %}
+      <li>
+        <span class="service-day__time">{{ item.time|time:"H:i" }}</span>
+        <span>{{ item.service_type.name }}{% if item.note %} <span class="service-day__note">— {{ item.note }}</span>{% endif %}</span>
+      </li>
+    {% endfor %}
+  </ul>
+
+  {% if day.fasting_level != "none" %}
+    <p class="fast-flag">{% include "_icons.html" with icon="fast" %}{{ day.get_fasting_level_display }}</p>
+  {% endif %}
+  {% if day.note %}<p class="meta" style="margin-top:var(--sp-2)">{{ day.note }}</p>{% endif %}
+</article>

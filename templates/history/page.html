@@ -2,19 +2,38 @@
 {% load i18n editable %}
 {% block title %}{% trans "История прихода" %} — {{ block.super }}{% endblock %}
 {% block content %}
-<h1>{% trans "История прихода" %}</h1>
 
-{% editable "history" "intro" "Вступление" %}
-<p>История нашего прихода — это история русской православной общины Джексонвилла.</p>
-{% endeditable %}
+<section class="page-head">
+  <div class="shell">
+    <h1>{% trans "История прихода" %}</h1>
+  </div>
+</section>
 
-<ol class="timeline">
-  {% for m in milestones %}
-    <li class="timeline__item">
-      <strong>{{ m.year }}</strong> — <h3>{{ m.title }}</h3>
-      {% if m.image %}<img src="{{ m.image.url }}" alt="{{ m.title }}" style="max-width:100%">{% endif %}
-      {% if m.description %}<p>{{ m.description|linebreaks }}</p>{% endif %}
-    </li>
-  {% endfor %}
-</ol>
+<section class="band">
+  <div class="shell prose">
+    {% editable "history" "intro" "Вступление" %}
+    <p>История нашего прихода — это история русской православной общины Джексонвилла.</p>
+    {% endeditable %}
+  </div>
+</section>
+
+<section class="band">
+  <div class="shell">
+    <ol class="timeline">
+      {% for m in milestones %}
+        <li class="timeline__item">
+          <p class="timeline__year">{{ m.year }}</p>
+          <div>
+            <h3>{{ m.title }}</h3>
+            {% if m.image %}<img src="{{ m.image.url }}" alt="{{ m.title }}" loading="lazy" style="margin-bottom:var(--sp-3)">{% endif %}
+            {% if m.description %}<div class="prose">{{ m.description|linebreaks }}</div>{% endif %}
+          </div>
+        </li>
+      {% empty %}
+        <li><p class="empty">{% trans "Вехи истории пока не заполнены." %}</p></li>
+      {% endfor %}
+    </ol>
+  </div>
+</section>
+
 {% endblock %}

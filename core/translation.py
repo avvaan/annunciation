@@ -20,4 +20,4 @@ class PageTextTranslationOptions(TranslationOptions):
 
 @register(SiteSettings)
 class SiteSettingsTranslationOptions(TranslationOptions):
-    fields = ("parish_name", "city", "address")
+    fields = ("parish_name", "city", "address", "hero_lede")

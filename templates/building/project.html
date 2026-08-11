@@ -1,34 +1,79 @@
 {% extends "base.html" %}
 {% load i18n %}
 {% block title %}{{ project.title }} — {{ block.super }}{% endblock %}
+{% block body_class %}has-hero{% endblock %}
 {% block content %}
-<h1>{{ project.title }}</h1>
-{% if project.cover_image %}<img src="{{ project.cover_image.url }}" alt="{{ project.title }}" style="max-width:100%">{% endif %}
-<p>{{ project.description|linebreaks }}</p>
 
-<div class="progress" role="progressbar" aria-valuenow="{{ project.percent_raised }}" aria-valuemin="0" aria-valuemax="100">
-  <div class="progress__bar" style="width:{{ project.percent_raised }}%"></div>
-</div>
-<p>{% blocktrans with raised=project.raised_amount|floatformat:0 goal=project.goal_amount|floatformat:0 percent=project.percent_raised %}Собрано {{ raised }} $ из {{ goal }} $ ({{ percent }}%){% endblocktrans %}</p>
+<section class="hero">
+  <div class="hero__media">
+    <img src="{% if project.cover_image %}{{ project.cover_image.url }}{% else %}/static/images/photos/font-candles.jpg{% endif %}"
+         alt="" fetchpriority="high">
+  </div>
+  <div class="hero__inner">
+    <h1 class="hero__title">{{ project.title }}</h1>
+    {% if project.description %}<p class="hero__lede">{{ project.description|truncatewords:26 }}</p>{% endif %}
+    {% if site_settings.realm_giving_url %}
+      <div class="hero__actions">
+        <a href="{{ site_settings.realm_giving_url }}" class="btn btn--accent">{% trans "Поддержать строительство" %}</a>
+      </div>
+    {% endif %}
+  </div>
+</section>
 
-<h2>{% trans "Новости стройки" %}</h2>
-{% for u in updates %}
-  <article class="card">
-    <h3>{{ u.title }}</h3>
-    <p><time>{{ u.date|date:"d.m.Y" }}</time></p>
-    {% if u.cover_image %}<img src="{{ u.cover_image.url }}" alt="{{ u.title }}" style="max-width:100%">{% endif %}
-    <p>{{ u.body|linebreaks }}</p>
-  </article>
-{% endfor %}
-
-<h2>{% trans "Фотографии" %}</h2>
-<div class="photo-grid">
-  {% for p in photos %}<img src="{{ p.image.url }}" alt="{{ p.caption }}">{% endfor %}
-  {% if not photos %}
-    <div class="photo-placeholder">
-      <img src="/static/images/photo-placeholder.svg" alt="">
-      <span>{% trans "Фото появится позже" %}</span>
+<section class="band--deep">
+  <div class="shell">
+    <div class="fund">
+      <div>
+        <p class="fund__figure">
+          {{ project.raised_amount|floatformat:0 }}&nbsp;$
+          <span class="fund__of">{% blocktrans with goal=project.goal_amount|floatformat:0 %}из {{ goal }} ${% endblocktrans %}</span>
+        </p>
+      </div>
+      <p class="meta" style="margin:0">{% blocktrans with percent=project.percent_raised %}Собрано {{ percent }}%{% endblocktrans %}</p>
     </div>
-  {% endif %}
-</div>
+    <div class="progress" role="progressbar" aria-valuenow="{{ project.percent_raised }}" aria-valuemin="0" aria-valuemax="100" style="margin-top:var(--sp-3)">
+      <div class="progress__bar" style="width:{{ project.percent_raised }}%"></div>
+    </div>
+  </div>
+</section>
+
+{% if project.description %}
+<section class="band">
+  <div class="shell prose">{{ project.description|linebreaks }}</div>
+</section>
+{% endif %}
+
+<section class="band">
+  <div class="shell">
+    <h2>{% trans "Ход работ" %}</h2>
+    <div class="stack">
+      {% for u in updates %}
+        <article class="card">
+          <p class="meta">{{ u.date|date:"d.m.Y" }}</p>
+          <h3>{{ u.title }}</h3>
+          {% if u.cover_image %}<img src="{{ u.cover_image.url }}" alt="" loading="lazy" style="margin-bottom:var(--sp-3)">{% endif %}
+          <div class="prose">{{ u.body|linebreaks }}</div>
+        </article>
+      {% empty %}
+        <p class="empty">{% trans "Новостей о стройке пока нет." %}</p>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
+<section class="band">
+  <div class="shell">
+    <h2>{% trans "Фотографии" %}</h2>
+    <div class="photo-grid">
+      {% for p in photos %}
+        <img src="{{ p.image.url }}" alt="{{ p.caption }}" loading="lazy">
+      {% empty %}
+        <div class="photo-placeholder">
+          {% include "_icons.html" with icon="image" %}<span>{% trans "Фото появится позже" %}</span>
+        </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+
 {% endblock %}

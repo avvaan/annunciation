@@ -1,6 +1,9 @@
 {% load i18n %}
-<a class="card ministry-card" href="{% url 'ministries:ministry_detail' slug=m.slug %}">
-  {% if m.image %}<img src="{{ m.image.url }}" alt="{{ m.name }}">{% endif %}
-  <h3>{{ m.name }}{% if m.is_private %} 🔒{% endif %}</h3>
-  <p>{{ m.description|truncatewords:20 }}</p>
+<a class="tile" href="{% url 'ministries:ministry_detail' slug=m.slug %}">
+  <div class="tile__media">
+    <img src="{% if m.image %}{{ m.image.url }}{% else %}/static/images/photos/greenery.jpg{% endif %}"
+         alt="" loading="lazy">
+  </div>
+  <h3>{{ m.name }}{% if m.is_private %} {% include "_icons.html" with icon="lock" %}{% endif %}</h3>
+  <p>{{ m.description|truncatewords:18 }}</p>
 </a>

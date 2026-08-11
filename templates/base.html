@@ -10,30 +10,34 @@
 <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% block og_image %}/static/images/og-image.png{% endblock %}">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="theme-color" content="#16120f">
 <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg">
+<link rel="preload" as="font" type="font/woff2" href="/static/fonts/oldstandard-700-cyrillic.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/static/fonts/ptsans-400-cyrillic.woff2" crossorigin>
 <link rel="stylesheet" href="/static/css/base.css">
 </head>
-<body>
+<body class="{% block body_class %}{% endblock %}">
 <!--
-THESIS: The site is the departure board, not a decorated brochure with a board bolted on. It refuses the cream-parchment-gold "church site" default by giving the schedule the exact, high-contrast grammar of a timetable — because for this parish the schedule IS the product.
-OWN-WORLD: Near-white paper ground, near-black ink, one reserved accent — liturgical rubric red (used only for feast/fasting flags and primary actions, never decoration). Martian Mono (geometric, constructivist) for every date/time numeral; PT Sans (bold, Cyrillic-native) for names and nav; system-ui for body copy — zero webfont cost for the bulk of the reading. Flat rectangular cards, ruled hairline dividers, no shadows, no rounded soft-UI, no gold.
-STORY: A parishioner opens the site to find out when the next service is, in seconds, on a phone, without zooming. They see it read like a timetable board they already trust: date, weekday, old-style date, feast, service times, fasting flag — nothing decorative between them and that fact.
-FIRST VIEWPORT: Home opens directly on a live 3-row board of the nearest upcoming services (not a photo hero) under one short headline, red fasting/feast tags inline, a single "весь месяц" link below, announcements after.
-FORM: Табло расписания (Soviet/Russian departure-board information design) — candidate 4 of 7 grounded directions, seed key 4b401e4a (degraded roll, no network to the challenger service).
+THESIS: A parish site whose first viewport is the church itself, photographed — the schedule is not buried under the picture, it is the first thing the picture hands you. Refuses the flat ruled timetable it replaces, and refuses the gilt-scrollwork church template equally.
+OWN-WORLD: Warm parchment ground (#f3ece0) against deep umber bands (#16120f); one liturgical oxblood (#7a2230) for feasts, fasts and primary action; brass (#a5813f) confined to hairlines and a single diamond ornament. Old Standard TT — a revival of pre-revolutionary Russian book printing — carries every heading; PT Sans carries the reading. Full-bleed photography, hairline rules, no shadows, no rounded corners, no gilt.
+STORY: A parishioner arrives, recognises their own church in the first screen, and finds the next service without scrolling past a word of marketing.
+FIRST VIEWPORT: Full-bleed photograph of the church under a bottom-weighted scrim; nav sits transparent over it; display headline lower-left with the parish name and city; two actions (Расписание / Пожертвовать); the next three services begin immediately below the fold.
+FORM: Editorial parish — brief-pinned by the user to the Vestry church reference (Awwwards, Feb 2022: big background images, clean flat design, typography-led). Reference site unreachable from this sandbox; built from its documented art direction with the user's approval.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md.
 -->
 <a class="skip-link" href="#main">{% trans "Перейти к содержимому" %}</a>
+
 <header class="site-header">
   <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
   <div class="site-header__row">
     <a href="{% url 'core:home' %}" class="site-header__title">{{ site_settings.parish_name }}</a>
     <label for="nav-toggle" class="nav-toggle-btn">
-      <span class="nav-toggle-icon" aria-hidden="true"></span>{% trans "Меню" %}
+      {% include "_icons.html" with icon="menu" %}{% trans "Меню" %}
     </label>
   </div>
   <nav class="site-nav" aria-label="{% trans "Основная навигация" %}">
     <a href="{% url 'services:schedule' %}">{% trans "Расписание" %}</a>
-    <a href="{% url 'publications:list' %}">{% trans "Календарь и бюллетень" %}</a>
+    <a href="{% url 'publications:list' %}">{% trans "Календарь" %}</a>
     <a href="{% url 'building:project' %}">{% trans "Строительство" %}</a>
     <a href="{% url 'school:page' %}">{% trans "Русская школа" %}</a>
     <a href="{% url 'history:page' %}">{% trans "История" %}</a>
@@ -60,20 +64,45 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 </main>
 
 <footer class="site-footer">
-  <div class="site-footer__actions">
-    {% if site_settings.realm_giving_url %}
-      <a href="{{ site_settings.realm_giving_url }}" class="btn btn--accent">{% trans "Пожертвовать" %}</a>
-    {% endif %}
-    {% if site_settings.realm_membership_url %}
-      <a href="{{ site_settings.realm_membership_url }}" class="btn btn--outline">{% trans "Стать членом прихода" %}</a>
-    {% endif %}
+  <div class="shell">
+    <div class="site-footer__grid">
+      <div>
+        <p class="site-footer__name">{{ site_settings.parish_name }}</p>
+        <p class="meta">
+          {{ site_settings.city }}{% if site_settings.address %}<br>{{ site_settings.address }}{% endif %}
+          {% if site_settings.phone %}<br>{{ site_settings.phone }}{% endif %}
+          {% if site_settings.email %}<br><a href="mailto:{{ site_settings.email }}">{{ site_settings.email }}</a>{% endif %}
+        </p>
+        <div class="site-footer__actions">
+          {% if site_settings.realm_giving_url %}
+            <a href="{{ site_settings.realm_giving_url }}" class="btn btn--accent">{% trans "Пожертвовать" %}</a>
+          {% endif %}
+          {% if site_settings.realm_membership_url %}
+            <a href="{{ site_settings.realm_membership_url }}" class="btn btn--light">{% trans "Стать членом прихода" %}</a>
+          {% endif %}
+        </div>
+      </div>
+      <div>
+        <h4>{% trans "Приход" %}</h4>
+        <ul>
+          <li><a href="{% url 'services:schedule' %}">{% trans "Расписание богослужений" %}</a></li>
+          <li><a href="{% url 'publications:list' %}">{% trans "Календарь и бюллетень" %}</a></li>
+          <li><a href="{% url 'core:about' %}">{% trans "О приходе" %}</a></li>
+          <li><a href="{% url 'history:page' %}">{% trans "История" %}</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>{% trans "Участие" %}</h4>
+        <ul>
+          <li><a href="{% url 'building:project' %}">{% trans "Строительство храма" %}</a></li>
+          <li><a href="{% url 'school:page' %}">{% trans "Русская школа" %}</a></li>
+          <li><a href="{% url 'ministries:ministry_list' %}">{% trans "Служения" %}</a></li>
+          <li><a href="{% url 'newsletter:subscribe' %}">{% trans "Подписка на новости" %}</a></li>
+        </ul>
+      </div>
+    </div>
+    <p class="site-footer__legal">{{ site_settings.parish_name }} · {{ site_settings.city }}</p>
   </div>
-  <p class="site-footer__name">{{ site_settings.parish_name }}</p>
-  <p>{{ site_settings.city }}{% if site_settings.address %} · {{ site_settings.address }}{% endif %}</p>
-  {% if site_settings.phone or site_settings.email %}
-    <p>{% if site_settings.phone %}{{ site_settings.phone }}{% endif %}{% if site_settings.phone and site_settings.email %} · {% endif %}{% if site_settings.email %}{{ site_settings.email }}{% endif %}</p>
-  {% endif %}
-  <p><a href="{% url 'newsletter:subscribe' %}">{% trans "Подписаться на новости" %}</a></p>
 </footer>
 </body>
 </html>
