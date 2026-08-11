@@ -93,9 +93,29 @@ class Command(BaseCommand):
     }
 
     SCHOOL = {
+        "description": (
+            "Русская школа при нашем приходе — это место, где дети растут в родном "
+            "языке, культуре и вере одновременно. Мы читаем и пишем по-русски, "
+            "разбираем сказки и историю, готовимся к православным праздникам и "
+            "поём вместе перед Пасхой и Рождеством.\n\n"
+            "Занятия ведут прихожане-волонтёры для детей разных возрастов — от "
+            "первых букв до свободного чтения. Приходите познакомиться на любое "
+            "занятие, запись открыта в течение учебного года.",
+            "The Russian School at our parish is where children grow up in their "
+            "native language, culture and faith together. We read and write in "
+            "Russian, explore folk tales and history, prepare for Orthodox feasts "
+            "and sing together before Pascha and Christmas.\n\n"
+            "Classes are taught by parish volunteers for children of different "
+            "ages, from first letters to fluent reading. Come by any class to see "
+            "how it works — enrollment stays open through the school year.",
+        ),
         "schedule_text": (
             "По понедельникам и вторникам, с 16:00 до 20:00, один раз в неделю.",
             "Mondays and Tuesdays, 4 pm to 8 pm, once a week.",
+        ),
+        "tuition_note": (
+            "Точную сумму и способы оплаты уточняйте у координатора школы.",
+            "Ask the school coordinator for the current tuition amount and how to pay.",
         ),
     }
 
