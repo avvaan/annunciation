@@ -1,0 +1,57 @@
+{% extends "council/_portal_base.html" %}
+{% load i18n %}
+{% block portal_title %}{{ meeting.title }}{% endblock %}
+{% block portal_lede %}
+  <p>{{ meeting.date|date:"d.m.Y" }}{% if meeting.time %}, {{ meeting.time|time:"H:i" }}{% endif %}{% if meeting.location %} · {{ meeting.location }}{% endif %}</p>
+{% endblock %}
+{% block portal_content %}
+{% if is_council %}
+  <p><a href="{% url 'council:meeting_edit' pk=meeting.pk %}" class="btn">{% trans "Править" %}</a></p>
+{% endif %}
+
+{% if meeting.agenda %}
+  <section class="portal-section">
+    <h2>{% trans "Повестка" %}</h2>
+    <div class="prose">{{ meeting.agenda|linebreaks }}</div>
+  </section>
+{% endif %}
+
+<section class="portal-section">
+  <h2>{% trans "Протоколы" %}</h2>
+  <ul class="doc-list">
+    {% for p in protocols %}
+      <li><a href="{% url 'council:protocol_detail' pk=p.pk %}">
+        {% include "_icons.html" with icon="document" %}
+        <span class="doc-list__title">{{ p.title }}</span>
+        {% if p.council_only %}<span class="status">{% trans "только совет" %}</span>{% endif %}
+      </a></li>
+    {% empty %}<li><p class="empty" style="padding:var(--sp-3) 0">{% trans "Протокола пока нет." %}</p></li>{% endfor %}
+  </ul>
+</section>
+
+<section class="portal-section">
+  <h2>{% trans "Файлы заседания" %}</h2>
+  <ul class="doc-list">
+    {% for d in documents %}
+      <li><a href="{% url 'council:document_download' pk=d.pk %}">
+        {% include "_icons.html" with icon="document" %}
+        <span class="doc-list__title">{{ d.title }}</span>
+        <span class="doc-list__period">{{ d.get_category_display }}</span>
+      </a></li>
+    {% empty %}<li><p class="empty" style="padding:var(--sp-3) 0">{% trans "Файлов нет." %}</p></li>{% endfor %}
+  </ul>
+</section>
+
+<section class="portal-section">
+  <h2>{% trans "Поручения" %}</h2>
+  <ul class="rota">
+    {% for t in tasks %}
+      <li>
+        <span style="flex:1">{{ t.title }}</span>
+        {% if t.assignee %}<span class="meta">{{ t.assignee.get_full_name|default:t.assignee }}</span>{% endif %}
+        <span class="status{% if t.is_overdue %} status--accent{% endif %}">{{ t.get_status_display }}</span>
+      </li>
+    {% empty %}<li><span class="empty">{% trans "Поручений нет." %}</span></li>{% endfor %}
+  </ul>
+</section>
+{% endblock %}

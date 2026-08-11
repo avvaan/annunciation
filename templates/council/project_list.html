@@ -1,0 +1,16 @@
+{% extends "council/_portal_base.html" %}
+{% load i18n %}
+{% block portal_title %}{% trans "Проекты совета" %}{% endblock %}
+{% block portal_content %}
+<div class="stack">
+  {% for p in projects %}
+    <article class="card">
+      <h3>{{ p.title }}</h3>
+      <p class="meta"><span class="status">{{ p.get_status_display }}</span>
+        {% if p.owner %} · {{ p.owner.get_full_name|default:p.owner }}{% endif %}
+        {% if p.due_date %} · {{ p.due_date|date:"d.m.Y" }}{% endif %}</p>
+      {% if p.description %}<div class="prose">{{ p.description|linebreaks }}</div>{% endif %}
+    </article>
+  {% empty %}<p class="empty">{% trans "Проектов пока нет." %}</p>{% endfor %}
+</div>
+{% endblock %}

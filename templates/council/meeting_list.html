@@ -1,0 +1,30 @@
+{% extends "council/_portal_base.html" %}
+{% load i18n %}
+{% block portal_title %}{% trans "Заседания совета" %}{% endblock %}
+{% block portal_content %}
+{% if is_council %}
+  <p><a href="{% url 'council:meeting_new' %}" class="btn btn--accent">{% trans "Назначить заседание" %}</a></p>
+{% endif %}
+
+<h2>{% trans "Предстоящие" %}</h2>
+<ul class="rota">
+  {% for m in upcoming %}
+    <li>
+      <span class="rota__date">{{ m.date|date:"d.m.Y" }}{% if m.time %} {{ m.time|time:"H:i" }}{% endif %}</span>
+      <a href="{% url 'council:meeting_detail' pk=m.pk %}" style="flex:1">{{ m.title }}</a>
+      {% if m.location %}<span class="meta">{{ m.location }}</span>{% endif %}
+    </li>
+  {% empty %}<li><span class="empty">{% trans "Заседаний не назначено." %}</span></li>{% endfor %}
+</ul>
+
+<h2 style="margin-top:var(--sp-6)">{% trans "Прошедшие" %}</h2>
+<ul class="rota">
+  {% for m in past %}
+    <li>
+      <span class="rota__date">{{ m.date|date:"d.m.Y" }}</span>
+      <a href="{% url 'council:meeting_detail' pk=m.pk %}" style="flex:1">{{ m.title }}</a>
+      <span class="status">{{ m.get_status_display }}</span>
+    </li>
+  {% empty %}<li><span class="empty">{% trans "Пока пусто." %}</span></li>{% endfor %}
+</ul>
+{% endblock %}

@@ -1,0 +1,101 @@
+{% extends "council/_portal_base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Совет прихода" %} — {{ block.super }}{% endblock %}
+{% block portal_lede %}
+  <p>{% if is_council %}{% trans "Полный доступ: протоколы совета и финансовые отчёты." %}
+     {% else %}{% trans "Доступ прихожанина: то, чем совет поделился с приходом." %}{% endif %}</p>
+{% endblock %}
+
+{% block portal_content %}
+
+{% if can_approve and pending_count %}
+  <p class="card">
+    <strong>{% blocktrans count n=pending_count %}{{ n }} заявка на доступ ждёт решения.{% plural %}{{ n }} заявок на доступ ждут решения.{% endblocktrans %}</strong>
+    <a href="{% url 'council:approvals' %}" class="link-more" style="margin-left:var(--sp-2)">
+      {% trans "Рассмотреть" %}{% include "_icons.html" with icon="arrow" %}
+    </a>
+  </p>
+{% endif %}
+
+<div class="grid grid--2">
+  <section>
+    <div class="section-head">
+      <h2>{% trans "Ближайшие заседания" %}</h2>
+      {% if is_council %}<a href="{% url 'council:meeting_new' %}" class="link-more">{% trans "Назначить" %}</a>{% endif %}
+    </div>
+    <ul class="rota">
+      {% for m in upcoming_meetings %}
+        <li>
+          <span class="rota__date">{{ m.date|date:"d.m.Y" }}{% if m.time %} {{ m.time|time:"H:i" }}{% endif %}</span>
+          <a href="{% url 'council:meeting_detail' pk=m.pk %}" style="flex:1">{{ m.title }}</a>
+        </li>
+      {% empty %}<li><span class="empty">{% trans "Заседаний не назначено." %}</span></li>{% endfor %}
+    </ul>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>{% trans "Мои поручения" %}</h2>
+      <a href="{% url 'council:task_list' %}" class="link-more">{% trans "Все" %}</a>
+    </div>
+    <ul class="rota">
+      {% for t in my_tasks %}
+        <li>
+          <form method="post" action="{% url 'council:task_toggle' pk=t.pk %}" class="inline-form">
+            {% csrf_token %}<button type="submit" class="btn">{% trans "Готово" %}</button>
+          </form>
+          <span style="flex:1">{{ t.title }}</span>
+          {% if t.due_date %}
+            <span class="{% if t.is_overdue %}status status--accent{% else %}meta{% endif %}">
+              {{ t.due_date|date:"d.m.Y" }}
+            </span>
+          {% endif %}
+        </li>
+      {% empty %}<li><span class="empty">{% trans "Поручений за вами нет." %}</span></li>{% endfor %}
+    </ul>
+  </section>
+</div>
+
+<div class="ornament" role="presentation"></div>
+
+<div class="grid grid--2">
+  <section>
+    <div class="section-head">
+      <h2>{% trans "Протоколы" %}</h2>
+      <a href="{% url 'council:protocol_list' %}" class="link-more">{% trans "Все" %}</a>
+    </div>
+    <ul class="doc-list">
+      {% for p in recent_protocols %}
+        <li><a href="{% url 'council:protocol_detail' pk=p.pk %}">
+          {% include "_icons.html" with icon="document" %}
+          <span class="doc-list__title">{{ p.title }}</span>
+          <span class="doc-list__period">{{ p.created_at|date:"d.m.Y" }}</span>
+        </a></li>
+      {% empty %}<li><p class="empty" style="padding:var(--sp-3) 0">{% trans "Протоколов пока нет." %}</p></li>{% endfor %}
+    </ul>
+  </section>
+
+  <section>
+    <div class="section-head">
+      <h2>{% trans "Отчёты" %}</h2>
+      <a href="{% url 'council:report_list' %}" class="link-more">{% trans "Все" %}</a>
+    </div>
+    <ul class="doc-list">
+      {% for r in recent_reports %}
+        <li><a href="{% if r.file %}{% url 'council:report_download' pk=r.pk %}{% else %}{% url 'council:report_list' %}{% endif %}">
+          {% include "_icons.html" with icon="document" %}
+          <span class="doc-list__title">{{ r.title }}</span>
+          <span class="doc-list__period">{{ r.period|default:r.get_category_display }}</span>
+        </a></li>
+      {% empty %}<li><p class="empty" style="padding:var(--sp-3) 0">{% trans "Отчётов пока нет." %}</p></li>{% endfor %}
+    </ul>
+  </section>
+</div>
+
+{% if can_mail %}
+  <p style="margin-top:var(--sp-5)">
+    <a href="{% url 'council:mailing' %}" class="btn">{% trans "Написать группе" %}</a>
+  </p>
+{% endif %}
+
+{% endblock %}

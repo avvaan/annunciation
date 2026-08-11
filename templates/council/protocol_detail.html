@@ -1,0 +1,33 @@
+{% extends "council/_portal_base.html" %}
+{% load i18n %}
+{% block portal_title %}{{ protocol.title }}{% endblock %}
+{% block portal_lede %}
+  <p>{{ protocol.created_at|date:"d.m.Y" }}{% if protocol.meeting %} · {{ protocol.meeting.title }}{% endif %}</p>
+{% endblock %}
+{% block portal_content %}
+<div class="prose">
+  {% if protocol.body %}{{ protocol.body|linebreaks }}{% endif %}
+  {% if protocol.decisions %}
+    <div class="ornament" role="presentation"></div>
+    <h2>{% trans "Решения" %}</h2>
+    {{ protocol.decisions|linebreaks }}
+  {% endif %}
+</div>
+{% if protocol.file %}
+  <p style="margin-top:var(--sp-4)">
+    <a href="{% url 'council:protocol_download' pk=protocol.pk %}" class="btn">{% trans "Скачать файл" %}</a>
+  </p>
+{% endif %}
+{% if tasks %}
+  <section class="portal-section">
+    <h2>{% trans "Поручения по протоколу" %}</h2>
+    <ul class="rota">
+      {% for t in tasks %}
+        <li><span style="flex:1">{{ t.title }}</span>
+          {% if t.assignee %}<span class="meta">{{ t.assignee.get_full_name|default:t.assignee }}</span>{% endif %}
+          <span class="status">{{ t.get_status_display }}</span></li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,25 @@
+{% extends "council/_portal_base.html" %}
+{% load i18n %}
+{% block portal_title %}{% trans "Поручения" %}{% endblock %}
+{% block portal_content %}
+<p class="row-actions">
+  <a href="?scope=mine" class="btn{% if scope == 'mine' %} btn--accent{% endif %}">{% trans "Мои" %}</a>
+  <a href="?scope=all" class="btn{% if scope != 'mine' %} btn--accent{% endif %}">{% trans "Все" %}</a>
+  <a href="?scope={{ scope }}&show={% if show == 'all' %}open{% else %}all{% endif %}" class="link-more">
+    {% if show == 'all' %}{% trans "Только открытые" %}{% else %}{% trans "Показать выполненные" %}{% endif %}
+  </a>
+</p>
+<ul class="rota">
+  {% for t in tasks %}
+    <li>
+      <form method="post" action="{% url 'council:task_toggle' pk=t.pk %}" class="inline-form">
+        {% csrf_token %}
+        <button type="submit" class="btn">{% if t.status == 'done' %}{% trans "Вернуть" %}{% else %}{% trans "Готово" %}{% endif %}</button>
+      </form>
+      <span style="flex:1">{{ t.title }}</span>
+      {% if t.assignee %}<span class="meta">{{ t.assignee.get_full_name|default:t.assignee }}</span>{% endif %}
+      {% if t.due_date %}<span class="{% if t.is_overdue %}status status--accent{% else %}meta{% endif %}">{{ t.due_date|date:"d.m.Y" }}</span>{% endif %}
+    </li>
+  {% empty %}<li><span class="empty">{% trans "Поручений нет." %}</span></li>{% endfor %}
+</ul>
+{% endblock %}

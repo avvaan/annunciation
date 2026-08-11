@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Запрос доступа" %} — {{ block.super }}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="shell">
+    <h1>{% trans "Запрос доступа к порталу" %}</h1>
+    <p>{% trans "Портал совета прихода: протоколы, отчёты, поручения. Доступ открывает настоятель или администратор." %}</p>
+  </div>
+</section>
+<section class="band">
+  <div class="shell" style="max-width:32rem">
+    <form method="post">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <button type="submit">{% trans "Отправить заявку" %}</button>
+    </form>
+  </div>
+</section>
+{% endblock %}

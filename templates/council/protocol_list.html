@@ -1,0 +1,17 @@
+{% extends "council/_portal_base.html" %}
+{% load i18n %}
+{% block portal_title %}{% trans "Протоколы" %}{% endblock %}
+{% block portal_content %}
+{% if is_council %}<p><a href="{% url 'council:protocol_new' %}" class="btn btn--accent">{% trans "Новый протокол" %}</a></p>{% endif %}
+<ul class="doc-list">
+  {% for p in protocols %}
+    <li><a href="{% url 'council:protocol_detail' pk=p.pk %}">
+      {% include "_icons.html" with icon="document" %}
+      <span class="doc-list__title">{{ p.title }}</span>
+      {% if p.council_only %}<span class="status">{% trans "только совет" %}</span>{% endif %}
+      {% if not p.is_published %}<span class="status status--accent">{% trans "черновик" %}</span>{% endif %}
+      <span class="doc-list__period">{{ p.created_at|date:"d.m.Y" }}</span>
+    </a></li>
+  {% empty %}<li><p class="empty" style="padding:var(--sp-3) 0">{% trans "Протоколов пока нет." %}</p></li>{% endfor %}
+</ul>
+{% endblock %}

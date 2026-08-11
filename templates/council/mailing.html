@@ -1,0 +1,24 @@
+{% extends "council/_portal_base.html" %}
+{% load i18n %}
+{% block portal_title %}{% trans "Рассылка" %}{% endblock %}
+{% block portal_lede %}<p>{% trans "Адреса получателей уходят в скрытую копию — никто не видит чужой почты." %}</p>{% endblock %}
+{% block portal_content %}
+<form method="post" enctype="multipart/form-data" style="max-width:44rem">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">{% trans "Отправить" %}</button>
+</form>
+
+<section class="portal-section">
+  <h2>{% trans "Что уже отправляли" %}</h2>
+  <ul class="rota">
+    {% for m in history %}
+      <li>
+        <span class="rota__date">{{ m.created_at|date:"d.m.Y" }}</span>
+        <span style="flex:1">{{ m.subject }}</span>
+        <span class="meta">{{ m.audience_label }} · {{ m.recipient_count }}</span>
+      </li>
+    {% empty %}<li><span class="empty">{% trans "Рассылок ещё не было." %}</span></li>{% endfor %}
+  </ul>
+</section>
+{% endblock %}

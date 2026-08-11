@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Доступ на рассмотрении" %} — {{ block.super }}{% endblock %}
+{% block content %}
+<section class="page-head">
+  <div class="shell">
+    <h1>{% trans "Доступ на рассмотрении" %}</h1>
+  </div>
+</section>
+<section class="band">
+  <div class="shell prose">
+    {% if membership_request %}
+      <p>{% trans "Ваша заявка отправлена и ждёт решения совета. Мы сообщим вам, как только доступ будет открыт." %}</p>
+      <p class="meta">{% trans "Подана" %}: {{ membership_request.created_at|date:"d.m.Y" }} ·
+        <span class="status">{{ membership_request.get_status_display }}</span></p>
+    {% else %}
+      <p>{% trans "У вас есть учётная запись, но доступ к порталу совета пока не запрошен." %}</p>
+      <p><a href="{% url 'council:request_access' %}" class="btn btn--accent">{% trans "Запросить доступ" %}</a></p>
+    {% endif %}
+    <p style="margin-top:var(--sp-4)">
+      <a href="{% url 'ministries:ministry_list' %}" class="link-more">{% trans "Перейти к служениям" %}{% include "_icons.html" with icon="arrow" %}</a>
+    </p>
+  </div>
+</section>
+{% endblock %}

@@ -675,3 +675,24 @@ button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-visible { filter: b
   font-size: var(--fs-xs); text-decoration: none;
   border: 1px solid var(--line); padding: 0 0.4em; color: var(--ink-2);
 }
+
+/* --------------------------------------------------------------------------
+   Council portal navigation — a working bar, not the site's editorial nav
+   -------------------------------------------------------------------------- */
+.portal-nav {
+  background: var(--surface);
+  border-bottom: 1px solid var(--line);
+  position: sticky; top: 0; z-index: 10;
+  overflow-x: auto;
+}
+.portal-nav__row { display: flex; gap: var(--sp-1); padding-block: var(--sp-1); min-width: max-content; }
+.portal-nav a {
+  display: inline-flex; align-items: center; min-height: var(--tap);
+  padding: 0 var(--sp-3); text-decoration: none; white-space: nowrap;
+  font-size: var(--fs-sm); font-weight: 700;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  border-bottom: 3px solid transparent;
+}
+.portal-nav a:hover, .portal-nav a[aria-current="page"] {
+  color: var(--accent); border-bottom-color: var(--accent);
+}

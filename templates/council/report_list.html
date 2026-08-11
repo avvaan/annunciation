@@ -1,0 +1,20 @@
+{% extends "council/_portal_base.html" %}
+{% load i18n %}
+{% block portal_title %}{% trans "Отчёты" %}{% endblock %}
+{% block portal_content %}
+{% if is_council %}<p><a href="{% url 'council:report_new' %}" class="btn btn--accent">{% trans "Новый отчёт" %}</a></p>{% endif %}
+<div class="stack">
+  {% for r in reports %}
+    <article class="card">
+      <h3>{{ r.title }}</h3>
+      <p class="meta">{{ r.get_category_display }}{% if r.period %} · {{ r.period }}{% endif %}
+        {% if r.council_only %} · <span class="status">{% trans "только совет" %}</span>{% endif %}</p>
+      {% if r.body %}<div class="prose">{{ r.body|linebreaks }}</div>{% endif %}
+      <div class="row-actions">
+        {% if r.file %}<a href="{% url 'council:report_download' pk=r.pk %}" class="btn">{% trans "Скачать" %}</a>{% endif %}
+        {% if is_council %}<a href="{% url 'council:report_edit' pk=r.pk %}" class="link-more">{% trans "Править" %}</a>{% endif %}
+      </div>
+    </article>
+  {% empty %}<p class="empty">{% trans "Отчётов пока нет." %}</p>{% endfor %}
+</div>
+{% endblock %}

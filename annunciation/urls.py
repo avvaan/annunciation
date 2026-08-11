@@ -19,6 +19,7 @@ urlpatterns += i18n_patterns(
     path("history/", include("history.urls")),
     path("newsletter/", include("newsletter.urls")),
     path("ministries/", include("ministries.urls")),
+    path("council/", include("council.urls")),
     prefix_default_language=False,
 )
 

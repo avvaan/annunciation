@@ -1,0 +1,9 @@
+{% extends "council/_portal_base.html" %}
+{% load i18n %}
+{% block portal_content %}
+<form method="post" enctype="multipart/form-data" style="max-width:44rem">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">{% trans "Сохранить" %}</button>
+</form>
+{% endblock %}
