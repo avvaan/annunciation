@@ -4,16 +4,13 @@ from django.contrib import admin, messages
 from modeltranslation.admin import TranslationAdmin
 
 from .models import (
+    WEEKDAY_NAMES_RU,
     RecurringServiceItem,
     RecurringServiceRule,
     ServiceDay,
     ServiceItem,
     ServiceType,
 )
-
-WEEKDAY_NAMES_RU = [
-    "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье",
-]
 
 
 @admin.register(ServiceType)

@@ -31,6 +31,10 @@ class FastingLevel(models.TextChoices):
     STRICT = "strict", _("Строгий пост (сухоядение)")
 
 
+WEEKDAY_NAMES_RU = [
+    "Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье",
+]
+
 # The Julian/Gregorian gap is 13 days for the whole 20th–21st century and only
 # widens to 14 days from 1 March 2100 (new style) onward.
 _JULIAN_GAP_CHANGE_DATE = datetime.date(2100, 3, 1)
@@ -118,6 +122,10 @@ class ServiceDay(models.Model):
     @property
     def weekday(self):
         return self.date.weekday()
+
+    @property
+    def weekday_label(self):
+        return WEEKDAY_NAMES_RU[self.date.weekday()]
 
 
 class ServiceItem(models.Model):

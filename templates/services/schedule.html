@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Расписание богослужений" %} — {{ block.super }}{% endblock %}
+{% block content %}
+<h1>{% trans "Расписание богослужений" %}</h1>
+
+{% for day in days %}
+  <article class="card service-day{% if day.fasting_level != 'none' %} service-day--fasting{% endif %}">
+    <header>
+      <strong>{{ day.date|date:"d.m.Y" }}</strong> — {{ day.weekday_label }}
+      <span class="service-day__old-style">({% trans "ст. ст." %} {{ day.old_style_date|date:"d.m" }})</span>
+    </header>
+    {% if day.feast_title %}<h3>{{ day.feast_title }}</h3>{% endif %}
+    <ul class="service-day__items">
+      {% for item in day.items.all %}
+        <li>{{ item.time|time:"H:i" }} — {{ item.service_type.name }}{% if item.note %} ({{ item.note }}){% endif %}</li>
+      {% endfor %}
+    </ul>
+    {% if day.fasting_level != "none" %}
+      <p class="service-day__fasting">{{ day.get_fasting_level_display }}</p>
+    {% endif %}
+    {% if day.note %}<p>{{ day.note }}</p>{% endif %}
+  </article>
+{% empty %}
+  <p>{% trans "Расписание пока не заполнено." %}</p>
+{% endfor %}
+{% endblock %}

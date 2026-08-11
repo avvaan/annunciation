@@ -1,0 +1,6 @@
+{% load i18n %}
+<a class="card ministry-card" href="{% url 'ministries:ministry_detail' slug=m.slug %}">
+  {% if m.image %}<img src="{{ m.image.url }}" alt="{{ m.name }}">{% endif %}
+  <h3>{{ m.name }}{% if m.is_private %} 🔒{% endif %}</h3>
+  <p>{{ m.description|truncatewords:20 }}</p>
+</a>

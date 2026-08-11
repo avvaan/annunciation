@@ -1,0 +1,125 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ ministry.name }} — {{ block.super }}{% endblock %}
+{% block content %}
+<a href="{% url 'ministries:ministry_list' %}">← {% trans "Все служения" %}</a>
+<h1>{{ ministry.name }}{% if ministry.is_private %} 🔒{% endif %}</h1>
+{% if ministry.image %}<img src="{{ ministry.image.url }}" alt="{{ ministry.name }}" style="max-width:100%">{% endif %}
+{% if ministry.announcement %}<p class="card"><strong>{{ ministry.announcement }}</strong></p>{% endif %}
+<p>{{ ministry.description|linebreaks }}</p>
+
+<p>
+  {% if not user.is_authenticated %}
+    <a href="{% url 'ministries:login' %}">{% trans "Войдите" %}</a> {% trans "чтобы присоединиться." %}
+  {% elif membership and membership.status == "pending" %}
+    <em>{% trans "Заявка на рассмотрении" %}</em>
+  {% elif is_member %}
+    <form method="post" action="{% url 'ministries:ministry_leave' slug=ministry.slug %}" style="display:inline">
+      {% csrf_token %}<button type="submit">{% trans "Выйти из служения" %}</button>
+    </form>
+  {% else %}
+    <form method="post" action="{% url 'ministries:ministry_join' slug=ministry.slug %}" style="display:inline">
+      {% csrf_token %}<button type="submit">{% trans "Присоединиться" %}</button>
+    </form>
+  {% endif %}
+</p>
+
+{% if is_leader %}
+<section id="members">
+  <h2>{% trans "Заявки на участие" %}</h2>
+  {% for mem in ministry.memberships.all %}
+    {% if mem.status == "pending" %}
+      <form method="post" action="{% url 'ministries:membership_approve' pk=mem.pk %}">
+        {% csrf_token %}
+        {{ mem.user }} <button type="submit">{% trans "Принять" %}</button>
+      </form>
+    {% endif %}
+  {% endfor %}
+</section>
+{% endif %}
+
+<section id="schedule">
+  <h2>{% trans "График" %}</h2>
+  <ul>
+    {% for e in schedule_entries %}
+      <li>{{ e.date|date:"d.m.Y" }} — {{ e.person|default:"—" }}{% if e.note %} ({{ e.note }}){% endif %}</li>
+    {% empty %}<li>{% trans "Пока пусто" %}</li>{% endfor %}
+  </ul>
+  {% if is_leader %}
+    <form method="post">
+      {% csrf_token %}
+      {{ schedule_form.as_p }}
+      <button type="submit" name="submit_schedule">{% trans "Добавить в график" %}</button>
+    </form>
+  {% endif %}
+</section>
+
+<section id="work">
+  <h2>{% trans "Проекты" %}</h2>
+  <ul>
+    {% for p in projects %}<li>{{ p.title }} — {{ p.get_status_display }}</li>{% empty %}<li>—</li>{% endfor %}
+  </ul>
+
+  <h3>{% trans "Нужно купить" %}</h3>
+  <ul>
+    {% for s in supply_requests %}
+      <li>
+        {{ s.item }}{% if s.note %} ({{ s.note }}){% endif %}
+        {% if is_leader %}
+          <form method="post" action="{% url 'ministries:supply_toggle' pk=s.pk %}" style="display:inline">
+            {% csrf_token %}<button type="submit">{% trans "Куплено" %}</button>
+          </form>
+        {% endif %}
+      </li>
+    {% empty %}<li>—</li>{% endfor %}
+  </ul>
+  {% if is_member %}
+    <form method="post">
+      {% csrf_token %}
+      {{ supply_form.as_p }}
+      <button type="submit" name="submit_supply">{% trans "Добавить заявку" %}</button>
+    </form>
+  {% endif %}
+</section>
+
+<section id="library">
+  <h2>{% trans "Документы" %}</h2>
+  <ul>
+    {% for d in documents %}<li><a href="{% url 'ministries:document_download' pk=d.pk %}">{{ d.title }}</a></li>{% endfor %}
+  </ul>
+  <h2>{% trans "Отчёты" %}</h2>
+  <ul>
+    {% for r in reports %}<li><a href="{% url 'ministries:report_download' pk=r.pk %}">{{ r.title }}</a></li>{% endfor %}
+  </ul>
+</section>
+
+<section id="photos">
+  <h2>{% trans "Фото" %}</h2>
+  <div class="photo-grid">
+    {% for p in photos %}<img src="{{ p.image.url }}" alt="{{ p.caption }}">{% endfor %}
+  </div>
+  {% if is_member %}
+    <form method="post" enctype="multipart/form-data">
+      {% csrf_token %}
+      {{ photo_form.as_p }}
+      <button type="submit" name="submit_photo">{% trans "Загрузить фото" %}</button>
+    </form>
+  {% endif %}
+</section>
+
+<section id="discussion">
+  <h2>{% trans "Обсуждение" %}</h2>
+  <ul>
+    {% for t in topics %}
+      <li><a href="{% url 'ministries:topic_detail' pk=t.pk %}">{{ t.title }}</a> — {{ t.comments.count }} {% trans "комментариев" %}</li>
+    {% empty %}<li>{% trans "Пока нет тем" %}</li>{% endfor %}
+  </ul>
+  {% if is_member %}
+    <form method="post">
+      {% csrf_token %}
+      {{ topic_form.as_p }}
+      <button type="submit" name="submit_topic">{% trans "Создать тему" %}</button>
+    </form>
+  {% endif %}
+</section>
+{% endblock %}

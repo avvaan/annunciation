@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Вход" %} — {{ block.super }}{% endblock %}
+{% block content %}
+<h1>{% trans "Вход в портал служений" %}</h1>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">{% trans "Войти" %}</button>
+</form>
+<p><a href="{% url 'ministries:signup' %}">{% trans "Ещё нет аккаунта? Зарегистрироваться" %}</a></p>
+{% endblock %}

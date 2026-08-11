@@ -1,0 +1,33 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Русская школа" %} — {{ block.super }}{% endblock %}
+{% block content %}
+<h1>{% trans "Русская школа" %}</h1>
+{% if page.cover_image %}<img src="{{ page.cover_image.url }}" alt="" style="max-width:100%">{% endif %}
+<p>{{ page.description|linebreaks }}</p>
+
+<dl>
+  <dt>{% trans "Возраст" %}</dt><dd>{% blocktrans with age=page.age_from %}от {{ age }} лет{% endblocktrans %}</dd>
+  {% if page.schedule_text %}<dt>{% trans "Расписание занятий" %}</dt><dd>{{ page.schedule_text }}</dd>{% endif %}
+  {% if page.term_start %}
+    <dt>{% trans "Учебный год" %}</dt>
+    <dd>{{ page.term_start|date:"d.m.Y" }} — {{ page.term_end|date:"d.m.Y" }}</dd>
+  {% endif %}
+  {% if page.tuition_note %}<dt>{% trans "Оплата" %}</dt><dd>{{ page.tuition_note }}</dd>{% endif %}
+</dl>
+
+{% if page.enrollment_open %}
+  <p><strong>{% trans "Идёт запись на новый учебный год." %}</strong></p>
+{% endif %}
+
+<p>
+  {% if page.contact_email %}<a href="mailto:{{ page.contact_email }}">{{ page.contact_email }}</a>{% endif %}
+  {% if page.contact_phone %} · {{ page.contact_phone }}{% endif %}
+</p>
+
+{% if photos %}
+<div class="photo-grid">
+  {% for p in photos %}<img src="{{ p.image.url }}" alt="{{ p.caption }}">{% endfor %}
+</div>
+{% endif %}
+{% endblock %}

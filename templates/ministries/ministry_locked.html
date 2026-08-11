@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<a href="{% url 'ministries:ministry_list' %}">← {% trans "Все служения" %}</a>
+<h1>{{ ministry.name }} 🔒</h1>
+<p>{% trans "Это закрытое служение. Содержимое видно только участникам." %}</p>
+{% if user.is_authenticated %}
+  <form method="post" action="{% url 'ministries:ministry_join' slug=ministry.slug %}">
+    {% csrf_token %}<button type="submit">{% trans "Подать заявку на участие" %}</button>
+  </form>
+{% else %}
+  <a href="{% url 'ministries:login' %}">{% trans "Войдите" %}</a>
+{% endif %}
+{% endblock %}

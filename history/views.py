@@ -1,3 +1,8 @@
 from django.shortcuts import render
 
-# Create your views here.
+from .models import HistoryMilestone
+
+
+def history_page(request):
+    milestones = HistoryMilestone.objects.all()
+    return render(request, "history/page.html", {"milestones": milestones})

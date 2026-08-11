@@ -1,0 +1,20 @@
+{% extends "base.html" %}
+{% load i18n editable %}
+{% block title %}{% trans "О приходе" %} — {{ block.super }}{% endblock %}
+{% block content %}
+<h1>{% trans "О приходе" %}</h1>
+
+{% editable "about" "intro" "Вступление" %}
+<p>Наш приход объединяет русскоязычных православных христиан Джексонвилла и окрестностей.</p>
+{% endeditable %}
+
+<h2>{% trans "Духовенство" %}</h2>
+{% for c in clergy %}
+  <div class="card">
+    {% if c.photo %}<img src="{{ c.photo.url }}" alt="{{ c.name }}" style="max-width:160px">{% endif %}
+    <h3>{{ c.name }}</h3>
+    <p>{{ c.title }}</p>
+    {% if c.bio %}<p>{{ c.bio }}</p>{% endif %}
+  </div>
+{% endfor %}
+{% endblock %}

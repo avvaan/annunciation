@@ -1,0 +1,21 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block content %}
+<h1>{{ site_settings.parish_name }}</h1>
+<p>{{ site_settings.city }}</p>
+
+{% if announcements %}
+<section>
+  <h2>{% trans "Объявления" %}</h2>
+  {% for a in announcements %}
+    <div class="card">
+      <h3>{{ a.title }}</h3>
+      <p>{{ a.content }}</p>
+      {% if a.link_url %}<a href="{{ a.link_url }}">{{ a.link_text|default:"Подробнее" }}</a>{% endif %}
+    </div>
+  {% endfor %}
+</section>
+{% endif %}
+
+<p><a href="{% url 'services:schedule' %}">{% trans "Расписание богослужений" %} →</a></p>
+{% endblock %}

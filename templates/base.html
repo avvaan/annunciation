@@ -1,0 +1,47 @@
+{% load i18n %}<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{{ site_settings.parish_name }}{% endblock %}</title>
+<link rel="stylesheet" href="/static/css/base.css">
+</head>
+<body>
+<header class="site-header">
+  <a href="{% url 'core:home' %}" class="site-header__title">{{ site_settings.parish_name }}</a>
+  <nav class="site-nav">
+    <a href="{% url 'services:schedule' %}">{% trans "Расписание" %}</a>
+    <a href="{% url 'publications:list' %}">{% trans "Календарь и бюллетень" %}</a>
+    <a href="{% url 'building:project' %}">{% trans "Строительство" %}</a>
+    <a href="{% url 'school:page' %}">{% trans "Русская школа" %}</a>
+    <a href="{% url 'history:page' %}">{% trans "История" %}</a>
+    <a href="{% url 'ministries:ministry_list' %}">{% trans "Служения" %}</a>
+    <a href="{% url 'core:about' %}">{% trans "О приходе" %}</a>
+    <a href="{% url 'core:contact' %}">{% trans "Контакты" %}</a>
+  </nav>
+</header>
+
+{% if messages %}
+<ul class="messages">
+  {% for message in messages %}<li class="message message--{{ message.tags }}">{{ message }}</li>{% endfor %}
+</ul>
+{% endif %}
+
+<main>
+{% block content %}{% endblock %}
+</main>
+
+<footer class="site-footer">
+  <p>{{ site_settings.parish_name }} — {{ site_settings.city }}</p>
+  {% if site_settings.address %}<p>{{ site_settings.address }}</p>{% endif %}
+  {% if site_settings.phone %}<p>{{ site_settings.phone }}</p>{% endif %}
+  {% if site_settings.realm_giving_url %}
+    <a href="{{ site_settings.realm_giving_url }}" class="btn btn--donate">{% trans "Пожертвовать" %}</a>
+  {% endif %}
+  {% if site_settings.realm_membership_url %}
+    <a href="{{ site_settings.realm_membership_url }}" class="btn">{% trans "Стать членом прихода" %}</a>
+  {% endif %}
+  <p><a href="{% url 'newsletter:subscribe' %}">{% trans "Подписаться на новости" %}</a></p>
+</footer>
+</body>
+</html>

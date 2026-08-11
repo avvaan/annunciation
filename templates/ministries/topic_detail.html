@@ -1,0 +1,23 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ topic.title }} — {{ block.super }}{% endblock %}
+{% block content %}
+<a href="{% url 'ministries:ministry_detail' slug=ministry.slug %}">← {{ ministry.name }}</a>
+<h1>{{ topic.title }}</h1>
+<p><em>{{ topic.author }}, {{ topic.created_at|date:"d.m.Y H:i" }}</em></p>
+<p>{{ topic.body|linebreaks }}</p>
+
+<h2>{% trans "Комментарии" %}</h2>
+{% for c in comments %}
+  <div class="card">
+    <p><em>{{ c.author }}, {{ c.created_at|date:"d.m.Y H:i" }}</em></p>
+    <p>{{ c.body|linebreaks }}</p>
+  </div>
+{% empty %}<p>{% trans "Пока нет комментариев." %}</p>{% endfor %}
+
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">{% trans "Ответить" %}</button>
+</form>
+{% endblock %}

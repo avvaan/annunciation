@@ -12,7 +12,7 @@ class Ministry(models.Model):
     """A parish ministry — public card + a member/leader portal workspace."""
 
     name = models.CharField(max_length=200)
-    slug = models.SlugField(max_length=220, unique=True, blank=True)
+    slug = models.SlugField(max_length=220, unique=True, blank=True, allow_unicode=True)
     image = models.ImageField(upload_to="ministries/", blank=True)
     description = models.TextField(blank=True)
     announcement = models.TextField(blank=True, help_text="Короткая закреплённая новость на странице служения")
@@ -34,7 +34,7 @@ class Ministry(models.Model):
 
     def save(self, *args, **kwargs):
         if not self.slug:
-            base = slugify(self.name, allow_unicode=False) or "ministry"
+            base = slugify(self.name, allow_unicode=True) or "ministry"
             slug = base
             i = 2
             while Ministry.objects.filter(slug=slug).exclude(pk=self.pk).exists():

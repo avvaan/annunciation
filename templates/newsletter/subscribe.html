@@ -1,0 +1,12 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Подписка на новости" %} — {{ block.super }}{% endblock %}
+{% block content %}
+<h1>{% trans "Подписка на новости прихода" %}</h1>
+<p>{% trans "Расписание, объявления и новости стройки — на почту." %}</p>
+<form method="post">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <button type="submit">{% trans "Подписаться" %}</button>
+</form>
+{% endblock %}
