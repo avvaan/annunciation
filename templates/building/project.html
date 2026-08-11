@@ -9,7 +9,7 @@
 <div class="progress" role="progressbar" aria-valuenow="{{ project.percent_raised }}" aria-valuemin="0" aria-valuemax="100">
   <div class="progress__bar" style="width:{{ project.percent_raised }}%"></div>
 </div>
-<p>{% blocktrans with raised=project.raised_amount goal=project.goal_amount percent=project.percent_raised %}Собрано {{ raised }} $ из {{ goal }} $ ({{ percent }}%){% endblocktrans %}</p>
+<p>{% blocktrans with raised=project.raised_amount|floatformat:0 goal=project.goal_amount|floatformat:0 percent=project.percent_raised %}Собрано {{ raised }} $ из {{ goal }} $ ({{ percent }}%){% endblocktrans %}</p>
 
 <h2>{% trans "Новости стройки" %}</h2>
 {% for u in updates %}

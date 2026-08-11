@@ -1,5 +1,9 @@
+import datetime
+
 from django.contrib import messages
 from django.shortcuts import redirect, render
+
+from services.models import ServiceDay
 
 from .forms import ContactForm
 from .models import Announcement, ClergyMember
@@ -7,7 +11,12 @@ from .models import Announcement, ClergyMember
 
 def home(request):
     announcements = Announcement.objects.filter(is_active=True)
-    return render(request, "core/home.html", {"announcements": announcements})
+    upcoming_days = (
+        ServiceDay.objects.filter(is_published=True, date__gte=datetime.date.today())
+        .prefetch_related("items__service_type")
+        .order_by("date")[:3]
+    )
+    return render(request, "core/home.html", {"announcements": announcements, "upcoming_days": upcoming_days})
 
 
 def about(request):

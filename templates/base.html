@@ -7,9 +7,24 @@
 <link rel="stylesheet" href="/static/css/base.css">
 </head>
 <body>
+<!--
+THESIS: The site is the departure board, not a decorated brochure with a board bolted on. It refuses the cream-parchment-gold "church site" default by giving the schedule the exact, high-contrast grammar of a timetable — because for this parish the schedule IS the product.
+OWN-WORLD: Near-white paper ground, near-black ink, one reserved accent — liturgical rubric red (used only for feast/fasting flags and primary actions, never decoration). Martian Mono (geometric, constructivist) for every date/time numeral; PT Sans (bold, Cyrillic-native) for names and nav; system-ui for body copy — zero webfont cost for the bulk of the reading. Flat rectangular cards, ruled hairline dividers, no shadows, no rounded soft-UI, no gold.
+STORY: A parishioner opens the site to find out when the next service is, in seconds, on a phone, without zooming. They see it read like a timetable board they already trust: date, weekday, old-style date, feast, service times, fasting flag — nothing decorative between them and that fact.
+FIRST VIEWPORT: Home opens directly on a live 3-row board of the nearest upcoming services (not a photo hero) under one short headline, red fasting/feast tags inline, a single "весь месяц" link below, announcements after.
+FORM: Табло расписания (Soviet/Russian departure-board information design) — candidate 4 of 7 grounded directions, seed key 4b401e4a (degraded roll, no network to the challenger service).
+FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md.
+-->
+<a class="skip-link" href="#main">{% trans "Перейти к содержимому" %}</a>
 <header class="site-header">
-  <a href="{% url 'core:home' %}" class="site-header__title">{{ site_settings.parish_name }}</a>
-  <nav class="site-nav">
+  <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
+  <div class="site-header__row">
+    <a href="{% url 'core:home' %}" class="site-header__title">{{ site_settings.parish_name }}</a>
+    <label for="nav-toggle" class="nav-toggle-btn">
+      <span class="nav-toggle-icon" aria-hidden="true"></span>{% trans "Меню" %}
+    </label>
+  </div>
+  <nav class="site-nav" aria-label="{% trans "Основная навигация" %}">
     <a href="{% url 'services:schedule' %}">{% trans "Расписание" %}</a>
     <a href="{% url 'publications:list' %}">{% trans "Календарь и бюллетень" %}</a>
     <a href="{% url 'building:project' %}">{% trans "Строительство" %}</a>
@@ -18,6 +33,12 @@
     <a href="{% url 'ministries:ministry_list' %}">{% trans "Служения" %}</a>
     <a href="{% url 'core:about' %}">{% trans "О приходе" %}</a>
     <a href="{% url 'core:contact' %}">{% trans "Контакты" %}</a>
+    <form action="{% url 'set_language' %}" method="post" class="lang-switch">
+      {% csrf_token %}
+      <input name="next" type="hidden" value="{{ request.path }}">
+      <button type="submit" name="language" value="ru" class="lang-switch__btn{% if LANGUAGE_CODE == "ru" %} is-active{% endif %}">RU</button>
+      <button type="submit" name="language" value="en" class="lang-switch__btn{% if LANGUAGE_CODE == "en" %} is-active{% endif %}">EN</button>
+    </form>
   </nav>
 </header>
 
@@ -27,19 +48,23 @@
 </ul>
 {% endif %}
 
-<main>
+<main id="main">
 {% block content %}{% endblock %}
 </main>
 
 <footer class="site-footer">
-  <p>{{ site_settings.parish_name }} — {{ site_settings.city }}</p>
-  {% if site_settings.address %}<p>{{ site_settings.address }}</p>{% endif %}
-  {% if site_settings.phone %}<p>{{ site_settings.phone }}</p>{% endif %}
-  {% if site_settings.realm_giving_url %}
-    <a href="{{ site_settings.realm_giving_url }}" class="btn btn--donate">{% trans "Пожертвовать" %}</a>
-  {% endif %}
-  {% if site_settings.realm_membership_url %}
-    <a href="{{ site_settings.realm_membership_url }}" class="btn">{% trans "Стать членом прихода" %}</a>
+  <div class="site-footer__actions">
+    {% if site_settings.realm_giving_url %}
+      <a href="{{ site_settings.realm_giving_url }}" class="btn btn--accent">{% trans "Пожертвовать" %}</a>
+    {% endif %}
+    {% if site_settings.realm_membership_url %}
+      <a href="{{ site_settings.realm_membership_url }}" class="btn btn--outline">{% trans "Стать членом прихода" %}</a>
+    {% endif %}
+  </div>
+  <p class="site-footer__name">{{ site_settings.parish_name }}</p>
+  <p>{{ site_settings.city }}{% if site_settings.address %} · {{ site_settings.address }}{% endif %}</p>
+  {% if site_settings.phone or site_settings.email %}
+    <p>{% if site_settings.phone %}{{ site_settings.phone }}{% endif %}{% if site_settings.phone and site_settings.email %} · {% endif %}{% if site_settings.email %}{{ site_settings.email }}{% endif %}</p>
   {% endif %}
   <p><a href="{% url 'newsletter:subscribe' %}">{% trans "Подписаться на новости" %}</a></p>
 </footer>

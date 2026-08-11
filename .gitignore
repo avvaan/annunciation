@@ -6,3 +6,7 @@ db.sqlite3
 /private_media/
 /staticfiles/
 .env
+
+node_modules/
+package.json
+package-lock.json

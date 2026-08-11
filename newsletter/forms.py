@@ -7,3 +7,4 @@ class SubscribeForm(forms.ModelForm):
     class Meta:
         model = Subscriber
         fields = ["email", "name"]
+        labels = {"email": "E-mail", "name": "Имя"}

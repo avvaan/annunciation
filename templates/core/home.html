@@ -4,6 +4,30 @@
 <h1>{{ site_settings.parish_name }}</h1>
 <p>{{ site_settings.city }}</p>
 
+<section aria-label="{% trans "Ближайшие службы" %}">
+  <h2 style="margin-top:0">{% trans "Ближайшие службы" %}</h2>
+  {% for day in upcoming_days %}
+    <article class="card service-day{% if day.fasting_level != 'none' %} service-day--fasting{% endif %}">
+      <header>
+        <strong>{{ day.date|date:"d.m.Y" }}</strong> — {{ day.weekday_label }}
+        <span class="service-day__old-style">({% trans "ст. ст." %} {{ day.old_style_date|date:"d.m" }})</span>
+      </header>
+      {% if day.feast_title %}<h3>{{ day.feast_title }}</h3>{% endif %}
+      <ul class="service-day__items">
+        {% for item in day.items.all %}
+          <li>{{ item.time|time:"H:i" }} — {{ item.service_type.name }}{% if item.note %} ({{ item.note }}){% endif %}</li>
+        {% endfor %}
+      </ul>
+      {% if day.fasting_level != "none" %}
+        <p class="service-day__fasting">{{ day.get_fasting_level_display }}</p>
+      {% endif %}
+    </article>
+  {% empty %}
+    <p>{% trans "Расписание пока не заполнено." %}</p>
+  {% endfor %}
+  <p><a href="{% url 'services:schedule' %}" class="btn">{% trans "Всё расписание" %} →</a></p>
+</section>
+
 {% if announcements %}
 <section>
   <h2>{% trans "Объявления" %}</h2>
@@ -16,6 +40,4 @@
   {% endfor %}
 </section>
 {% endif %}
-
-<p><a href="{% url 'services:schedule' %}">{% trans "Расписание богослужений" %} →</a></p>
 {% endblock %}

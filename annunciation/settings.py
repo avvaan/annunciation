@@ -106,6 +106,7 @@ LOCALE_PATHS = [BASE_DIR / "locale"]
 TIME_ZONE = "America/New_York"
 
 USE_I18N = True
+USE_THOUSAND_SEPARATOR = True
 
 USE_TZ = True
 
