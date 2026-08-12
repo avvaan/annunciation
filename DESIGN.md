@@ -4,77 +4,91 @@
 
 ## Direction
 
-**Editorial parish** — full-bleed photography, Russian book-printing antiqua, warm parchment ground, one liturgical oxblood accent.
+**Parish commons** — the donor's own device, taken literally: a floating rounded white nav pill over a rounded-corner photo hero, gradient-caption photo cards, gold pill buttons, everywhere rounded and soft-shadowed rather than hairline and flat.
 
-Brief-pinned by the user to the Vestry church reference (Awwwards Honorable Mention, Feb 2022 — documented art direction: big background images, clean flat design, typography-led). The reference site itself is unreachable from the build sandbox (`awwwards.com` and `themeforest.net` are blocked by the egress proxy); the user chose to proceed from its documented direction rather than supply screenshots, and that substitution was disclosed before any code was written.
+Donor-pinned by the user to a WordPress theme, **fse-church** ("Church WP Theme" v1.3.9, `screenshot.png` studied directly — reachable, unlike the previous direction's reference). The user chose to take the theme's shape language *literally* (not just as inspiration) and its "green" style variation's palette (deep forest-green `#4A734C` + gold `#D4A017` + cream, closest of its six variants to a liturgical register) over its default teal/amber. Copy, stock photography and lorem-ipsum content were **not** copied — only the visual system: color, shape, type pairing, card and hero composition.
 
-Replaces the previous **"Табло расписания"** direction (flat ruled departure-board timetable, paper-white/black/rubric-red). That world is now an anti-reference: it is not polished, it is discarded. What survives from it is product truth only — the schedule remains the site's centre of gravity and must stay glanceable on a phone.
+Replaces the previous **"editorial parish"** direction (full-bleed photography, Old Standard TT antiqua, umber/parchment/oxblood, no rounded corners, no shadows). That world is now an anti-reference. What survives from it is product truth only: the service schedule remains the site's centre of gravity and must stay glanceable on a phone; the members-only portal (ministries + council) stays in its own plainer, denser working register rather than adopting the public site's persuasive one — though the user did ask for the portal to be "dressed up" in the same rounded/palette language, unlike the previous direction which kept it deliberately flat.
 
-Equally refuses the gilt-scrollwork church-template default. There is no gold fill anywhere; brass appears only as hairline ornament, and the single ornamental motif in the entire system is one rule with a centred diamond.
+Still refuses the gilt-scrollwork church-template default in spirit: the donor's own gold is used structurally (fills, buttons, borders) rather than as applied ornament, and no ornamental motif was invented from nothing — the one decorative element left in the system is a plain CSS-drawn rule with a centred gold dot.
 
 ## Color
 
-Strategy: **Committed** — deep umber bands against warm parchment, one reserved accent.
+Strategy: **Committed** — deep forest-green bands against warm cream, one gold accent.
 
 | Token | Value | Use |
 |---|---|---|
-| `--paper` | `#f3ece0` | page ground |
-| `--paper-deep` | `#e9dfcd` | image wells, progress track |
-| `--surface` | `#fffdf8` | cards, inputs |
-| `--deep` | `#16120f` | dark bands, hero scrim, footer, page heads |
-| `--deep-2` | `#241d18` | cards on a dark band |
-| `--ink` | `#1c1712` | body text |
-| `--ink-2` | `#5d5346` | secondary text |
-| `--ink-on-deep` | `#f3ece0` | text on dark |
-| `--ink-on-deep-2` | `#bdb1a0` | secondary text on dark |
-| `--accent` | `#7a2230` | oxblood — fasting/feast flags, primary action, active language |
-| `--accent-deep` | `#5b1622` | accent hover/pressed |
-| `--accent-tint` | `#f0e0dc` | accent background pairing |
-| `--brass` | `#a5813f` | hairline ornament, link underlines, progress on dark — never a fill |
-| `--line` / `--line-deep` | `#d6c9b3` / `#3a2f26` | hairline rules, light and dark ground |
+| `--paper` | `#fbf6ed` | page ground |
+| `--paper-deep` | `#f1e7d2` | image wells, progress track, placeholder tiles |
+| `--surface` | `#ffffff` | cards, inputs, the floating nav pill |
+| `--deep` | `#1f3419` | dark bands, page-head fallback, footer |
+| `--deep-2` | `#2b4623` | cards sitting on a dark band |
+| `--mid` | `#4a734c` | hero's empty-state gradient only (body text on it falls under 4.5:1, so it never carries paragraph copy) |
+| `--ink` | `#1c2418` | body text |
+| `--ink-2` | `#5b6754` | secondary text |
+| `--ink-on-deep` | `#fbf6ed` | text on dark |
+| `--ink-on-deep-2` | `#c3d0bb` | secondary text on dark |
+| `--accent` | `#b8860f` | text-safe gold — underlines, borders, non-text UI |
+| `--accent-bright` | `#d4a017` | the donor's own gold — button/tag fills, paired with dark text, never with white text (2.4–3.3:1, short of 4.5:1) |
+| `--accent-deep` | `#7d5c0a` | gold text on cream or on `--accent-tint` (5.2–5.7:1) |
+| `--accent-tint` | `#f8ecc9` | accent background pairing, major-feast card fill |
+| `--line` / `--line-deep` | `#e4d9c1` / `#3c5934` | hairline rules, light and dark ground |
 | `--focus` | `#1f5fd0` | focus ring only |
+
+Every fill/text pairing was checked against WCAG: body text ≥4.5:1, non-text UI (borders, checkmarks) ≥3:1. The one trap in this palette is `--accent-bright` (the donor's vivid gold) read as white text — it doesn't clear 4.5:1 at any weight tested, so every solid gold button/tag in both `base.css` and `portal.css` pairs it with `--deep` text instead, the same way the donor's own screenshot shows dark text on its amber buttons.
+
+## Shape
+
+New to this direction — the donor's signature is roundedness, not hairlines:
+
+| Token | Value | Use |
+|---|---|---|
+| `--radius-sm` | `0.75rem` | inputs, small chips, checkboxes |
+| `--radius-md` | `1.25rem` | cards, tiles, panels |
+| `--radius-lg` | `1.75rem` | hero, page-head, the nav pill |
+| `--radius-pill` | `999px` | buttons, tags, the language switch |
+| `--shadow-sm` / `--shadow-md` / `--shadow-lg` | — | card lift, nav pill, hero/page-head |
+| `--edge` | `0.875rem` (mobile) / `1.5rem` (≥60rem) | the gutter every floating card is inset by |
 
 ## Type
 
 | Token | Face | Use |
 |---|---|---|
-| `--font-display` | **Old Standard TT** (400/700 + italic), self-hosted | every heading, hero title, feast titles, dates, timeline years, footer name |
-| `--font-body` | **PT Sans** (400/700), self-hosted | body copy, nav, labels, buttons, times |
+| `--font-display` | **Lora** (400/500/600/700 + italic), self-hosted | every heading, hero title, feast titles, dates, timeline years, footer name |
+| `--font-body` | **Inter** (400/500/600/700), self-hosted | body copy, nav, labels, buttons, times |
 
-Old Standard TT is a revival of the late-19th/early-20th-century Russian book typefaces — the typographic world this audience actually reads liturgical and academic books in, and a face outside the model-default display set. PT Sans is Cyrillic-native by design.
+The donor specifies Hedvig Letters Serif for display and Inter for body. Hedvig ships **Latin-only glyphs** (verified with `fontTools`: 0 of 66 tested Cyrillic characters present) and cannot carry a Russian-first site, so Lora stands in as the closest obtainable face — itself a Cyrillic-native book serif (designed by Cyreal), keeping the same warm, moderate-contrast register without a missing-glyph fallback. Inter is the donor's own face and is Cyrillic-native by design, so it carries over unchanged.
 
-Both self-hosted as woff2, Cyrillic + Latin subsets only (5 + 4 files). No Google Fonts CDN: an earlier pass linked it directly and it intermittently stalled page loads through this environment's proxy, against the brief's fast-loading constraint. The 700-weight Cyrillic display face and 400-weight Cyrillic body face are `<link rel=preload>`ed.
+Both self-hosted as woff2, Cyrillic + Latin subsets only (10 + 8 files, fetched once from Google's own subset endpoint rather than linked live — no Google Fonts CDN at runtime, consistent with the previous direction's fast-loading constraint). The 700-weight Cyrillic display face and 400-weight Cyrillic body face are `<link rel=preload>`ed.
 
-Base size 19px, line-height 1.65 — the audience skews elderly. Hero display is `clamp(2rem, 5vw, 3.75rem)`, well under the 6rem ceiling; the parish name is four long Russian words and larger sizes collided with the header.
+Base size 19px, line-height 1.65 — unchanged, the audience still skews elderly. `--fs-hero` and now also `--fs-3xl` (the `h1` size) are `clamp()`ed rather than fixed: a fixed 52px `h1` combined with `overflow-wrap: anywhere` was splitting long Cyrillic titles like "Расписание богослужений" mid-word on narrow phones instead of at a word boundary — caught in finish review and fixed by clamping `--fs-3xl` the same way the hero title already was.
 
 ## Components
 
-- **`.hero`** — full-bleed photograph, `min-height: min(86svh, 46rem)`, bottom-weighted three-stop scrim, content bottom-aligned with 8.5rem (mobile) / 11rem (desktop) top padding so it clears the transparent header. `.hero__media--empty` is the ruled fallback ground when no photograph exists.
-- **`.page-head`** — deep umber block for inner pages that carry no photograph.
-- **`.service-day`** — the schedule card: Old Standard tabular date, uppercase weekday, italic old-style date, feast title, hairline-divided time rows with a fixed 4.25rem time column, `.fast-flag` when applicable. No colored side rail — the flag itself carries the signal. `.service-day--major` marks a great feast the way a parish wall calendar does: the title set in capitals over a brass rule, and the card's border in brass — not a second accent colour. On a `.band--deep` the card keeps its parchment surface, so it re-asserts its own ink; inheriting the band's light text rendered it invisible.
-- **`.tile`** — image + heading + line; the 3/2 media well scales its image 1.04 on hover.
-- **`.doc-list`** — hairline-ruled rows for PDFs, icon + title + period.
-- **`.btn`** — wears a drawn letterpress plate as a 9-slice `border-image` (`plate-light.png` / `plate-accent.png`), uppercase tracked label, 48px min height. The plate supplies the printed surface and its impressed inner rule; the label stays live text, so it scales with OS text size, translates between RU and EN, and is read by screen readers. `.btn--light` (on dark grounds) drops the plate for a plain hairline — a parchment plate glares against umber. `button[type=submit]` inherits the accent plate, explicitly excluding `.lang-switch__btn`, whose job is to show the active language rather than look like a primary action.
-- **`.ornament`** — the entire ornamental budget: a drawn brass rule with a centred diamond (`divider-light.png`; `divider-dark.png` swaps in on dark bands, since each asset carries its own ground).
-- **`.timeline`**, **`.facts`**, **`.rota`**, **`.photo-grid`**, **`.portrait`**, **`.status`**, **`.fund`** — see `static/css/base.css`.
-- **Icons** — authored SVG set in `templates/_icons.html`, one 1.5px stroke on a 24×24 grid, sized to the surrounding text. No emoji (the previous build used 🔒 in ministry templates; replaced).
-- **Nav** — transparent over a hero (`body.has-hero`), solid otherwise. Checkbox toggle with an always-visible "Меню" text label; the checkbox is a sibling of both the header row and the nav, which the `~` selector requires.
+- **`.site-header__bar`** — the one floating card: white, `--radius-lg`, `--shadow-md`, inset by `--edge` from the viewport on every page (hero, page-head, or plain). Absolutely positioned over a hero or page-head; static at the top of plain pages. The mobile-toggle checkbox sits *outside* this card so `:checked ~ .site-header__bar .site-nav` (a sibling combinator into a descendant) can still open it — documented in `base.css` since it's easy to break by nesting the checkbox back inside.
+- **`.hero`** / **`.page-head`** — both a rounded, inset, shadowed card (`margin: var(--edge)`, `--radius-lg`) rather than full-bleed; the donor's photo is presented as an object on the page, not the page itself. `.page-head` is bottom-anchored (`display:flex; align-items:flex-end`) with generous top padding, not just enough to clear the nav bar's *typical* height — the bar's actual height varies with how many lines the parish name wraps to, and a page-head sized to the typical case clipped under the bar on the day it wrapped a line taller.
+- **`.tile`** — the donor's signature card: photo, `--radius-md`, dark gradient scrim, caption (heading + line) printed directly onto the photo's bottom edge inside `.tile__media`, not set below it as plain text.
+- **`.sday`** (schedule card) — same information hierarchy as before (weekday leads, date is secondary, fasting flag in the header, per-item times in a fixed column), now a white rounded card with a soft shadow; a major feast gets the `--accent-tint` fill instead of a second border color.
+- **`.btn`** — a solid rounded pill, not a drawn plate: `--surface` + `--line` border by default, `--accent-bright` fill + `--deep` text for the primary action, an outline-only `--light` variant for dark grounds. Buttons lift 1px with a stronger shadow on hover/focus rather than just darkening.
+- **`.ornament`** — the entire ornamental budget, now three lines of CSS instead of an image: a hairline with a centred `0.4rem` gold dot. The previous direction's brass-drawn divider/plate/cross/border-strip PNGs (`static/images/ornament/`) are removed — none of them fit a world with no drawn ornament left to reskin, and the footer cross is now `_icons.html`'s existing authored SVG (`icon="cross"`) colored via `currentColor` instead of a raster asset baked to the old dark-umber ground.
+- **`.pnav` / `.pbtn` / `.tag` / `.ppanel` / `.pempty` / `.pcheck`** (portal, `portal.css`) — reskinned into the same rounded/gold language (pill buttons and tags, rounded panels, a floating rounded nav bar) while keeping the portal's own fixed type scale, row-based lists instead of cards, and flat information density — the user asked for the portal "dressed up" to match, not converted into marketing UI. The `.pcheck` (task done-checkbox) draws its checkmark in `--deep`, not white, since white-on-gold fails the 3:1 floor for UI graphics at this token's lightness.
+- **Icons** — unchanged: authored SVG set in `templates/_icons.html`, one 1.5px stroke on a 24×24 grid. No emoji.
 
 ## Layout
 
-Mobile-first. `--wide: 74rem` content shell, `--measure: 38rem` prose. Single breakpoint at `60rem` un-collapses the nav. Sections alternate parchment `.band` and umber `.band--deep` to pace the scroll.
+Mobile-first, unchanged structurally. `--wide: 74rem` content shell, `--measure: 38rem` prose. Single breakpoint at `60rem`. What changed is that every section-level surface (`band--deep`, `.hero`, `.page-head`, `.site-footer`) is now inset by `--edge` and rounded rather than running edge-to-edge, so the cream page ground is always visible as a margin around every dark block — the donor's floating-card composition applied at every scale, not just the hero.
 
 ## Motion
 
-One authored moment: the hero title, lede and actions rise 1.25rem out of a 6px blur on an exponential ease-out, staggered 90ms. Nothing else animates on scroll — no per-section entrances, no sliders. Tile images have a 0.6s hover scale. `prefers-reduced-motion` disables the hero entrance and smooth scrolling.
+Unchanged: one authored moment (hero title/lede/actions rise 1.25rem out of a 6px blur, staggered), tile images scale 1.04 on hover, `prefers-reduced-motion` disables both. Buttons gained a small translateY+shadow lift on hover, consistent with the rest of this direction's soft-shadow language.
 
 ## Browser surfaces
 
-Themed rather than left to the browser: `::selection` (oxblood on parchment), caret color, scrollbar track and thumb (both WebKit and standard properties), focus ring, link underline color and offset, and `font-variant-numeric: tabular-nums` on every date, time, year and money figure.
+Re-themed to the new palette rather than left over from the previous one: `::selection` (gold-bright on deep-green text), caret color, scrollbar track/thumb (now pill-radius'd), focus ring, link underline color, `font-variant-numeric: tabular-nums` on every date/time/year/money figure — all unchanged in mechanism, just repointed at the new tokens.
 
 ## Imagery
 
-Six photographs supplied by the parish, resized and re-encoded into `static/images/photos/`:
+The same six parish photographs carry over unchanged (`static/images/photos/`) — nothing about the donor swap required new photography, and the brief's rule still holds: real people/places get real photography only, generated imagery stays decorative.
 
 | File | Subject | Used as |
 |---|---|---|
@@ -85,32 +99,16 @@ Six photographs supplied by the parish, resized and re-encoded into `static/imag
 | `icon-trinity.jpg` | Rublev Trinity icon among flowers | available, not yet placed |
 | `parishioners.jpg` | Two parishioners with an analogion | available, not yet placed |
 
-Each is a shipped default that an admin upload overrides (`SiteSettings.hero_image`, `BuildingProject.cover_image`, `RussianSchoolPage.cover_image`, `Ministry.image`), so the site is never empty out of the box and never blocks the secretary from replacing a photo.
+Each is a shipped default that an admin upload overrides, so the site is never empty out of the box.
 
-A seventh supplied file — an Annunciation icon graphic — was **not** used: it carries another monastery's watermark and burnt-in lettering, so it is third-party branded artwork rather than parish material.
-
-Favicon and OG card are hand-authored assets from the previous pass and are due a refresh into this world.
-
-### Drawn ornament (Higgsfield)
-
-Generated at the user's request in this design's palette, then trimmed, downscaled and palette-quantised into `static/images/ornament/` — 140KB for the whole set, against the brief's loading budget. The Higgsfield CDN is blocked by this session's egress policy, so the user exported them and handed them back as files.
-
-| File | Use |
-|---|---|
-| `divider-light.png` / `divider-dark.png` | `.ornament` on parchment / on umber |
-| `plate-light.png` / `plate-accent.png` | 9-slice button plates |
-| `cross.png` | three-bar cross emblem in the footer |
-| `border-strip.png` | Byzantine band along the footer's top edge, 1.75rem tall, nowhere else |
-
-Two further generations — a corner interlace flourish and a wheat-and-vine motif — were rendered well but not installed: both are dense enough to read as the gilt-scrollwork the brief rules out, and neither had a place the design actually needed. They remain in the Higgsfield history if a use appears.
+The previous direction's drawn brass ornament set (`divider-light/dark.png`, `plate-light/accent.png`, `cross.png`, `border-strip.png` — six Higgsfield-generated PNGs, ~132KB) is deleted: none of it belongs to a world with no drawn ornament, buttons that are solid pills rather than 9-slice plates, and a footer cross that's now an inline SVG. `favicon.svg` and `og-image.png` were left as-is (plain black-on-white, doesn't clash) rather than regenerated — a candidate for a future pass, not done here.
 
 ## Coverage against the brief
 
-Every section the brief names now exists and is admin-fillable: schedule, calendar & bulletin, building project, Russian school, parish history, **first visit**, **clergy**, newsletter sign-up, **donations**, and the ministries portal. The last three arrived after the donor site-map became readable; before that the clergy cards lived inside the About page and giving was only a pair of footer links.
-
-The `Inquiry` form on the first-visit page is the one place a stranger can start a conversation: name, what brings them (Orthodox / curious / wants to speak with a priest), contact preference, best time, message. It refuses to submit with neither an e-mail nor a phone, since a reply would be impossible.
+Unchanged from the previous pass — every section the original brief named exists and is admin-fillable: schedule, calendar & bulletin, building project, Russian school, parish history, first visit, clergy, newsletter sign-up, donations, and the ministries + council portals. This pass was a visual system replacement, not a content-model change; every model, view and URL is untouched.
 
 ## Known gaps / next steps
 
-- `icon-trinity.jpg` and `parishioners.jpg` have no home yet — candidates for the history page and the about page once real captions exist.
-- Clergy portraits, exterior shots of the building, and construction-progress photos are still absent; those fields fall back to a drawn placeholder tile.
+- `icon-trinity.jpg` and `parishioners.jpg` still have no home.
+- Clergy portraits, exterior/construction photos are still absent; those fields fall back to a drawn placeholder tile.
+- `favicon.svg` / `og-image.png` are functional but untouched by this palette swap — worth a refresh into gold-on-green if another design pass happens.

@@ -11,13 +11,13 @@
    ========================================================================== */
 
 body.portal {
-  /* Инверсия публичной раскладки: там пергаментный лист и белые карточки,
-     здесь белый лист и пергаментная хром-полоса. Та же палитра, другая
-     комната — и плотный текст на белом читается лучше. */
-  --pp-ground:  #fffdf8;
-  --pp-chrome:  #f3ece0;
-  --pp-chrome-2:#e9dfcd;
-  --pp-row-hi:  #faf5ec;
+  /* Инверсия публичной раскладки: там кремовый лист и белые карточки,
+     здесь белый лист и кремовая хром-полоса. Та же палитра, та же скруглённая
+     форма шаблона, другая комната — и плотный текст на белом читается лучше. */
+  --pp-ground:  var(--surface);
+  --pp-chrome:  var(--paper);
+  --pp-chrome-2:var(--paper-deep);
+  --pp-row-hi:  #f7f0e0;
 
   /* Шкала фиксированная, шаг ~1.18. Текучие заголовки в рабочем интерфейсе
      только мешают: человек сидит за одним и тем же экраном. */
@@ -38,16 +38,20 @@ body.portal {
    заперта вне body.portal (см. base.css), так что здесь достаточно задать
    собственный вид, ничего не перебивая. Флажок «готово», ссылка «выйти» и
    .pbtn — самостоятельные компоненты и одеваются ниже, поэтому исключены. */
+/* accent-bright + deep-green text, not white: white on the text-safe gold
+   token is 3.25:1, short of the 4.5:1 floor for button-sized text — the same
+   fill-plus-dark-text pairing the public .btn--accent uses. */
 body.portal button[type="submit"]:not(.pcheck):not(.pnav__out):not(.pbtn) {
   display: inline-flex; align-items: center; justify-content: center;
   min-height: var(--tap); padding: 0.4em 1.1em;
   font-family: var(--font-body); font-size: var(--pp-sm); font-weight: 700;
   letter-spacing: normal; text-transform: none; cursor: pointer;
-  color: #fff; background: var(--accent); border: 1px solid var(--accent);
+  border-radius: var(--radius-pill);
+  color: var(--deep); background: var(--accent-bright); border: 1px solid var(--accent-bright);
   transition: background 0.15s ease, border-color 0.15s ease;
 }
 body.portal button[type="submit"]:not(.pcheck):not(.pnav__out):not(.pbtn):hover {
-  background: var(--accent-deep); border-color: var(--accent-deep); filter: none;
+  background: #e0ad25; border-color: #e0ad25; filter: none;
 }
 
 /* Один шрифт на весь портал. Книжная антиква — голос публичной части;
@@ -66,10 +70,15 @@ body.portal .shell { max-width: 78rem; }
 /* --------------------------------------------------------------------------
    Шапка портала — одна полоса, а не публичное меню плюс чёрная плита
    -------------------------------------------------------------------------- */
+/* Same floating rounded bar as the public header, at portal density: a
+   sticky strip rather than a tall pill, since this one stays on screen. */
 .pnav {
   background: var(--pp-chrome);
   border-bottom: 1px solid var(--line);
-  position: sticky; top: 0; z-index: 20;
+  position: sticky; top: var(--edge); z-index: 20;
+  margin: var(--edge) var(--edge) 0;
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
 }
 
 .pnav__bar {
@@ -208,14 +217,15 @@ a.prow__title:hover { color: var(--accent); text-decoration: underline; }
    -------------------------------------------------------------------------- */
 .tag {
   display: inline-flex; align-items: center; gap: 0.4em;
-  padding: 0.15em 0.55em; border: 1px solid var(--line);
+  padding: 0.15em 0.65em; border: 1px solid var(--line);
+  border-radius: var(--radius-pill);
   font-size: var(--pp-xs); font-weight: 700; line-height: 1.4;
   letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap;
   color: var(--ink-2); background: var(--pp-chrome);
 }
 .tag svg { width: 0.9em; height: 0.9em; }
-.tag--overdue { color: #fff; background: var(--accent); border-color: var(--accent); }
-.tag--soon    { color: var(--ink); background: transparent; border-color: var(--brass); }
+.tag--overdue { color: var(--deep); background: var(--accent-bright); border-color: var(--accent-bright); }
+.tag--soon    { color: var(--accent-deep); background: transparent; border-color: var(--accent); }
 .tag--done    { color: var(--ink-2); background: transparent; border-style: dashed; }
 .tag--draft   { color: var(--ink-2); background: transparent; }
 .tag--closed  { color: var(--accent-deep); background: var(--accent-tint); border-color: var(--accent-tint); }
@@ -226,18 +236,19 @@ a.prow__title:hover { color: var(--accent); text-decoration: underline; }
    -------------------------------------------------------------------------- */
 .pbtn {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5em;
-  min-height: 2.5rem; padding: 0.4em 1em;
+  min-height: 2.5rem; padding: 0.4em 1.1em;
   font-family: var(--font-body); font-size: var(--pp-sm); font-weight: 700;
   line-height: 1.2; text-decoration: none; cursor: pointer;
+  border-radius: var(--radius-pill);
   color: var(--ink); background: var(--pp-ground);
-  border: 1px solid var(--ink); border-image: none;
+  border: 1px solid var(--line); border-image: none;
   transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
 }
 .pbtn:hover { background: var(--pp-chrome); color: var(--ink); }
 .pbtn--primary {
-  color: #fff; background: var(--accent); border-color: var(--accent);
+  color: var(--deep); background: var(--accent-bright); border-color: var(--accent-bright);
 }
-.pbtn--primary:hover { background: var(--accent-deep); border-color: var(--accent-deep); color: #fff; }
+.pbtn--primary:hover { background: #e0ad25; border-color: #e0ad25; color: var(--deep); }
 .pbtn--quiet { border-color: var(--line); color: var(--ink-2); }
 .pbtn--quiet:hover { border-color: var(--ink-2); color: var(--ink); }
 .pbtn[disabled], .pbtn[aria-disabled="true"] {
@@ -255,12 +266,15 @@ body.portal .pcheck {
   width: 1.35rem; height: 1.35rem; min-height: 0; padding: 0; margin: 0;
   flex: none; cursor: pointer;
   border: 1.5px solid var(--ink-2); background: var(--pp-ground);
+  border-radius: 0.35rem;
   display: inline-grid; place-content: center;
   transition: border-color 0.15s ease, background 0.15s ease;
 }
+/* Checkmark drawn in deep green, not white: white-on-gold falls under the
+   3:1 floor for UI graphics at this token's lightness. */
 body.portal .pcheck::before {
   content: ""; width: 0.7rem; height: 0.4rem;
-  border-left: 2px solid var(--pp-ground); border-bottom: 2px solid var(--pp-ground);
+  border-left: 2px solid var(--deep); border-bottom: 2px solid var(--deep);
   transform: rotate(-45deg) translate(0.05rem, -0.1rem); opacity: 0;
   transition: opacity 0.12s ease;
 }
@@ -269,7 +283,7 @@ body.portal .pcheck::before {
 body.portal .pcheck::after { content: ""; position: absolute; inset: -11px; }
 body.portal .pcheck:hover { border-color: var(--accent); }
 body.portal .pcheck:checked, body.portal .pcheck[data-done="true"] {
-  background: var(--accent); border-color: var(--accent);
+  background: var(--accent-bright); border-color: var(--accent-bright);
 }
 body.portal .pcheck:checked::before, body.portal .pcheck[data-done="true"]::before { opacity: 1; }
 .pcheck-form { display: inline-flex; margin: 0; }
@@ -277,16 +291,17 @@ body.portal .pcheck:checked::before, body.portal .pcheck[data-done="true"]::befo
 /* Переключатель выборки: один элемент вместо двух отдельных кнопок,
    чтобы было видно, что это одно решение с двумя ответами. */
 .seg {
-  display: inline-flex; border: 1px solid var(--ink); background: var(--pp-ground);
+  display: inline-flex; border: 1px solid var(--line); background: var(--pp-ground);
+  border-radius: var(--radius-pill); overflow: hidden;
 }
 .seg a {
   display: inline-flex; align-items: center; min-height: 2.5rem;
   padding: 0 var(--sp-3); text-decoration: none;
   font-size: var(--pp-sm); font-weight: 700; color: var(--ink);
 }
-.seg a + a { border-left: 1px solid var(--ink); }
+.seg a + a { border-left: 1px solid var(--line); }
 .seg a:hover { background: var(--pp-chrome); }
-.seg a[aria-current="true"] { background: var(--accent); color: #fff; }
+.seg a[aria-current="true"] { background: var(--deep); color: var(--ink-on-deep); }
 @media (max-width: 40rem) { .seg a { min-height: var(--tap); } }
 
 .ptoolbar {
@@ -306,6 +321,7 @@ body.portal .pcheck:checked::before, body.portal .pcheck[data-done="true"]::befo
    -------------------------------------------------------------------------- */
 .ppanel {
   border: 1px solid var(--line); background: var(--pp-ground);
+  border-radius: var(--radius-md); box-shadow: var(--shadow-sm);
   padding: var(--sp-3);
 }
 .ppanel + .ppanel { margin-top: var(--sp-2); }
@@ -321,7 +337,8 @@ body.portal .pcheck:checked::before, body.portal .pcheck[data-done="true"]::befo
 .pnotice {
   display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap;
   padding: var(--sp-2) var(--sp-3);
-  background: var(--accent-tint); border-left: 3px solid var(--accent);
+  background: var(--accent-tint); border: 1px solid var(--accent);
+  border-radius: var(--radius-md);
   font-size: var(--pp-sm); margin-bottom: var(--sp-4);
 }
 .pnotice strong { color: var(--accent-deep); }
@@ -332,7 +349,7 @@ body.portal .pcheck:checked::before, body.portal .pcheck[data-done="true"]::befo
    -------------------------------------------------------------------------- */
 .pempty {
   padding: var(--sp-5) var(--sp-3);
-  border: 1px dashed var(--line);
+  border: 1px dashed var(--line); border-radius: var(--radius-md);
   text-align: center; color: var(--ink-2); font-size: var(--pp-sm);
 }
 .pempty strong { display: block; color: var(--ink); font-size: var(--pp-base); margin-bottom: var(--sp-1); }
@@ -351,7 +368,7 @@ body.portal .pform input,
 body.portal .pform textarea,
 body.portal .pform select {
   font-size: var(--pp-base); padding: 0.55em 0.7em; min-height: 2.5rem;
-  border: 1px solid var(--line); background: var(--pp-ground);
+  border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--pp-ground);
 }
 body.portal .pform input:focus,
 body.portal .pform textarea:focus,
@@ -359,13 +376,14 @@ body.portal .pform select:focus { border-color: var(--accent); }
 body.portal .pform .helptext { font-size: var(--pp-xs); }
 /* Кнопка отправки в портале не носит печатную плашку публичной части */
 body.portal .pform button[type="submit"] {
-  border-image: none; background: var(--accent); color: #fff;
-  border: 1px solid var(--accent); text-transform: none;
+  border-image: none; background: var(--accent-bright); color: var(--deep);
+  border: 1px solid var(--accent-bright); text-transform: none;
+  border-radius: var(--radius-pill);
   letter-spacing: 0; font-size: var(--pp-sm); padding: 0.4em 1.1em;
   min-height: var(--tap);
 }
 body.portal .pform button[type="submit"]:hover {
-  background: var(--accent-deep); border-color: var(--accent-deep); filter: none;
+  background: #e0ad25; border-color: #e0ad25; filter: none;
 }
 
 /* --------------------------------------------------------------------------

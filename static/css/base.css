@@ -1,86 +1,152 @@
 /* ==========================================================================
    Приход Благовещения Пресвятой Богородицы
-   Direction: editorial parish — full-bleed photography, Russian book-printing
-   antiqua, warm parchment ground, oxblood liturgical accent.
+   Direction: parish commons — donor-pinned to the fse-church WordPress theme's
+   shape language: a floating rounded nav pill over a rounded-corner photo
+   card, dark-green bands, gold pill actions, warm cream ground. Book serif
+   (Lora) for display, grotesque (Inter) for reading and UI.
    ========================================================================== */
 
 /* --------------------------------------------------------------------------
    Fonts — self-hosted (no CDN round-trip; the brief pins fast loading)
-   Old Standard TT: revival of pre-revolutionary Russian book typefaces —
-   the display voice. PT Sans: Cyrillic-native workhorse — body and UI.
+   Lora: the closest obtainable face to the donor's Hedvig Letters Serif —
+   Hedvig ships Latin-only glyphs, so it cannot carry a Russian-first site.
+   Lora is itself a Cyrillic-native book serif (Cyreal), so it keeps the same
+   warm, moderate-contrast display register without a missing-glyph fallback.
+   Inter: the donor's own body face — Cyrillic-native, used as specified.
    -------------------------------------------------------------------------- */
 @font-face {
-  font-family: "Old Standard"; font-style: normal; font-weight: 400; font-display: swap;
-  src: url("/static/fonts/oldstandard-400-cyrillic.woff2") format("woff2");
+  font-family: "Lora"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("/static/fonts/lora-400-normal-cyrillic.woff2") format("woff2");
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 @font-face {
-  font-family: "Old Standard"; font-style: normal; font-weight: 400; font-display: swap;
-  src: url("/static/fonts/oldstandard-400-latin.woff2") format("woff2");
+  font-family: "Lora"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("/static/fonts/lora-400-normal-latin.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+2000-206F, U+20AC, U+2122;
 }
 @font-face {
-  font-family: "Old Standard"; font-style: normal; font-weight: 700; font-display: swap;
-  src: url("/static/fonts/oldstandard-700-cyrillic.woff2") format("woff2");
+  font-family: "Lora"; font-style: normal; font-weight: 500; font-display: swap;
+  src: url("/static/fonts/lora-500-normal-cyrillic.woff2") format("woff2");
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 @font-face {
-  font-family: "Old Standard"; font-style: normal; font-weight: 700; font-display: swap;
-  src: url("/static/fonts/oldstandard-700-latin.woff2") format("woff2");
+  font-family: "Lora"; font-style: normal; font-weight: 500; font-display: swap;
+  src: url("/static/fonts/lora-500-normal-latin.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+2000-206F, U+20AC, U+2122;
 }
 @font-face {
-  font-family: "Old Standard"; font-style: italic; font-weight: 400; font-display: swap;
-  src: url("/static/fonts/oldstandard-400i-cyrillic.woff2") format("woff2");
+  font-family: "Lora"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url("/static/fonts/lora-600-normal-cyrillic.woff2") format("woff2");
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 @font-face {
-  font-family: "PT Sans"; font-style: normal; font-weight: 400; font-display: swap;
-  src: url("/static/fonts/ptsans-400-cyrillic.woff2") format("woff2");
-  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
-}
-@font-face {
-  font-family: "PT Sans"; font-style: normal; font-weight: 400; font-display: swap;
-  src: url("/static/fonts/ptsans-400-latin.woff2") format("woff2");
+  font-family: "Lora"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url("/static/fonts/lora-600-normal-latin.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+2000-206F, U+20AC, U+2122;
 }
 @font-face {
-  font-family: "PT Sans"; font-style: normal; font-weight: 700; font-display: swap;
-  src: url("/static/fonts/ptsans-700-cyrillic.woff2") format("woff2");
+  font-family: "Lora"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("/static/fonts/lora-700-normal-cyrillic.woff2") format("woff2");
   unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
 }
 @font-face {
-  font-family: "PT Sans"; font-style: normal; font-weight: 700; font-display: swap;
-  src: url("/static/fonts/ptsans-700-latin.woff2") format("woff2");
+  font-family: "Lora"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("/static/fonts/lora-700-normal-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+2000-206F, U+20AC, U+2122;
+}
+@font-face {
+  font-family: "Lora"; font-style: italic; font-weight: 400; font-display: swap;
+  src: url("/static/fonts/lora-400-italic-cyrillic.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Lora"; font-style: italic; font-weight: 400; font-display: swap;
+  src: url("/static/fonts/lora-400-italic-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+2000-206F, U+20AC, U+2122;
+}
+@font-face {
+  font-family: "Inter"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("/static/fonts/inter-400-normal-cyrillic.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Inter"; font-style: normal; font-weight: 400; font-display: swap;
+  src: url("/static/fonts/inter-400-normal-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+2000-206F, U+20AC, U+2122;
+}
+@font-face {
+  font-family: "Inter"; font-style: normal; font-weight: 500; font-display: swap;
+  src: url("/static/fonts/inter-500-normal-cyrillic.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Inter"; font-style: normal; font-weight: 500; font-display: swap;
+  src: url("/static/fonts/inter-500-normal-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+2000-206F, U+20AC, U+2122;
+}
+@font-face {
+  font-family: "Inter"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url("/static/fonts/inter-600-normal-cyrillic.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Inter"; font-style: normal; font-weight: 600; font-display: swap;
+  src: url("/static/fonts/inter-600-normal-latin.woff2") format("woff2");
+  unicode-range: U+0000-00FF, U+2000-206F, U+20AC, U+2122;
+}
+@font-face {
+  font-family: "Inter"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("/static/fonts/inter-700-normal-cyrillic.woff2") format("woff2");
+  unicode-range: U+0301, U+0400-045F, U+0490-0491, U+04B0-04B1, U+2116;
+}
+@font-face {
+  font-family: "Inter"; font-style: normal; font-weight: 700; font-display: swap;
+  src: url("/static/fonts/inter-700-normal-latin.woff2") format("woff2");
   unicode-range: U+0000-00FF, U+2000-206F, U+20AC, U+2122;
 }
 
 :root {
-  /* -- colour: warm parchment, deep umber, one liturgical oxblood -- */
-  --paper:        #f3ece0;
-  --paper-deep:   #e9dfcd;
-  --surface:      #fffdf8;
-  --deep:         #16120f;
-  --deep-2:       #241d18;
+  /* -- colour: cream ground, deep forest-green bands, one gold accent --
+     Donor palette (fse-church "green" style variation): background #4A734C,
+     accent #D4A017, cream #fbf6ed — closest of its six variants to a
+     liturgical green-and-gold register, per the user's choice. */
+  --paper:        #fbf6ed;
+  --paper-deep:   #f1e7d2;
+  --surface:      #ffffff;
+  --deep:         #1f3419;   /* darkest green — footer, deepest bands */
+  --deep-2:       #2b4623;   /* cards/tiles sitting on a dark band */
+  --mid:          #4a734c;   /* mid green — hero scrim, page-head */
 
-  --ink:          #1c1712;
-  --ink-2:        #5d5346;
-  --ink-on-deep:  #f3ece0;
-  --ink-on-deep-2:#bdb1a0;
+  --ink:          #1c2418;
+  --ink-2:        #5b6754;
+  --ink-on-deep:  #fbf6ed;
+  --ink-on-deep-2:#c3d0bb;
 
-  --accent:       #7a2230;   /* oxblood — feast/fast flags, primary action */
-  --accent-deep:  #5b1622;
-  --accent-tint:  #f0e0dc;
-  --brass:        #a5813f;   /* hairline ornament only, never a fill */
+  --accent:       #b8860f;   /* gold, darkened off the donor's #D4A017 to hold 4.5:1 on cream */
+  --accent-bright:#d4a017;   /* donor's own gold — fills, large glyphs, dark grounds only */
+  --accent-deep:  #7d5c0a;   /* text-safe gold — 5.2:1+ on both paper and accent-tint */
+  --accent-tint:  #f8ecc9;
 
-  --line:         #d6c9b3;
-  --line-deep:    #3a2f26;
+  --line:         #e4d9c1;
+  --line-deep:    #3c5934;
 
   --focus:        #1f5fd0;
 
+  /* -- shape: the donor's signature — everything rounded, nothing hairline -- */
+  --radius-sm:  0.75rem;
+  --radius-md:  1.25rem;
+  --radius-lg:  1.75rem;
+  --radius-pill: 999px;
+
+  --shadow-sm: 0 1px 2px rgba(20,24,15,0.07), 0 2px 6px rgba(20,24,15,0.05);
+  --shadow-md: 0 10px 28px -10px rgba(15,20,10,0.32);
+  --shadow-lg: 0 24px 60px -16px rgba(10,15,8,0.4);
+
+  --edge: 0.875rem;   /* gutter between viewport/section edge and a floating card */
+
   /* -- type -- */
-  --font-display: "Old Standard", Georgia, "Times New Roman", serif;
-  --font-body:    "PT Sans", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+  --font-display: "Lora", Georgia, "Times New Roman", serif;
+  --font-body:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
   --fs-xs:   0.875rem;
   --fs-sm:   1rem;
@@ -88,7 +154,11 @@
   --fs-lg:   1.375rem;
   --fs-xl:   1.75rem;
   --fs-2xl:  2.375rem;
-  --fs-3xl:  3.25rem;
+  /* clamped, not fixed: a fixed 52px h1 combined with a long Cyrillic word
+     forces overflow-wrap:anywhere to split mid-word on narrow phones
+     (e.g. "Расписание богослужений" on .page-head) — the hero title already
+     solved this via --fs-hero's clamp; h1 needed the same treatment. */
+  --fs-3xl:  clamp(1.85rem, 6vw, 3.25rem);
   --fs-hero: clamp(2rem, 5vw, 3.75rem);
 
   /* -- space -- */
@@ -104,6 +174,8 @@
   --wide: 74rem;
   --tap: 48px;
 }
+
+@media (min-width: 60rem) { :root { --edge: 1.5rem; } }
 
 /* --------------------------------------------------------------------------
    Reset + browser surfaces (selection, caret, scrollbar, focus all themed)
@@ -123,14 +195,14 @@ body {
   -webkit-font-smoothing: antialiased;
 }
 
-::selection { background: var(--accent); color: var(--surface); }
+::selection { background: var(--accent-bright); color: var(--deep); }
 
 * { scrollbar-color: var(--ink-2) var(--paper-deep); scrollbar-width: thin; }
 ::-webkit-scrollbar { width: 12px; height: 12px; }
 ::-webkit-scrollbar-track { background: var(--paper-deep); }
-::-webkit-scrollbar-thumb { background: var(--ink-2); border: 3px solid var(--paper-deep); }
+::-webkit-scrollbar-thumb { background: var(--ink-2); border: 3px solid var(--paper-deep); border-radius: var(--radius-pill); }
 
-:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; }
+:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 0.25rem; }
 
 img { max-width: 100%; display: block; }
 
@@ -142,7 +214,7 @@ h1, h2, h3, h4 {
   font-family: var(--font-display);
   font-weight: 700;
   line-height: 1.12;
-  letter-spacing: -0.012em;
+  letter-spacing: -0.008em;
   margin: 0 0 var(--sp-3);
   text-wrap: balance;
 }
@@ -151,18 +223,19 @@ h1 { font-size: var(--fs-3xl); }
    Без переноса «богослужений» шире экрана телефона уже на 320px. */
 h1, h2, h3, h4, .site-header__title, .site-footer__name { overflow-wrap: anywhere; }
 h2 { font-size: var(--fs-2xl); }
-h3 { font-size: var(--fs-xl); font-weight: 400; }
+h3 { font-size: var(--fs-xl); font-weight: 600; }
 h4 { font-size: var(--fs-lg); }
 
 p { margin: 0 0 var(--sp-3); }
-a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.22em; text-decoration-color: var(--brass); }
-a:hover { text-decoration-color: var(--accent); color: var(--accent); }
+a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.22em; text-decoration-color: var(--accent); }
+a:hover { text-decoration-color: var(--accent); color: var(--accent-deep); }
 
 .skip-link {
   position: absolute; left: -999px; top: 0; z-index: 200;
   background: var(--deep); color: var(--ink-on-deep); padding: var(--sp-2) var(--sp-3);
+  border-radius: 0 0 var(--radius-sm) 0;
 }
-.skip-link:focus { left: var(--sp-2); top: var(--sp-2); }
+.skip-link:focus { left: 0; top: 0; }
 
 /* --------------------------------------------------------------------------
    Layout primitives
@@ -176,10 +249,11 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
 .band--deep {
   background: var(--deep); color: var(--ink-on-deep);
   padding-block: var(--sp-7); margin-block: var(--sp-6);
+  margin-inline: var(--edge); border-radius: var(--radius-lg);
 }
 .band--deep h1, .band--deep h2, .band--deep h3 { color: var(--ink-on-deep); }
-.band--deep a { text-decoration-color: var(--brass); }
-.band--deep a:hover { color: #e8b877; }
+.band--deep a { text-decoration-color: var(--accent-bright); }
+.band--deep a:hover { color: var(--accent-bright); }
 
 .section-head {
   display: flex; align-items: baseline; justify-content: space-between;
@@ -188,35 +262,48 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
 }
 .section-head h2 { margin-bottom: 0; }
 
-/* Ornament: a drawn brass rule with a centred diamond — the whole ornamental
-   budget of the design, standing in for gilt scrollwork. The asset carries its
-   own ground, so the dark variant swaps the file rather than inverting it. */
+/* Ornament: the donor spends its whole ornamental budget on shape and
+   shadow, not drawn motifs — so a section break here is a plain gold rule
+   with a small centred dot, authored in CSS, not an image. */
 .ornament {
-  height: 2.75rem;
-  margin-block: var(--sp-5);
-  background: url("/static/images/ornament/divider-light.png") center / contain no-repeat;
+  height: 1px; max-width: 5rem; margin: var(--sp-5) auto;
+  background: var(--line); position: relative; border: none;
 }
-.band--deep .ornament, .ornament--dark {
-  background-image: url("/static/images/ornament/divider-dark.png");
+.ornament::after {
+  content: ""; position: absolute; top: 50%; left: 50%;
+  width: 0.4rem; height: 0.4rem; border-radius: 50%;
+  background: var(--accent); transform: translate(-50%, -50%);
 }
+.band--deep .ornament, .ornament--dark { background: var(--line-deep); }
 
 /* --------------------------------------------------------------------------
-   Header / navigation — transparent over a hero, solid elsewhere
+   Header / navigation — a floating rounded bar, always, over a photo or
+   over the plain page ground alike (the donor's one recognisable device).
+
+   `.site-header__bar` is the one visible card (background, radius, shadow);
+   `.nav-toggle-input` sits outside it so the checked-state selectors can
+   reach into it with `~ .site-header__bar …` (a sibling combinator, then a
+   descendant one) — the checkbox itself stays a true sibling of the card
+   the whole trick depends on, even though the toggle button and the nav it
+   opens both now live one level deeper, merged into a single panel.
    -------------------------------------------------------------------------- */
 .site-header {
   position: relative; z-index: 50;
-  background: var(--surface);
-  border-bottom: 1px solid var(--line);
+  padding: var(--edge) var(--edge) 0;
 }
-.has-hero .site-header {
-  position: absolute; inset: 0 0 auto; background: transparent; border-bottom-color: transparent;
-  color: var(--ink-on-deep);
+.has-hero .site-header, .has-page-head .site-header {
+  position: absolute; inset: 0 0 auto; background: transparent;
 }
-.has-hero .site-header .site-header__title { color: var(--ink-on-deep); }
+
+.site-header__bar {
+  max-width: calc(var(--wide) + 2 * var(--edge)); margin-inline: auto;
+  background: var(--surface); color: var(--ink);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
 
 .site-header__row {
-  max-width: var(--wide); margin-inline: auto;
-  padding: var(--sp-3);
+  padding: var(--sp-2) var(--sp-2) var(--sp-2) var(--sp-4);
   display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2) var(--sp-3);
   /* при системном шрифте 200% имя прихода и кнопка «Меню» не встают в строку */
   flex-wrap: wrap;
@@ -224,102 +311,108 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
 .site-header__title {
   font-family: var(--font-display); font-weight: 700;
   font-size: var(--fs-sm); line-height: 1.15;
-  text-decoration: none;
+  text-decoration: none; color: var(--ink);
   /* ch растёт вместе с кеглем, поэтому предел в ch при 200% работает против
      себя; ограничиваем долей строки и позволяем сжиматься */
   min-width: 0; flex: 1 1 12rem;
 }
-@media (min-width: 60rem) { .site-header__title { font-size: var(--fs-lg); flex: 0 1 auto; max-width: 30rem; } }
-.site-header__title:hover { color: inherit; }
+@media (min-width: 60rem) { .site-header__title { font-size: var(--fs-lg); flex: 0 1 auto; max-width: 24rem; } }
+.site-header__title:hover { color: var(--accent-deep); text-decoration: none; }
 
 .nav-toggle-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
 .nav-toggle-btn {
   display: inline-flex; align-items: center; gap: var(--sp-1);
-  font-family: var(--font-body); font-weight: 700; font-size: var(--fs-sm);
-  letter-spacing: 0.06em; text-transform: uppercase;
-  border: 1px solid currentColor; padding: var(--sp-1) var(--sp-3);
+  font-family: var(--font-body); font-weight: 600; font-size: var(--fs-sm);
+  border-radius: var(--radius-pill);
+  border: 1px solid var(--line); padding: var(--sp-1) var(--sp-3);
   min-height: var(--tap); cursor: pointer; user-select: none;
-  background: transparent; color: inherit;
+  background: var(--paper); color: var(--ink);
 }
 .nav-toggle-btn svg { width: 1rem; height: 1rem; }
-.nav-toggle-input:focus-visible + .nav-toggle-btn { outline: 3px solid var(--focus); outline-offset: 3px; }
+.nav-toggle-input:focus-visible ~ .site-header__bar .nav-toggle-btn { outline: 3px solid var(--focus); outline-offset: 3px; }
+.nav-toggle-input:checked ~ .site-header__bar .nav-toggle-btn { background: var(--deep); color: var(--ink-on-deep); border-color: var(--deep); }
 
 .site-nav {
   display: none; flex-direction: column;
   background: var(--surface); color: var(--ink);
   border-top: 1px solid var(--line);
-  max-width: var(--wide); margin-inline: auto;
 }
-.nav-toggle-input:checked ~ .site-nav { display: flex; }
+.nav-toggle-input:checked ~ .site-header__bar .site-nav { display: flex; }
 .site-nav a {
-  display: block; padding: var(--sp-3);
+  display: block; padding: var(--sp-3) var(--sp-4);
   font-family: var(--font-display); font-size: var(--fs-lg);
   text-decoration: none; border-bottom: 1px solid var(--line);
   min-height: var(--tap);
 }
-.site-nav a:hover, .site-nav a:focus-visible { background: var(--paper); color: var(--accent); }
+.site-nav a:hover, .site-nav a:focus-visible { background: var(--paper); color: var(--accent-deep); }
 
-.lang-switch { display: flex; padding: var(--sp-3); gap: var(--sp-1); }
+.site-header__cta { padding: 0 var(--sp-4) var(--sp-3); }
+.site-header__cta .btn { width: 100%; }
+
+/* extra-specific selector: must outrank the later .btn{display:inline-flex} rule */
+.site-header__bar .site-header__donate { display: none; flex: none; margin: var(--sp-2) var(--sp-4) var(--sp-2) 0; }
+
+.lang-switch { display: flex; padding: var(--sp-3) var(--sp-4); gap: var(--sp-1); }
 .lang-switch__btn {
-  font-family: var(--font-body); font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.08em;
-  background: transparent; border: 1px solid currentColor; color: inherit;
+  font-family: var(--font-body); font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.04em;
+  background: var(--paper); border: 1px solid var(--line); color: var(--ink-2);
+  border-radius: var(--radius-pill);
   padding: 0 var(--sp-2); min-height: var(--tap); min-width: 3.25rem; cursor: pointer;
 }
-/* Активный язык обозначается весом и подчёркиванием, а не заливкой: заливка
-   акцентом делала переключатель самым громким объектом в шапке, громче любого
-   настоящего действия. */
-.lang-switch__btn { border-color: transparent; color: var(--ink-2); }
-.has-hero .site-header .lang-switch__btn { color: var(--ink-on-deep-2); }
-.lang-switch__btn:hover { color: var(--accent); }
-.has-hero .site-header .lang-switch__btn:hover { color: #e8b877; }
+.lang-switch__btn:hover { color: var(--accent-deep); border-color: var(--accent); }
 .lang-switch__btn.is-active {
-  color: inherit; background: transparent; border-color: transparent;
-  text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.35em;
-  text-decoration-color: var(--accent);
+  color: var(--ink-on-deep); background: var(--deep); border-color: var(--deep);
 }
 
 @media (min-width: 60rem) {
+  .site-header__bar { display: flex; align-items: center; }
   .nav-toggle-btn { display: none; }
-  .site-header__row { padding-block: var(--sp-3); }
+  .site-header__cta { display: none; }
+  .site-header__row { padding-right: var(--sp-2); }
   .site-nav {
     display: flex !important; flex-direction: row; align-items: center; flex-wrap: wrap;
     background: transparent; border-top: none; color: inherit;
-    padding-inline: var(--sp-3); padding-bottom: var(--sp-2); gap: var(--sp-1);
+    flex: 1 1 auto; padding-block: var(--sp-2); gap: var(--sp-1);
   }
   .site-nav a {
-    border-bottom: none; padding: var(--sp-1) var(--sp-2);
-    font-family: var(--font-body); font-size: var(--fs-sm); min-height: 0;
+    border-bottom: none; padding: 0.55em 0.9em; border-radius: var(--radius-pill);
+    font-family: var(--font-body); font-weight: 600; font-size: var(--fs-sm); min-height: 0;
   }
-  .site-nav a:hover { background: transparent; }
+  .site-nav a:hover { background: var(--paper); }
   .lang-switch { margin-left: auto; padding: 0; }
   .lang-switch__btn { min-height: 2.25rem; }
+  .site-header__bar .site-header__donate { display: inline-flex; margin: 0 var(--sp-4) 0 var(--sp-1); }
 }
 
 /* --------------------------------------------------------------------------
-   Hero — full-bleed photograph, scrim, display headline
+   Hero — a rounded photo card, inset from the viewport like every other
+   surface in this world, with the nav pill floating on its top edge.
    -------------------------------------------------------------------------- */
 .hero {
   position: relative;
-  min-height: min(86svh, 46rem);
+  margin: var(--edge);
+  border-radius: var(--radius-lg);
+  min-height: min(80svh, 42rem);
   display: flex; align-items: flex-end;
   background: var(--deep);
   color: var(--ink-on-deep);
   overflow: hidden;
+  box-shadow: var(--shadow-lg);
 }
 .hero__media { position: absolute; inset: 0; }
 .hero__media img { width: 100%; height: 100%; object-fit: cover; }
 .hero__media::after {
   content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(22,18,15,0.80) 0%, rgba(22,18,15,0.52) 34%, rgba(22,18,15,0.94) 100%);
+  background: linear-gradient(180deg, rgba(20,30,15,0.72) 0%, rgba(20,30,15,0.28) 38%, rgba(15,22,10,0.92) 100%);
 }
 .hero__inner {
   position: relative; z-index: 1;
   max-width: var(--wide); margin-inline: auto; width: 100%;
-  /* top padding clears the header, which sits transparent over the hero */
-  padding: 8.5rem var(--sp-3) var(--sp-5);
+  /* top padding clears the nav pill, which floats over the photo's top edge */
+  padding: 6.5rem var(--sp-4) var(--sp-5);
 }
 .hero__title {
-  font-size: var(--fs-hero); line-height: 1.05; letter-spacing: -0.018em;
+  font-size: var(--fs-hero); line-height: 1.05; letter-spacing: -0.014em;
   margin: 0 0 var(--sp-3); max-width: 15ch;
   color: var(--ink-on-deep);
 }
@@ -328,16 +421,14 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
   margin-bottom: var(--sp-4);
 }
 @media (min-width: 60rem) {
-  .hero__inner { padding-top: 11rem; padding-bottom: var(--sp-6); }
+  .hero__inner { padding-top: 8.5rem; padding-bottom: var(--sp-6); padding-inline: var(--sp-6); }
 }
 .hero__actions { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
 
 /* Empty hero when no photograph has been supplied yet: the scrim gradient
-   plus a ruled ground, so the composition still reads as intended. */
+   plus the deep-green ground, so the composition still reads as intended. */
 .hero__media--empty {
-  background:
-    repeating-linear-gradient(180deg, transparent 0 3.5rem, rgba(165,129,63,0.10) 3.5rem calc(3.5rem + 1px)),
-    radial-gradient(120% 90% at 70% 0%, #33291f 0%, #16120f 70%);
+  background: radial-gradient(120% 90% at 70% 0%, var(--mid) 0%, var(--deep) 70%);
 }
 
 /* the single authored motion moment of the page */
@@ -353,11 +444,25 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
   to   { opacity: 1; transform: none; filter: blur(0); }
 }
 
-/* Inner-page header block, for pages without a photograph */
+/* Inner-page header block, for pages without a photograph — same rounded
+   card as the hero, filled with the deep green (the mid green under body
+   copy only holds 3.4:1, short of the 4.5:1 floor for the paragraph text). */
+/* bottom-anchored, like the hero — the header bar's own height varies with
+   the parish name's wrap, so a fixed top padding here would clip under it
+   whenever the bar grows a line taller than the day it was tuned against. */
 .page-head {
   background: var(--deep); color: var(--ink-on-deep);
-  padding-block: var(--sp-7) var(--sp-6);
+  margin: var(--edge); border-radius: var(--radius-lg);
+  min-height: 15rem; display: flex; align-items: flex-end;
+  /* top padding must clear the nav bar's own height, which grows with the
+     parish name's wrap (measured up to ~164px at desktop, ~80px at mobile) —
+     padded well past the worst case measured, since the bar's exact height
+     isn't available to CSS. */
+  padding: 7.5rem var(--sp-4) var(--sp-5);
+  box-shadow: var(--shadow-lg);
 }
+.page-head > * { width: 100%; }
+@media (min-width: 60rem) { .page-head { min-height: 18rem; padding: 12.5rem var(--sp-6) var(--sp-6); } }
 .page-head h1 { color: var(--ink-on-deep); margin-bottom: var(--sp-2); max-width: 20ch; }
 .page-head p { color: var(--ink-on-deep-2); max-width: var(--measure); margin-bottom: 0; }
 
@@ -396,7 +501,7 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
 /* Заголовок месяца режет список на куски, которые человек держит в голове. */
 .month-rule {
   font-size: var(--fs-xl); margin-bottom: var(--sp-3);
-  padding-bottom: var(--sp-1); border-bottom: 2px solid var(--ink);
+  padding-bottom: var(--sp-1); border-bottom: 2px solid var(--accent);
 }
 .month-rule + .sdays { margin-bottom: var(--sp-6); }
 
@@ -408,18 +513,18 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
 
 .sday {
   background: var(--surface); border: 1px solid var(--line);
-  padding: var(--sp-3); display: flex; flex-direction: column;
+  border-radius: var(--radius-md); box-shadow: var(--shadow-sm);
+  padding: var(--sp-3) var(--sp-4); display: flex; flex-direction: column;
 }
-/* Карточка сохраняет пергаментную подложку и на тёмной полосе — значит,
-   должна вернуть себе и чернила: унаследовав светлый текст полосы, она
-   становится невидимой. */
+/* Карточка сохраняет свою белую подложку и на тёмной полосе — иначе на
+   зелёном фоне она становится нечитаемым тёмным на тёмном. */
 .band--deep .sday { color: var(--ink); border-color: var(--line); }
 .band--deep .sday .sday__num,
 .band--deep .sday .sday__note,
 .band--deep .sday .sday__old,
 .band--deep .sday .sday__extra,
 .band--deep .sday .sday__none { color: var(--ink-2); }
-.band--deep .sday .sday__rel { color: var(--accent); }
+.band--deep .sday .sday__rel { color: var(--accent-deep); }
 .sday__head {
   display: flex; align-items: flex-start; justify-content: space-between;
   gap: var(--sp-2); flex-wrap: wrap; margin-bottom: var(--sp-2);
@@ -436,16 +541,14 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
 .sday__num { font-size: var(--fs-sm); color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .sday__rel {
   font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.06em;
-  text-transform: uppercase; color: var(--accent);
+  text-transform: uppercase; color: var(--accent-deep);
 }
 .sday--today { border-color: var(--accent); border-width: 2px; }
 
 .sday__feast { font-size: var(--fs-base); margin-bottom: var(--sp-2); }
-.sday--major { border-color: var(--brass); }
+.sday--major { border-color: var(--accent); background: var(--accent-tint); }
 .sday--major .sday__feast {
   font-family: var(--font-display); font-weight: 700; font-size: var(--fs-lg);
-  text-transform: uppercase; letter-spacing: 0.02em;
-  border-top: 2px solid var(--brass); padding-top: var(--sp-1);
 }
 
 .sday__items { list-style: none; margin: 0 0 var(--sp-2); padding: 0; }
@@ -468,16 +571,18 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
    них прямо вводила в заблуждение. */
 .fast {
   display: inline-flex; align-items: center; gap: 0.4em; margin: 0;
-  padding: 0.15em 0.55em; font-size: var(--fs-xs); font-weight: 700;
+  padding: 0.2em 0.65em; font-size: var(--fs-xs); font-weight: 700;
   letter-spacing: 0.04em; text-transform: uppercase;
-  border: 1px solid transparent; max-width: 100%; overflow-wrap: anywhere;
+  border: 1px solid transparent; border-radius: var(--radius-pill);
+  max-width: 100%; overflow-wrap: anywhere;
 }
 .fast svg { width: 0.95em; height: 0.95em; flex: none; }
-.fast--strict { background: var(--accent); border-color: var(--accent); color: #fff; }
+.fast--strict { background: var(--deep); border-color: var(--deep); color: var(--ink-on-deep); }
 .fast--fast   { border-color: var(--accent); color: var(--accent-deep); background: var(--accent-tint); }
-.fast--light  { border-color: var(--brass); color: var(--ink); background: transparent; }
-.next-service .fast--fast { background: transparent; color: #f0c9c2; border-color: #f0c9c2; }
-.next-service .fast--light { color: var(--ink-on-deep); }
+.fast--light  { border-color: var(--line); color: var(--ink-2); background: var(--paper); }
+.next-service .fast--strict { background: rgba(251,246,237,0.14); border-color: var(--ink-on-deep-2); color: var(--ink-on-deep); }
+.next-service .fast--fast { background: rgba(212,160,23,0.16); color: var(--accent-bright); border-color: var(--accent-bright); }
+.next-service .fast--light { color: var(--ink-on-deep-2); border-color: var(--ink-on-deep-2); background: transparent; }
 
 .fast-legend { margin-top: var(--sp-6); border-top: 1px solid var(--line); padding-top: var(--sp-3); }
 .fast-legend h2 { font-size: var(--fs-lg); }
@@ -491,6 +596,7 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
 .card {
   background: var(--surface);
   border: 1px solid var(--line);
+  border-radius: var(--radius-md); box-shadow: var(--shadow-sm);
   padding: var(--sp-4);
   margin-bottom: var(--sp-3);
 }
@@ -502,13 +608,27 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
 @media (min-width: 44rem) { .grid--2 { grid-template-columns: repeat(2, 1fr); } }
 @media (min-width: 60rem) { .grid--3 { grid-template-columns: repeat(3, 1fr); } }
 
+/* The donor's signature card: a rounded photo with its caption printed
+   straight onto a dark gradient at the foot of the image, not set below it. */
 .tile { display: block; text-decoration: none; color: inherit; }
-.tile__media { aspect-ratio: 3 / 2; overflow: hidden; background: var(--paper-deep); margin-bottom: var(--sp-3); }
+.tile__media {
+  position: relative; aspect-ratio: 3 / 2; overflow: hidden;
+  background: var(--paper-deep); border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+}
 .tile__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16,1,0.3,1); }
 .tile:hover .tile__media img { transform: scale(1.04); }
-.tile h3 { margin-bottom: var(--sp-1); }
-.tile:hover h3 { color: var(--accent); }
-.tile p { color: var(--ink-2); font-size: var(--fs-sm); margin-bottom: 0; }
+.tile__media::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, transparent 40%, rgba(10,16,8,0.82) 100%);
+}
+.tile__caption {
+  position: absolute; z-index: 1; inset: auto 0 0; padding: var(--sp-4) var(--sp-3) var(--sp-3);
+  color: var(--ink-on-deep);
+}
+.tile__caption h3 { color: var(--ink-on-deep); margin-bottom: 0.2rem; }
+.tile:hover .tile__caption h3 { color: var(--accent-bright); }
+.tile__caption p { color: var(--ink-on-deep-2); font-size: var(--fs-sm); margin-bottom: 0; }
 
 .doc-list { list-style: none; margin: 0; padding: 0; }
 .doc-list li { border-top: 1px solid var(--line); }
@@ -517,7 +637,7 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
   display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap;
   padding: var(--sp-3) 0; text-decoration: none; min-height: var(--tap);
 }
-.doc-list a:hover { color: var(--accent); }
+.doc-list a:hover { color: var(--accent-deep); }
 .doc-list__period { font-size: var(--fs-sm); color: var(--ink-2); font-variant-numeric: tabular-nums; }
 .doc-list__title { font-family: var(--font-display); font-size: var(--fs-lg); flex: 1; }
 
@@ -525,56 +645,50 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
 .band--deep .meta { color: var(--ink-on-deep-2); }
 
 /* --------------------------------------------------------------------------
-   Buttons
+   Buttons — the donor's rounded pills, solid fills, soft shadow
    -------------------------------------------------------------------------- */
-/* Buttons wear a drawn letterpress plate as a 9-slice border-image: the
-   printed surface and its impressed inner rule come from the asset, while the
-   label stays live text — so it scales with the reader's font size, translates
-   between RU and EN, and is announced by screen readers. */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5em;
   min-height: var(--tap); padding: 0.75em 1.75em;
   font-family: var(--font-body); font-size: var(--fs-sm); font-weight: 700;
-  letter-spacing: 0.06em; text-transform: uppercase;
+  border-radius: var(--radius-pill);
   text-decoration: none; cursor: pointer;
-  color: var(--ink); background: transparent;
-  border: 10px solid transparent;
-  border-image: url("/static/images/ornament/plate-light.png") 60 fill / 10px / 0 repeat;
-  transition: filter 0.18s ease, color 0.18s ease;
+  color: var(--ink); background: var(--surface);
+  border: 1px solid var(--line);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
 }
-.btn:hover, .btn:focus-visible { filter: brightness(0.94); }
+.btn:hover, .btn:focus-visible { transform: translateY(-1px); box-shadow: var(--shadow-md); }
 .btn svg { width: 1rem; height: 1rem; }
 
 .btn--accent {
-  color: #fdf6ef;
-  border-image-source: url("/static/images/ornament/plate-accent.png");
+  color: var(--deep); background: var(--accent-bright); border-color: var(--accent-bright);
 }
-.btn--accent:hover, .btn--accent:focus-visible { filter: brightness(1.12); color: #fff; }
+.btn--accent:hover, .btn--accent:focus-visible { background: #e0ad25; border-color: #e0ad25; }
 
-/* On a dark ground the parchment plate would glare; the light button keeps a
-   plain hairline instead of a printed plate. */
+/* On a dark ground the donor keeps the same white pill, just outlined when
+   it is a secondary action rather than the page's one primary action. */
 .btn--light {
-  border: 1px solid var(--ink-on-deep); border-image: none;
-  color: var(--ink-on-deep); background: transparent;
-  padding: 0.75em 1.75em;
+  border: 1px solid var(--ink-on-deep-2); background: transparent;
+  color: var(--ink-on-deep); box-shadow: none;
 }
-.btn--light:hover, .btn--light:focus-visible { background: var(--ink-on-deep); color: var(--deep); filter: none; }
+.btn--light:hover, .btn--light:focus-visible { background: var(--ink-on-deep); color: var(--deep); box-shadow: var(--shadow-sm); }
 
-.btn[disabled], .btn[aria-disabled="true"] { opacity: 0.45; pointer-events: none; }
+.btn[disabled], .btn[aria-disabled="true"] { opacity: 0.45; pointer-events: none; transform: none; }
 
-/* При системном шрифте 200% «ПОЖЕРТВОВАТЬ» — одно неразрывное слово с
-   разрядкой и отступами по 1.75em — становится шире телефона и утаскивает
-   за собой всю страницу. Кнопка должна ужиматься и переносить слово. */
+/* При системном шрифте 200% «ПОЖЕРТВОВАТЬ» с отступами по 1.75em становится
+   шире телефона и утаскивает за собой всю страницу. Кнопка должна ужиматься
+   и переносить слово. */
 .btn, button[type="submit"] {
   max-width: 100%; overflow-wrap: anywhere; text-align: center;
 }
 
 .link-more {
   display: inline-flex; align-items: center; gap: 0.5em;
-  font-weight: 700; font-size: var(--fs-sm); letter-spacing: 0.06em; text-transform: uppercase;
-  text-decoration: none; border-bottom: 1px solid var(--brass); padding-bottom: 0.15em;
+  font-weight: 700; font-size: var(--fs-sm);
+  text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 0.15em;
 }
-.link-more:hover { border-bottom-color: var(--accent); }
+.link-more:hover { border-bottom-color: var(--accent-deep); color: var(--accent-deep); }
 .link-more svg { width: 0.9rem; height: 0.9rem; transition: transform 0.2s ease; }
 .link-more:hover svg { transform: translateX(0.2rem); }
 
@@ -584,13 +698,13 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
 form p { margin-bottom: var(--sp-3); }
 label {
   display: block; font-size: var(--fs-sm); font-weight: 700;
-  letter-spacing: 0.04em; margin-bottom: var(--sp-1);
+  margin-bottom: var(--sp-1);
 }
 input, textarea, select {
   width: 100%; font: inherit; font-size: var(--fs-base);
-  padding: 0.7em 0.85em; min-height: var(--tap);
+  padding: 0.7em 1em; min-height: var(--tap);
   background: var(--surface); color: var(--ink);
-  border: 1px solid var(--line);
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
 }
 input:focus, textarea:focus, select:focus { border-color: var(--accent); }
 input::placeholder, textarea::placeholder { color: var(--ink-2); }
@@ -611,34 +725,35 @@ input[type="radio"], input[type="checkbox"] {
 }
 .helptext, .helptext li { font-size: var(--fs-sm); color: var(--ink-2); }
 ul.helptext, form ul { padding-left: 1.2em; }
-.errorlist { list-style: none; padding: 0; margin: 0 0 var(--sp-2); color: var(--accent-deep); font-size: var(--fs-sm); font-weight: 700; }
+.errorlist { list-style: none; padding: 0; margin: 0 0 var(--sp-2); color: #a13a3a; font-size: var(--fs-sm); font-weight: 700; }
 
-/* form submits wear the same drawn plate — but not the language switch, whose
-   job is to show which language is active, not to look like a primary action.
-   Печатная плашка — деталь публичной части. В портале тот же селектор одевал
-   в неё флажок «готово» и ссылку «выйти», и они становились самым громким
-   на странице; поэтому правило заперто вне body.portal. */
+/* form submits wear the same gold pill — but not the language switch, whose
+   job is to show which language is active, not to look like a primary
+   action. Locked out of .portal, where a plain button reads as a working
+   control, not a call to action. */
 body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn) {
   display: inline-flex; align-items: center; justify-content: center;
   min-height: var(--tap); padding: 0.75em 1.75em;
   font-family: var(--font-body); font-size: var(--fs-sm); font-weight: 700;
-  letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer;
-  background: transparent; color: #fdf6ef;
-  border: 10px solid transparent;
-  border-image: url("/static/images/ornament/plate-accent.png") 60 fill / 10px / 0 repeat;
-  transition: filter 0.18s ease;
+  border-radius: var(--radius-pill); cursor: pointer;
+  background: var(--accent-bright); color: var(--deep); border: 1px solid var(--accent-bright);
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
 }
 body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):hover,
-body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-visible { filter: brightness(1.12); }
+body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-visible {
+  background: #e0ad25; transform: translateY(-1px); box-shadow: var(--shadow-md);
+}
 
 .messages { list-style: none; margin: 0; padding: var(--sp-3) var(--sp-3) 0; max-width: var(--wide); margin-inline: auto; }
 .message {
-  border: 1px solid var(--line); border-top: 3px solid var(--brass);
-  background: var(--surface); padding: var(--sp-3); margin-bottom: var(--sp-2);
-  font-weight: 700;
+  border: 1px solid var(--accent);
+  border-radius: var(--radius-sm);
+  background: var(--accent-tint); padding: var(--sp-3); margin-bottom: var(--sp-2);
+  font-weight: 700; box-shadow: var(--shadow-sm);
 }
-.message--success { border-top-color: var(--brass); }
-.message--error { border-top-color: var(--accent); color: var(--accent-deep); background: var(--accent-tint); }
+.message--success { border-color: #3f7a3f; background: #eaf4ea; color: #2c5a2c; }
+.message--error { border-color: #a13a3a; color: #7a2b2b; background: #fbeaea; }
 
 /* --------------------------------------------------------------------------
    Building fund
@@ -651,10 +766,9 @@ body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-v
 }
 .fund__of { font-family: var(--font-body); font-size: var(--fs-sm); color: var(--ink-2); }
 .band--deep .fund__of { color: var(--ink-on-deep-2); }
-.progress { height: 0.6rem; background: var(--paper-deep); overflow: hidden; }
+.progress { height: 0.75rem; background: var(--paper-deep); border-radius: var(--radius-pill); overflow: hidden; }
 .band--deep .progress { background: var(--line-deep); }
-.progress__bar { height: 100%; background: var(--accent); }
-.band--deep .progress__bar { background: var(--brass); }
+.progress__bar { height: 100%; background: var(--accent-bright); border-radius: var(--radius-pill); }
 
 /* --------------------------------------------------------------------------
    Timeline (parish history)
@@ -670,7 +784,7 @@ body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-v
 }
 .timeline__year {
   font-family: var(--font-display); font-weight: 700; font-size: var(--fs-xl);
-  font-variant-numeric: tabular-nums; color: var(--accent);
+  font-variant-numeric: tabular-nums; color: var(--accent-deep);
 }
 .timeline__item h3 { margin-bottom: var(--sp-2); }
 
@@ -681,7 +795,7 @@ body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-v
 .facts div { display: grid; gap: 0.15rem; padding-block: var(--sp-3); border-top: 1px solid var(--line); }
 @media (min-width: 40rem) { .facts div { grid-template-columns: 14rem 1fr; gap: var(--sp-3); align-items: baseline; } }
 .facts dt { font-size: var(--fs-sm); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-2); }
-/* --ink-2 рассчитан на пергамент; на умбре это 2.48:1 */
+/* --ink-2 рассчитан на кремовую подложку; на зелёном фоне контраст ниже */
 .band--deep .facts dt { color: var(--ink-on-deep-2); }
 .band--deep .facts div { border-top-color: var(--line-deep); }
 .facts dd { margin: 0; }
@@ -691,18 +805,18 @@ body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-v
    -------------------------------------------------------------------------- */
 .photo-grid { display: grid; gap: var(--sp-2); grid-template-columns: repeat(2, 1fr); }
 @media (min-width: 48rem) { .photo-grid { grid-template-columns: repeat(4, 1fr); } }
-.photo-grid img { aspect-ratio: 1; object-fit: cover; width: 100%; }
+.photo-grid img { aspect-ratio: 1; object-fit: cover; width: 100%; border-radius: var(--radius-sm); }
 
 .photo-placeholder {
   display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--sp-2);
   aspect-ratio: 1; padding: var(--sp-3); text-align: center;
-  border: 1px solid var(--line); background: var(--paper-deep);
+  border: 1px dashed var(--line); border-radius: var(--radius-sm); background: var(--paper-deep);
   color: var(--ink-2); font-size: var(--fs-xs);
 }
 .photo-placeholder svg { width: 1.75rem; height: 1.75rem; opacity: 0.6; }
 
 .portrait { }
-.portrait__media { aspect-ratio: 3 / 4; overflow: hidden; background: var(--paper-deep); margin-bottom: var(--sp-3); }
+.portrait__media { aspect-ratio: 3 / 4; overflow: hidden; background: var(--paper-deep); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); margin-bottom: var(--sp-3); }
 .portrait__media img { width: 100%; height: 100%; object-fit: cover; }
 .portrait h3 { margin-bottom: 0.15rem; }
 .portrait__role { font-size: var(--fs-sm); color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.08em; }
@@ -722,7 +836,7 @@ body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-v
 .status {
   display: inline-flex; align-items: center; gap: 0.4em;
   font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
-  border: 1px solid var(--line); padding: 0.3em 0.7em; color: var(--ink-2);
+  border: 1px solid var(--line); border-radius: var(--radius-pill); padding: 0.3em 0.8em; color: var(--ink-2);
 }
 .status--accent { border-color: var(--accent); color: var(--accent-deep); background: var(--accent-tint); }
 
@@ -739,24 +853,20 @@ body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-v
    -------------------------------------------------------------------------- */
 .site-footer {
   background: var(--deep); color: var(--ink-on-deep);
-  padding-block: var(--sp-5) var(--sp-4); margin-top: var(--sp-6);
+  padding-block: var(--sp-5) var(--sp-4);
+  margin: var(--sp-6) var(--edge) 0; border-radius: var(--radius-lg);
   position: relative;
 }
-/* drawn Byzantine band along the footer's top edge — woven-textile weight,
-   not applied anywhere else in the design */
-.site-footer::before {
-  content: ""; position: absolute; inset: 0 0 auto; height: 1.75rem;
-  background: url("/static/images/ornament/border-strip.png") center / auto 100% repeat-x;
-  opacity: 0.85;
-}
-.site-footer__emblem { width: 2.25rem; height: auto; margin-bottom: var(--sp-3); }
-/* .meta задан для светлого фона (--ink-2); на умбре подвала это 2.48:1.
-   Тёмные полосы .band--deep это уже учитывали, подвал — нет. */
+.site-footer__emblem { display: inline-block; margin-bottom: var(--sp-3); color: var(--accent-bright); }
+.site-footer__emblem svg { width: 2.5rem; height: 2.5rem; }
+/* .meta задан для светлого фона (--ink-2); на глубоком зелёном подвала это
+   недостаточно контрастно. Тёмные полосы .band--deep это уже учитывали,
+   подвал — нет. */
 .site-footer .meta { color: var(--ink-on-deep-2); }
 .site-footer a { color: var(--ink-on-deep); }
-.site-footer a:hover { color: #e8b877; }
-.site-footer__grid { display: grid; gap: var(--sp-5); }
-@media (min-width: 48rem) { .site-footer__grid { grid-template-columns: 1.4fr 1fr; } }
+.site-footer a:hover { color: var(--accent-bright); }
+.site-footer__grid { display: grid; gap: var(--sp-5); padding-inline: var(--sp-4); }
+@media (min-width: 48rem) { .site-footer__grid { grid-template-columns: 1.4fr 1fr; padding-inline: var(--sp-6); } }
 .site-footer__grid > * { min-width: 0; }
 .site-footer__name { font-family: var(--font-display); font-size: var(--fs-xl); font-weight: 700; margin-bottom: var(--sp-2); }
 /* Заголовки h4 в общем подвале ломали порядок заголовков на страницах,
@@ -769,7 +879,11 @@ body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-v
   display: inline-flex; align-items: center; min-height: var(--tap);
 }
 .site-footer__actions { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-3); }
-.site-footer__legal { border-top: 1px solid var(--line-deep); margin-top: var(--sp-5); padding-top: var(--sp-3); color: var(--ink-on-deep-2); font-size: var(--fs-sm); }
+.site-footer__legal {
+  border-top: 1px solid var(--line-deep); margin: var(--sp-5) var(--sp-4) 0; padding: var(--sp-3) 0 0;
+  color: var(--ink-on-deep-2); font-size: var(--fs-sm);
+}
+@media (min-width: 48rem) { .site-footer__legal { margin-inline: var(--sp-6); } }
 
 /* --------------------------------------------------------------------------
    Editable-block affordance (staff only)
@@ -778,7 +892,7 @@ body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-v
 .editable-block__edit {
   display: inline-block; margin-left: var(--sp-2);
   font-size: var(--fs-xs); text-decoration: none;
-  border: 1px solid var(--line); padding: 0 0.4em; color: var(--ink-2);
+  border: 1px solid var(--line); border-radius: var(--radius-pill); padding: 0 0.5em; color: var(--ink-2);
 }
 
 /* --------------------------------------------------------------------------
@@ -794,12 +908,10 @@ body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-v
 .portal-nav a {
   display: inline-flex; align-items: center; min-height: var(--tap);
   padding: 0 var(--sp-3); text-decoration: none; white-space: nowrap;
-  font-size: var(--fs-sm); font-weight: 700;
-  letter-spacing: 0.04em; text-transform: uppercase;
-  border-bottom: 3px solid transparent;
+  font-size: var(--fs-sm); font-weight: 700; border-radius: var(--radius-pill);
 }
 .portal-nav a:hover, .portal-nav a[aria-current="page"] {
-  color: var(--accent); border-bottom-color: var(--accent);
+  color: var(--accent-deep); background: var(--accent-tint);
 }
 
 /* --------------------------------------------------------------------------
@@ -842,7 +954,7 @@ body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-v
 .hero__times { list-style: none; margin: 0 0 var(--sp-4); padding: 0; max-width: 30rem; }
 .hero__times li {
   display: flex; gap: var(--sp-3); align-items: baseline; flex-wrap: wrap;
-  padding-block: var(--sp-1); border-top: 1px solid rgba(243,236,224,0.25);
+  padding-block: var(--sp-1); border-top: 1px solid rgba(251,246,237,0.25);
   font-size: var(--fs-lg);
 }
 .hero__time {
@@ -850,10 +962,10 @@ body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-v
   font-variant-numeric: tabular-nums; min-width: 4.2rem; flex: none;
 }
 
-/* Ссылка-действие на тёмном фоне: латунь по умбре читается, но текст должен
-   быть светлым, а не наследовать чернила светлого фона. */
-.link-more--on-deep { color: var(--ink-on-deep); }
-.link-more--on-deep:hover { color: #e8b877; border-bottom-color: #e8b877; }
+/* Ссылка-действие на тёмном фоне: золото по зелёному читается, а текст
+   должен быть светлым, а не наследовать чернила светлого фона. */
+.link-more--on-deep { color: var(--ink-on-deep); border-bottom-color: var(--accent-bright); }
+.link-more--on-deep:hover { color: var(--accent-bright); border-bottom-color: var(--accent-bright); }
 .hero__actions { display: flex; flex-wrap: wrap; gap: var(--sp-3); align-items: center; }
 
 /* --------------------------------------------------------------------------
@@ -861,7 +973,7 @@ body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-v
    -------------------------------------------------------------------------- */
 .accepted { display: grid; gap: var(--sp-5); }
 @media (min-width: 44rem) { .accepted { grid-template-columns: 1fr 1fr; align-items: start; } }
-.accepted h2 { font-size: var(--fs-lg); padding-bottom: var(--sp-1); border-bottom: 2px solid var(--ink); }
+.accepted h2 { font-size: var(--fs-lg); padding-bottom: var(--sp-1); border-bottom: 2px solid var(--accent); }
 .accepted__names { list-style: none; margin: 0; padding: 0; counter-reset: n; }
 .accepted__names li {
   counter-increment: n; display: flex; gap: var(--sp-2); align-items: baseline;
@@ -874,7 +986,8 @@ body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-v
   font-variant-numeric: tabular-nums;
 }
 .accepted__kind {
-  margin-top: var(--sp-4); padding: var(--sp-2) var(--sp-3);
-  border-left: 3px solid var(--brass); background: var(--surface);
+  margin-top: var(--sp-4); padding: var(--sp-3) var(--sp-4);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--line); background: var(--accent-tint);
   font-size: var(--fs-sm); max-width: var(--measure);
 }

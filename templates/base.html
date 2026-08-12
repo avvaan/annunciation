@@ -10,49 +10,55 @@
 <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% block og_image %}/static/images/og-image.png{% endblock %}">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#16120f">
+<meta name="theme-color" content="#1f3419">
 <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg">
-<link rel="preload" as="font" type="font/woff2" href="/static/fonts/oldstandard-700-cyrillic.woff2" crossorigin>
-<link rel="preload" as="font" type="font/woff2" href="/static/fonts/ptsans-400-cyrillic.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/static/fonts/lora-700-normal-cyrillic.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/static/fonts/inter-400-normal-cyrillic.woff2" crossorigin>
 <link rel="stylesheet" href="/static/css/base.css">
 </head>
 <body class="{% block body_class %}{% endblock %}">
 <!--
-THESIS: A parish site whose first viewport is the church itself, photographed — the schedule is not buried under the picture, it is the first thing the picture hands you. Refuses the flat ruled timetable it replaces, and refuses the gilt-scrollwork church template equally.
-OWN-WORLD: Warm parchment ground (#f3ece0) against deep umber bands (#16120f); one liturgical oxblood (#7a2230) for feasts, fasts and primary action; brass (#a5813f) confined to hairlines and a single diamond ornament. Old Standard TT — a revival of pre-revolutionary Russian book printing — carries every heading; PT Sans carries the reading. Full-bleed photography, hairline rules, no shadows, no rounded corners, no gilt.
-STORY: A parishioner arrives, recognises their own church in the first screen, and finds the next service without scrolling past a word of marketing.
-FIRST VIEWPORT: Full-bleed photograph of the church under a bottom-weighted scrim; nav sits transparent over it; display headline lower-left with the parish name and city; two actions (Расписание / Пожертвовать); the next three services begin immediately below the fold.
-FORM: Editorial parish — brief-pinned by the user to the Vestry church reference (Awwwards, Feb 2022: big background images, clean flat design, typography-led). Reference site unreachable from this sandbox; built from its documented art direction with the user's approval.
+THESIS: A parish commons rebuilt on the donor template's own device — a floating rounded nav pill and rounded photo cards — so the site reads as an inviting, modern parish home rather than a flat civic notice board. Refuses both the gilt-scrollwork church-template default and this donor's own lorem-ipsum genericness.
+OWN-WORLD: Cream ground (#fbf6ed) against deep forest-green bands (#1f3419), one gold accent (#d4a017, text-safe as #7d5c0a) for feasts, fasts and primary action. Lora — a Cyrillic-native book serif standing in for the donor's Latin-only Hedvig Letters Serif — carries every heading; Inter, the donor's own face, carries the reading. Rounded corners and soft shadows everywhere; nothing hairline or flat.
+STORY: A parishioner arrives, recognises the next service inside a warm, present photograph, and finds it without scrolling past a word of marketing.
+FIRST VIEWPORT: A rounded-corner full-photo hero card inset from the viewport edge; the white nav pill floats on its top edge; display headline bottom-left with the next service's date, feast and times; one gold pill action (Расписание). The next three services begin immediately below the fold.
+FORM: Donor-pinned by the user to the fse-church WordPress theme (Church WP Theme v1.3.9) — taken literally per the user's choice: floating rounded nav, rounded photo cards with gradient-caption overlays, gold pill buttons, its "green" style variation's palette.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md.
 -->
 <a class="skip-link" href="#main">{% trans "Перейти к содержимому" %}</a>
 
 <header class="site-header">
   <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
-  <div class="site-header__row">
-    <a href="{% url 'core:home' %}" class="site-header__title">{{ site_settings.parish_name }}</a>
-    <label for="nav-toggle" class="nav-toggle-btn">
-      {% include "_icons.html" with icon="menu" %}{% trans "Меню" %}
-    </label>
+  <div class="site-header__bar">
+    <div class="site-header__row">
+      <a href="{% url 'core:home' %}" class="site-header__title">{{ site_settings.parish_name }}</a>
+      <label for="nav-toggle" class="nav-toggle-btn">
+        {% include "_icons.html" with icon="menu" %}{% trans "Меню" %}
+      </label>
+    </div>
+    <nav class="site-nav" aria-label="{% trans "Основная навигация" %}">
+      <a href="{% url 'core:first_visit' %}">{% trans "Впервые здесь?" %}</a>
+      <a href="{% url 'services:schedule' %}">{% trans "Расписание" %}</a>
+      <a href="{% url 'commemorations:submit' %}">{% trans "Записки" %}</a>
+      <a href="{% url 'publications:list' %}">{% trans "Календарь" %}</a>
+      <a href="{% url 'core:clergy' %}">{% trans "Духовенство" %}</a>
+      <a href="{% url 'building:project' %}">{% trans "Строительство" %}</a>
+      <a href="{% url 'school:page' %}">{% trans "Русская школа" %}</a>
+      <a href="{% url 'ministries:ministry_list' %}">{% trans "Служения" %}</a>
+      <a href="{% url 'core:about' %}">{% trans "О приходе" %}</a>
+      <a href="{% url 'core:contact' %}">{% trans "Контакты" %}</a>
+      <div class="site-header__cta">
+        <a href="{% url 'core:donation' %}" class="btn btn--accent">{% trans "Пожертвовать" %}</a>
+      </div>
+      <form action="{% url 'set_language' %}" method="post" class="lang-switch">
+        {% csrf_token %}
+        <input name="next" type="hidden" value="{{ request.path }}">
+        <button type="submit" name="language" value="ru" class="lang-switch__btn{% if LANGUAGE_CODE == "ru" %} is-active{% endif %}">RU</button>
+        <button type="submit" name="language" value="en" class="lang-switch__btn{% if LANGUAGE_CODE == "en" %} is-active{% endif %}">EN</button>
+      </form>
+    </nav>
+    <a href="{% url 'core:donation' %}" class="btn btn--accent site-header__donate">{% trans "Пожертвовать" %}</a>
   </div>
-  <nav class="site-nav" aria-label="{% trans "Основная навигация" %}">
-    <a href="{% url 'core:first_visit' %}">{% trans "Впервые здесь?" %}</a>
-    <a href="{% url 'services:schedule' %}">{% trans "Расписание" %}</a>
-    <a href="{% url 'commemorations:submit' %}">{% trans "Записки" %}</a>
-    <a href="{% url 'publications:list' %}">{% trans "Календарь" %}</a>
-    <a href="{% url 'core:clergy' %}">{% trans "Духовенство" %}</a>
-    <a href="{% url 'building:project' %}">{% trans "Строительство" %}</a>
-    <a href="{% url 'school:page' %}">{% trans "Русская школа" %}</a>
-    <a href="{% url 'ministries:ministry_list' %}">{% trans "Служения" %}</a>
-    <a href="{% url 'core:about' %}">{% trans "О приходе" %}</a>
-    <a href="{% url 'core:contact' %}">{% trans "Контакты" %}</a>
-    <form action="{% url 'set_language' %}" method="post" class="lang-switch">
-      {% csrf_token %}
-      <input name="next" type="hidden" value="{{ request.path }}">
-      <button type="submit" name="language" value="ru" class="lang-switch__btn{% if LANGUAGE_CODE == "ru" %} is-active{% endif %}">RU</button>
-      <button type="submit" name="language" value="en" class="lang-switch__btn{% if LANGUAGE_CODE == "en" %} is-active{% endif %}">EN</button>
-    </form>
-  </nav>
 </header>
 
 {% if messages %}
@@ -69,7 +75,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
   <div class="shell">
     <div class="site-footer__grid">
       <div>
-        <img class="site-footer__emblem" src="/static/images/ornament/cross.png" alt="" width="40" height="71">
+        <span class="site-footer__emblem" aria-hidden="true">{% include "_icons.html" with icon="cross" %}</span>
         <p class="site-footer__name">{{ site_settings.parish_name }}</p>
         <p class="meta">
           {{ site_settings.city }}{% if site_settings.address %}<br>{{ site_settings.address }}{% endif %}

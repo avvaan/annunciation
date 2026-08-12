@@ -94,25 +94,31 @@
       <a class="tile" href="{% url 'building:project' %}">
         <div class="tile__media">
           {% parish_photo building_project.cover_image "font-candles" sizes="(min-width:60rem) 24rem, 100vw" %}
+          <div class="tile__caption">
+            <h3>{% trans "Строительство храма" %}</h3>
+            <p>{% trans "Как идёт стройка и на чём мы сейчас стоим." %}</p>
+          </div>
         </div>
-        <h3>{% trans "Строительство храма" %}</h3>
-        <p>{% trans "Как идёт стройка и на чём мы сейчас стоим." %}</p>
       </a>
 
       <a class="tile" href="{% url 'school:page' %}">
         <div class="tile__media">
           {% parish_photo school_page.cover_image "school-eggs" sizes="(min-width:60rem) 24rem, 100vw" %}
+          <div class="tile__caption">
+            <h3>{% trans "Русская школа" %}</h3>
+            <p>{% trans "Язык, история и традиции для детей прихожан." %}</p>
+          </div>
         </div>
-        <h3>{% trans "Русская школа" %}</h3>
-        <p>{% trans "Язык, история и традиции для детей прихожан." %}</p>
       </a>
 
       <a class="tile" href="{% url 'ministries:ministry_list' %}">
         <div class="tile__media">
           {% parish_photo None "greenery" sizes="(min-width:60rem) 24rem, 100vw" %}
+          <div class="tile__caption">
+            <h3>{% trans "Служения" %}</h3>
+            <p>{% trans "Чем живёт приход между службами и как присоединиться." %}</p>
+          </div>
         </div>
-        <h3>{% trans "Служения" %}</h3>
-        <p>{% trans "Чем живёт приход между службами и как присоединиться." %}</p>
       </a>
     </div>
   </div>
