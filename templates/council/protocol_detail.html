@@ -1,32 +1,49 @@
 {% extends "council/_portal_base.html" %}
 {% load i18n %}
+{% block title %}{{ protocol.title }} — {{ block.super }}{% endblock %}
 {% block portal_title %}{{ protocol.title }}{% endblock %}
 {% block portal_lede %}
-  <p>{{ protocol.created_at|date:"d.m.Y" }}{% if protocol.meeting %} · {{ protocol.meeting.title }}{% endif %}</p>
-{% endblock %}
-{% block portal_content %}
-<div class="prose">
-  {% if protocol.body %}{{ protocol.body|linebreaks }}{% endif %}
-  {% if protocol.decisions %}
-    <div class="ornament" role="presentation"></div>
-    <h2>{% trans "Решения" %}</h2>
-    {{ protocol.decisions|linebreaks }}
-  {% endif %}
-</div>
-{% if protocol.file %}
-  <p style="margin-top:var(--sp-4)">
-    <a href="{% url 'council:protocol_download' pk=protocol.pk %}" class="btn">{% trans "Скачать файл" %}</a>
+  <p class="phead__lede">
+    {{ protocol.created_at|date:"j E Y" }}{% if protocol.meeting %} ·
+      <a href="{% url 'council:meeting_detail' pk=protocol.meeting.pk %}">{{ protocol.meeting.title }}</a>{% endif %}
+    {% if not protocol.is_published %} · <span class="tag tag--draft">{% trans "черновик" %}</span>{% endif %}
+    {% if not protocol.council_only %} · <span class="tag">{% trans "видит приход" %}</span>{% endif %}
   </p>
+{% endblock %}
+{% block portal_actions %}
+  {% if is_council %}<a href="{% url 'council:protocol_edit' pk=protocol.pk %}" class="pbtn">{% trans "Править" %}</a>{% endif %}
+  {% if protocol.file %}
+    <a href="{% url 'council:protocol_download' pk=protocol.pk %}" class="pbtn">
+      {% include "_icons.html" with icon="document" %}{% trans "Скачать файл" %}
+    </a>
+  {% endif %}
+{% endblock %}
+
+{% block portal_content %}
+{% comment %}
+Протокол читают подряд, поэтому здесь — единственное место в портале с
+книжной мерой строки: сплошной текст на всю ширину рабочего экрана не
+читается.
+{% endcomment %}
+<div class="ppanel__body" style="max-width:38rem;font-size:var(--pp-base)">
+  {% if protocol.body %}{{ protocol.body|linebreaks }}{% endif %}
+</div>
+
+{% if protocol.decisions %}
+  <section class="psection" style="max-width:38rem">
+    <div class="psection__head"><h2>{% trans "Решения" %}</h2></div>
+    <div class="ppanel__body" style="font-size:var(--pp-base)">{{ protocol.decisions|linebreaks }}</div>
+  </section>
 {% endif %}
+
 {% if tasks %}
-  <section class="portal-section">
-    <h2>{% trans "Поручения по протоколу" %}</h2>
-    <ul class="rota">
-      {% for t in tasks %}
-        <li><span style="flex:1">{{ t.title }}</span>
-          {% if t.assignee %}<span class="meta">{{ t.assignee.get_full_name|default:t.assignee }}</span>{% endif %}
-          <span class="status">{{ t.get_status_display }}</span></li>
-      {% endfor %}
+  <section class="psection">
+    <div class="psection__head">
+      <h2>{% trans "Поручения по протоколу" %}</h2>
+      <span class="phead__count" style="margin-left:auto">{{ tasks|length }}</span>
+    </div>
+    <ul class="prows">
+      {% for t in tasks %}{% include "council/_task_row.html" with show_assignee=True %}{% endfor %}
     </ul>
   </section>
 {% endif %}

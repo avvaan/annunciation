@@ -1,0 +1,431 @@
+/* ==========================================================================
+   Портал — рабочая часть сайта: совет прихода и служения.
+   Загружается поверх base.css, откуда берёт сброс и палитру.
+
+   Это другая комната того же дома. Публичная часть уговаривает: фотография
+   во весь экран, книжная антиква, разворот под чтение. Портал ничего не
+   уговаривает — сюда заходят третий раз за неделю посмотреть, не просрочено
+   ли поручение. Поэтому здесь один шрифт вместо двух, фиксированная шкала
+   вместо текучей, строки вместо карточек и ни одного орнамента. Палитра
+   прихода остаётся: это по-прежнему один приход, а не два продукта.
+   ========================================================================== */
+
+body.portal {
+  /* Инверсия публичной раскладки: там пергаментный лист и белые карточки,
+     здесь белый лист и пергаментная хром-полоса. Та же палитра, другая
+     комната — и плотный текст на белом читается лучше. */
+  --pp-ground:  #fffdf8;
+  --pp-chrome:  #f3ece0;
+  --pp-chrome-2:#e9dfcd;
+  --pp-row-hi:  #faf5ec;
+
+  /* Шкала фиксированная, шаг ~1.18. Текучие заголовки в рабочем интерфейсе
+     только мешают: человек сидит за одним и тем же экраном. */
+  --pp-xs:   0.8125rem;
+  --pp-sm:   0.9375rem;
+  --pp-base: 1.0625rem;
+  --pp-lg:   1.25rem;
+  --pp-xl:   1.5rem;
+
+  --pp-row:  2.75rem;
+
+  background: var(--pp-ground);
+  font-size: var(--pp-base);
+  line-height: 1.5;
+}
+
+/* Кнопка отправки в портале плоская: печатная плашка публичной части
+   заперта вне body.portal (см. base.css), так что здесь достаточно задать
+   собственный вид, ничего не перебивая. Флажок «готово», ссылка «выйти» и
+   .pbtn — самостоятельные компоненты и одеваются ниже, поэтому исключены. */
+body.portal button[type="submit"]:not(.pcheck):not(.pnav__out):not(.pbtn) {
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: var(--tap); padding: 0.4em 1.1em;
+  font-family: var(--font-body); font-size: var(--pp-sm); font-weight: 700;
+  letter-spacing: normal; text-transform: none; cursor: pointer;
+  color: #fff; background: var(--accent); border: 1px solid var(--accent);
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+body.portal button[type="submit"]:not(.pcheck):not(.pnav__out):not(.pbtn):hover {
+  background: var(--accent-deep); border-color: var(--accent-deep); filter: none;
+}
+
+/* Один шрифт на весь портал. Книжная антиква — голос публичной части;
+   на подписи, кнопки и данные она надевается как костюм не по размеру. */
+body.portal h1, body.portal h2, body.portal h3, body.portal h4 {
+  font-family: var(--font-body);
+  letter-spacing: -0.005em;
+  line-height: 1.25;
+}
+body.portal h1 { font-size: var(--pp-xl); margin-bottom: 0; }
+body.portal h2 { font-size: var(--pp-lg); margin-bottom: 0; }
+body.portal h3 { font-size: var(--pp-base); font-weight: 700; margin-bottom: var(--sp-1); }
+
+body.portal .shell { max-width: 78rem; }
+
+/* --------------------------------------------------------------------------
+   Шапка портала — одна полоса, а не публичное меню плюс чёрная плита
+   -------------------------------------------------------------------------- */
+.pnav {
+  background: var(--pp-chrome);
+  border-bottom: 1px solid var(--line);
+  position: sticky; top: 0; z-index: 20;
+}
+
+.pnav__bar {
+  display: flex; align-items: center; gap: var(--sp-3);
+  min-height: 3.25rem;
+}
+
+.pnav__home {
+  display: inline-flex; align-items: baseline; gap: 0.5ch;
+  font-size: var(--pp-sm); font-weight: 700; text-decoration: none;
+  letter-spacing: 0.01em; white-space: nowrap;
+}
+.pnav__home span { color: var(--ink-2); font-weight: 400; }
+.pnav__home:hover { color: var(--accent); }
+
+.pnav__spacer { flex: 1 1 auto; }
+
+.pnav__who {
+  display: inline-flex; align-items: center; gap: var(--sp-2);
+  font-size: var(--pp-sm); color: var(--ink-2); white-space: nowrap;
+}
+.pnav__who strong { color: var(--ink); font-weight: 700; }
+body.portal .pnav__out {
+  background: none; border: 0; padding: 0.35em 0; margin: 0;
+  font: inherit; color: var(--ink-2); cursor: pointer;
+  text-decoration: underline; text-decoration-color: var(--line);
+  text-underline-offset: 0.22em;
+}
+body.portal .pnav__out:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+/* Разделы: прокручиваемая полоса, текущий помечен и цветом, и подчёркиванием —
+   на одном цвете он потерялся бы при дальтонизме. */
+.pnav__sections {
+  display: flex; gap: 0; overflow-x: auto; scrollbar-width: none;
+  border-top: 1px solid var(--line);
+  margin-inline: calc(-1 * var(--sp-3)); padding-inline: var(--sp-3);
+}
+.pnav__sections::-webkit-scrollbar { display: none; }
+.pnav__sections a {
+  display: inline-flex; align-items: center; min-height: var(--tap);
+  padding: 0 var(--sp-3); white-space: nowrap; text-decoration: none;
+  font-size: var(--pp-sm); font-weight: 700; color: var(--ink-2);
+  border-bottom: 2px solid transparent;
+  transition: color 0.15s ease, border-color 0.15s ease;
+}
+.pnav__sections a:first-child { padding-left: 0; }
+.pnav__sections a:hover { color: var(--ink); }
+.pnav__sections a[aria-current="page"] {
+  color: var(--accent); border-bottom-color: var(--accent);
+}
+
+/* --------------------------------------------------------------------------
+   Заголовок страницы — строка, а не плита: название, счёт, действие
+   -------------------------------------------------------------------------- */
+.phead {
+  display: flex; align-items: baseline; flex-wrap: wrap;
+  gap: var(--sp-2) var(--sp-3);
+  padding-block: var(--sp-4) var(--sp-3);
+  border-bottom: 2px solid var(--ink);
+  margin-bottom: var(--sp-3);
+}
+.phead__count {
+  font-size: var(--pp-sm); color: var(--ink-2);
+  font-variant-numeric: tabular-nums;
+}
+.phead__actions { margin-left: auto; display: flex; gap: var(--sp-2); flex-wrap: wrap; }
+.phead__lede {
+  flex-basis: 100%; margin: 0; font-size: var(--pp-sm); color: var(--ink-2);
+}
+
+.pmain { padding-bottom: var(--sp-6); }
+
+.psection { margin-top: var(--sp-5); }
+.psection__head {
+  display: flex; align-items: baseline; gap: var(--sp-3);
+  padding-bottom: var(--sp-1); margin-bottom: var(--sp-1);
+  border-bottom: 1px solid var(--ink);
+}
+.psection__head .link-more { margin-left: auto; }
+
+/* align-items:start — иначе короткая колонка растягивается до высоты
+   длинной и её последняя строка повисает посреди пустоты. */
+.pgrid { display: grid; gap: var(--sp-5); align-items: start; }
+@media (min-width: 56rem) { .pgrid--2 { grid-template-columns: 1fr 1fr; } }
+
+/* --------------------------------------------------------------------------
+   Строка — основная единица портала. Не карточка: карточка тратит экран
+   на рамку и тень, а совету нужно видеть неделю целиком.
+   -------------------------------------------------------------------------- */
+.prows { list-style: none; margin: 0; padding: 0; }
+
+.prow {
+  display: flex; align-items: center; gap: var(--sp-3);
+  min-height: var(--pp-row); padding: var(--sp-2) var(--sp-1);
+  border-bottom: 1px solid var(--line);
+}
+.prow:hover { background: var(--pp-row-hi); }
+.prow__lead { flex: none; display: flex; align-items: center; color: var(--ink-2); }
+.prow__lead svg { width: 1.1rem; height: 1.1rem; }
+
+/* Название несёт строку: оно самое крупное и оно же ссылка. */
+.prow__title {
+  flex: 1 1 auto; min-width: 0;
+  font-size: var(--pp-base); text-decoration: none;
+}
+a.prow__title:hover { color: var(--accent); text-decoration: underline; }
+.prow__sub { display: block; font-size: var(--pp-xs); color: var(--ink-2); }
+
+/* Правый край — только факты, выключка вправо, цифры табличные, чтобы
+   даты и суммы стояли в столбик. */
+.prow__meta {
+  flex: none; display: flex; align-items: center; gap: var(--sp-3);
+  font-size: var(--pp-sm); color: var(--ink-2);
+  font-variant-numeric: tabular-nums; text-align: right;
+}
+.prow__date { flex: none; min-width: 5.5rem; text-align: right; }
+.prow__who  { flex: none; }
+
+@media (max-width: 40rem) {
+  /* На телефоне три колонки не помещаются: факты уходят под название,
+     а не сжимают его в четыре строки по слову. */
+  .prow { flex-wrap: wrap; padding-block: var(--sp-2); }
+  .prow__title { flex: 1 1 100%; order: 1; }
+  .prow__lead { order: 0; }
+  .prow__meta {
+    order: 2; flex: 1 1 100%; justify-content: flex-start;
+    gap: var(--sp-1) var(--sp-2); margin-left: 1.85rem;
+    /* при системном шрифте 200% метка, имя и дата не встают в одну строку */
+    flex-wrap: wrap;
+  }
+  .prow__date { min-width: 0; text-align: left; }
+}
+
+/* --------------------------------------------------------------------------
+   Метки состояний — один словарь на весь портал
+   -------------------------------------------------------------------------- */
+.tag {
+  display: inline-flex; align-items: center; gap: 0.4em;
+  padding: 0.15em 0.55em; border: 1px solid var(--line);
+  font-size: var(--pp-xs); font-weight: 700; line-height: 1.4;
+  letter-spacing: 0.04em; text-transform: uppercase; white-space: nowrap;
+  color: var(--ink-2); background: var(--pp-chrome);
+}
+.tag svg { width: 0.9em; height: 0.9em; }
+.tag--overdue { color: #fff; background: var(--accent); border-color: var(--accent); }
+.tag--soon    { color: var(--ink); background: transparent; border-color: var(--brass); }
+.tag--done    { color: var(--ink-2); background: transparent; border-style: dashed; }
+.tag--draft   { color: var(--ink-2); background: transparent; }
+.tag--closed  { color: var(--accent-deep); background: var(--accent-tint); border-color: var(--accent-tint); }
+
+/* --------------------------------------------------------------------------
+   Кнопки портала — плоские. Печатная плашка публичной части здесь звучит
+   как объявление там, где нужна кнопка.
+   -------------------------------------------------------------------------- */
+.pbtn {
+  display: inline-flex; align-items: center; justify-content: center; gap: 0.5em;
+  min-height: 2.5rem; padding: 0.4em 1em;
+  font-family: var(--font-body); font-size: var(--pp-sm); font-weight: 700;
+  line-height: 1.2; text-decoration: none; cursor: pointer;
+  color: var(--ink); background: var(--pp-ground);
+  border: 1px solid var(--ink); border-image: none;
+  transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+}
+.pbtn:hover { background: var(--pp-chrome); color: var(--ink); }
+.pbtn--primary {
+  color: #fff; background: var(--accent); border-color: var(--accent);
+}
+.pbtn--primary:hover { background: var(--accent-deep); border-color: var(--accent-deep); color: #fff; }
+.pbtn--quiet { border-color: var(--line); color: var(--ink-2); }
+.pbtn--quiet:hover { border-color: var(--ink-2); color: var(--ink); }
+.pbtn[disabled], .pbtn[aria-disabled="true"] {
+  opacity: 0.45; pointer-events: none;
+}
+/* На телефоне кнопка должна быть пальцем нажимаема */
+@media (max-width: 40rem) { .pbtn { min-height: var(--tap); } }
+
+/* Отметить поручение выполненным — это флажок, а не объявление.
+   Управление стоит слева, но весит меньше названия: главное в строке —
+   что нужно сделать, а не чем это закрыть. */
+body.portal .pcheck {
+  position: relative;
+  appearance: none; -webkit-appearance: none;
+  width: 1.35rem; height: 1.35rem; min-height: 0; padding: 0; margin: 0;
+  flex: none; cursor: pointer;
+  border: 1.5px solid var(--ink-2); background: var(--pp-ground);
+  display: inline-grid; place-content: center;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+body.portal .pcheck::before {
+  content: ""; width: 0.7rem; height: 0.4rem;
+  border-left: 2px solid var(--pp-ground); border-bottom: 2px solid var(--pp-ground);
+  transform: rotate(-45deg) translate(0.05rem, -0.1rem); opacity: 0;
+  transition: opacity 0.12s ease;
+}
+/* Сам квадратик 22px — крупнее он выглядел бы кнопкой. Но палец бьёт по
+   44px, поэтому область нажатия расширена невидимой рамкой. */
+body.portal .pcheck::after { content: ""; position: absolute; inset: -11px; }
+body.portal .pcheck:hover { border-color: var(--accent); }
+body.portal .pcheck:checked, body.portal .pcheck[data-done="true"] {
+  background: var(--accent); border-color: var(--accent);
+}
+body.portal .pcheck:checked::before, body.portal .pcheck[data-done="true"]::before { opacity: 1; }
+.pcheck-form { display: inline-flex; margin: 0; }
+
+/* Переключатель выборки: один элемент вместо двух отдельных кнопок,
+   чтобы было видно, что это одно решение с двумя ответами. */
+.seg {
+  display: inline-flex; border: 1px solid var(--ink); background: var(--pp-ground);
+}
+.seg a {
+  display: inline-flex; align-items: center; min-height: 2.5rem;
+  padding: 0 var(--sp-3); text-decoration: none;
+  font-size: var(--pp-sm); font-weight: 700; color: var(--ink);
+}
+.seg a + a { border-left: 1px solid var(--ink); }
+.seg a:hover { background: var(--pp-chrome); }
+.seg a[aria-current="true"] { background: var(--accent); color: #fff; }
+@media (max-width: 40rem) { .seg a { min-height: var(--tap); } }
+
+.ptoolbar {
+  display: flex; align-items: center; gap: var(--sp-3);
+  flex-wrap: wrap; margin-bottom: var(--sp-3);
+}
+.ptoolbar__link {
+  font-size: var(--pp-sm); color: var(--ink-2);
+  text-decoration: underline; text-decoration-color: var(--line);
+  text-underline-offset: 0.22em;
+}
+.ptoolbar__link:hover { color: var(--accent); text-decoration-color: var(--accent); }
+
+/* --------------------------------------------------------------------------
+   Панель — там, где содержимое действительно отдельный предмет
+   (запрос на доступ, текст протокола), а не просто строка списка
+   -------------------------------------------------------------------------- */
+.ppanel {
+  border: 1px solid var(--line); background: var(--pp-ground);
+  padding: var(--sp-3);
+}
+.ppanel + .ppanel { margin-top: var(--sp-2); }
+.ppanel__head {
+  display: flex; align-items: baseline; gap: var(--sp-2);
+  flex-wrap: wrap; margin-bottom: var(--sp-2);
+}
+.ppanel__body { font-size: var(--pp-sm); }
+.ppanel__body p:last-child { margin-bottom: 0; }
+.ppanel__actions { display: flex; gap: var(--sp-2); margin-top: var(--sp-3); flex-wrap: wrap; }
+
+/* Требует решения — единственное место в портале, где фон окрашен. */
+.pnotice {
+  display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap;
+  padding: var(--sp-2) var(--sp-3);
+  background: var(--accent-tint); border-left: 3px solid var(--accent);
+  font-size: var(--pp-sm); margin-bottom: var(--sp-4);
+}
+.pnotice strong { color: var(--accent-deep); }
+.pnotice .pbtn { margin-left: auto; }
+
+/* --------------------------------------------------------------------------
+   Пустое состояние учит интерфейсу, а не сообщает о пустоте
+   -------------------------------------------------------------------------- */
+.pempty {
+  padding: var(--sp-5) var(--sp-3);
+  border: 1px dashed var(--line);
+  text-align: center; color: var(--ink-2); font-size: var(--pp-sm);
+}
+.pempty strong { display: block; color: var(--ink); font-size: var(--pp-base); margin-bottom: var(--sp-1); }
+.pempty .pbtn { margin-top: var(--sp-3); }
+
+/* --------------------------------------------------------------------------
+   Формы портала — те же плоские правила, что и кнопки
+   -------------------------------------------------------------------------- */
+body.portal .pform { max-width: 44rem; }
+body.portal .pform p { margin-bottom: var(--sp-3); }
+body.portal .pform label {
+  font-size: var(--pp-xs); font-weight: 700;
+  letter-spacing: 0.04em; text-transform: uppercase; color: var(--ink-2);
+}
+body.portal .pform input,
+body.portal .pform textarea,
+body.portal .pform select {
+  font-size: var(--pp-base); padding: 0.55em 0.7em; min-height: 2.5rem;
+  border: 1px solid var(--line); background: var(--pp-ground);
+}
+body.portal .pform input:focus,
+body.portal .pform textarea:focus,
+body.portal .pform select:focus { border-color: var(--accent); }
+body.portal .pform .helptext { font-size: var(--pp-xs); }
+/* Кнопка отправки в портале не носит печатную плашку публичной части */
+body.portal .pform button[type="submit"] {
+  border-image: none; background: var(--accent); color: #fff;
+  border: 1px solid var(--accent); text-transform: none;
+  letter-spacing: 0; font-size: var(--pp-sm); padding: 0.4em 1.1em;
+  min-height: var(--tap);
+}
+body.portal .pform button[type="submit"]:hover {
+  background: var(--accent-deep); border-color: var(--accent-deep); filter: none;
+}
+
+/* --------------------------------------------------------------------------
+   Подвал портала — одна строка. Дорога назад на сайт, и только.
+   -------------------------------------------------------------------------- */
+.pfoot {
+  border-top: 1px solid var(--line);
+  padding-block: var(--sp-3);
+  font-size: var(--pp-xs); color: var(--ink-2);
+  display: flex; gap: var(--sp-3); flex-wrap: wrap; align-items: center;
+}
+.pfoot a { color: var(--ink-2); }
+.pfoot a:hover { color: var(--accent); }
+
+/* Сообщения портала встают в поток, а не поверх содержимого */
+body.portal .messages { padding-inline: 0; max-width: none; }
+body.portal .message { font-size: var(--pp-sm); padding: var(--sp-2) var(--sp-3); }
+
+/* Данные набираются табличными цифрами везде, где это столбик */
+body.portal .prow__meta,
+body.portal .phead__count,
+body.portal time { font-variant-numeric: tabular-nums; }
+
+@media (max-width: 40rem) {
+  /* На телефоне действие прижималось к правому краю собственной строки и
+     висело в пустоте: margin-left:auto имеет смысл, только пока оно стоит
+     на одной строке с заголовком. */
+  .phead__actions { margin-left: 0; width: 100%; }
+  .phead__actions .pbtn { flex: 1 1 auto; }
+}
+
+/* --------------------------------------------------------------------------
+   Узкие экраны и крупный системный шрифт
+   -------------------------------------------------------------------------- */
+/* Полоса шапки не переносилась, и на 320px (порог WCAG 1.4.10) имя прихода,
+   имя вошедшего и «Выйти» выталкивали страницу за край. Тот же перенос
+   спасает и при системном шрифте 200%, где строка растёт так же. */
+.pnav__bar { flex-wrap: wrap; row-gap: var(--sp-1); padding-block: var(--sp-1); }
+.pnav__home, .pnav__who { min-width: 0; }
+.pnav__who strong { overflow-wrap: anywhere; }
+
+/* Кириллические слова длинные, а заголовки портала не текучие: без переноса
+   «Благовещения» вылезает за край раньше, чем сработает любая сетка. */
+body.portal h1, body.portal h2, body.portal .prow__title { overflow-wrap: anywhere; }
+
+/* Аудитория пожилая: текстовые элементы управления тоже должны быть
+   размером с палец, а не с засечку. */
+@media (max-width: 40rem) {
+  body.portal .pnav__out,
+  body.portal .pnav__home,
+  .ptoolbar__link,
+  .pfoot a,
+  body.portal summary.link-more,
+  .psection__head .link-more {
+    display: inline-flex; align-items: center; min-height: var(--tap);
+  }
+  /* При системном шрифте 200% переключатель выборки и ссылка рядом с ним
+     перестают помещаться в строку — пусть переносятся, а не растягивают
+     страницу вбок. */
+  .ptoolbar { row-gap: var(--sp-1); }
+  .seg { flex-wrap: wrap; }
+  .seg a { flex: 1 1 auto; justify-content: center; }
+}

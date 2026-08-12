@@ -1,0 +1,207 @@
+{% extends "_portal_shell.html" %}
+{% load i18n %}
+{% comment %}
+Рабочая страница служения — для тех, кто в нём состоит. Гость видит
+другую: витрину с фотографией и кнопкой «присоединиться». Одна и та же
+ссылка, но человек, который пришёл записаться в хор, и человек, который
+ведёт хор, приходят за разным.
+{% endcomment %}
+{% block title %}{{ ministry.name }} — {{ block.super }}{% endblock %}
+{% block portal_area %}{% trans "Служения" %}{% endblock %}
+{% block portal_sections %}{% include "ministries/_sections.html" %}{% endblock %}
+
+{% block portal_body %}
+<div class="phead">
+  <h1>{{ ministry.name }}</h1>
+  {% if ministry.is_private %}
+    <span class="tag tag--closed">{% include "_icons.html" with icon="lock" %}{% trans "закрытое" %}</span>
+  {% endif %}
+  {% if is_leader %}<span class="tag tag--soon">{% trans "вы ведёте" %}</span>{% endif %}
+  <div class="phead__actions">
+    <form method="post" action="{% url 'ministries:ministry_leave' slug=ministry.slug %}">
+      {% csrf_token %}<button type="submit" class="pbtn pbtn--quiet">{% trans "Выйти из служения" %}</button>
+    </form>
+  </div>
+</div>
+
+{% if ministry.announcement %}
+  <p class="pnotice"><strong>{{ ministry.announcement }}</strong></p>
+{% endif %}
+
+{% if is_leader and pending_members %}
+  <section id="members">
+    <div class="psection__head">
+      <h2>{% trans "Заявки на участие" %}</h2>
+      <span class="phead__count" style="margin-left:auto">{{ pending_members|length }}</span>
+    </div>
+    <ul class="prows">
+      {% for mem in pending_members %}
+        <li class="prow">
+          <span class="prow__title">{{ mem.user.get_full_name|default:mem.user }}</span>
+          <span class="prow__meta">
+            <form method="post" action="{% url 'ministries:membership_approve' pk=mem.pk %}">
+              {% csrf_token %}<button type="submit" class="pbtn pbtn--primary">{% trans "Принять" %}</button>
+            </form>
+          </span>
+        </li>
+      {% endfor %}
+    </ul>
+  </section>
+{% endif %}
+
+<div class="pgrid pgrid--2">
+  <section id="schedule">
+    <div class="psection__head">
+      <h2>{% trans "График" %}</h2>
+    </div>
+    <ul class="prows">
+      {% for e in schedule_entries %}
+        <li class="prow">
+          <span class="prow__title">{{ e.person.get_full_name|default:e.person|default:"—" }}{% if e.second_person %}, {{ e.second_person.get_full_name|default:e.second_person }}{% endif %}
+            {% if e.note %}<span class="prow__sub">{{ e.note }}</span>{% endif %}
+          </span>
+          <span class="prow__meta"><span class="prow__date">{{ e.date|date:"d.m.Y" }}</span></span>
+        </li>
+      {% empty %}
+        <li class="pempty"><strong>{% trans "График пока не составлен." %}</strong>
+          {% trans "Здесь расписывают, кто на какой службе." %}</li>
+      {% endfor %}
+    </ul>
+    {% if is_leader %}
+      <details id="add-schedule" style="margin-top:var(--sp-3)">
+        <summary class="link-more" style="cursor:pointer">{% trans "Добавить в график" %}</summary>
+        <form method="post" class="pform" style="margin-top:var(--sp-3)">
+          {% csrf_token %}{{ schedule_form.as_p }}
+          <button type="submit" name="submit_schedule">{% trans "Добавить" %}</button>
+        </form>
+      </details>
+    {% endif %}
+  </section>
+
+  <section id="work">
+    <div class="psection__head"><h2>{% trans "Проекты" %}</h2></div>
+    <ul class="prows">
+      {% for p in projects %}
+        <li class="prow">
+          <span class="prow__title">{{ p.title }}</span>
+          <span class="prow__meta">
+            <span class="tag">{{ p.get_status_display }}</span>
+            <span class="prow__date">{% if p.due_date %}{{ p.due_date|date:"d.m.Y" }}{% else %}—{% endif %}</span>
+          </span>
+        </li>
+      {% empty %}
+        <li class="pempty"><strong>{% trans "Проектов пока нет." %}</strong>
+          {% trans "Проект — то, что тянется дольше одной службы." %}</li>
+      {% endfor %}
+    </ul>
+
+    <div class="psection__head" style="margin-top:var(--sp-4)">
+      <h2>{% trans "Нужно купить" %}</h2>
+    </div>
+    <ul class="prows">
+      {% for s in supply_requests %}
+        <li class="prow">
+          {% if is_leader %}
+            <form method="post" action="{% url 'ministries:supply_toggle' pk=s.pk %}" class="pcheck-form prow__lead">
+              {% csrf_token %}
+              <button type="submit" class="pcheck" data-done="false"
+                aria-label="{% blocktrans with item=s.item %}Отметить купленным: {{ item }}{% endblocktrans %}"></button>
+            </form>
+          {% endif %}
+          <span class="prow__title">{{ s.item }}
+            {% if s.note %}<span class="prow__sub">{{ s.note }}</span>{% endif %}
+          </span>
+        </li>
+      {% empty %}
+        <li class="pempty"><strong>{% trans "Заявок нет." %}</strong>
+          {% trans "Кончились свечи или нужна утварь — впишите сюда, староста увидит." %}</li>
+      {% endfor %}
+    </ul>
+    <details id="add-supply" style="margin-top:var(--sp-3)">
+      <summary class="link-more" style="cursor:pointer">{% trans "Добавить заявку" %}</summary>
+      <form method="post" class="pform" style="margin-top:var(--sp-3)">
+        {% csrf_token %}{{ supply_form.as_p }}
+        <button type="submit" name="submit_supply">{% trans "Добавить" %}</button>
+      </form>
+    </details>
+  </section>
+</div>
+
+<div class="pgrid pgrid--2 psection">
+  <section id="library">
+    <div class="psection__head">
+      <h2>{% trans "Документы и отчёты" %}</h2>
+    </div>
+    <ul class="prows">
+      {% for d in documents %}
+        <li class="prow">
+          <span class="prow__lead">{% include "_icons.html" with icon="document" %}</span>
+          <a href="{% url 'ministries:document_download' pk=d.pk %}" class="prow__title">{{ d.title }}</a>
+          <span class="prow__meta"><span class="prow__date">{{ d.get_category_display }}</span></span>
+        </li>
+      {% endfor %}
+      {% for r in reports %}
+        <li class="prow">
+          <span class="prow__lead">{% include "_icons.html" with icon="document" %}</span>
+          <a href="{% url 'ministries:report_download' pk=r.pk %}" class="prow__title">{{ r.title }}</a>
+          <span class="prow__meta"><span class="prow__date">{{ r.period }}</span></span>
+        </li>
+      {% endfor %}
+      {% if not documents and not reports %}
+        <li class="pempty"><strong>{% trans "Файлов пока нет." %}</strong>
+          {% trans "Ноты, инструкции и отчёты выкладывает ведущий служения." %}</li>
+      {% endif %}
+    </ul>
+  </section>
+
+  <section id="discussion">
+    <div class="psection__head">
+      <h2>{% trans "Обсуждение" %}</h2>
+    </div>
+    <ul class="prows">
+      {% for t in topics %}
+        <li class="prow">
+          <a href="{% url 'ministries:topic_detail' pk=t.pk %}" class="prow__title">{{ t.title }}
+            <span class="prow__sub">{{ t.author.get_full_name|default:t.author }}</span>
+          </a>
+          <span class="prow__meta">
+            <span class="prow__who">{% blocktrans count n=t.comments.count %}{{ n }} ответ{% plural %}{{ n }} ответов{% endblocktrans %}</span>
+            <span class="prow__date">{{ t.created_at|date:"d.m.Y" }}</span>
+          </span>
+        </li>
+      {% empty %}
+        <li class="pempty"><strong>{% trans "Тем пока нет." %}</strong>
+          {% trans "Здесь договариваются о том, что не решается в притворе после службы." %}</li>
+      {% endfor %}
+    </ul>
+    <details id="add-topic" style="margin-top:var(--sp-3)">
+      <summary class="link-more" style="cursor:pointer">{% trans "Создать тему" %}</summary>
+      <form method="post" class="pform" style="margin-top:var(--sp-3)">
+        {% csrf_token %}{{ topic_form.as_p }}
+        <button type="submit" name="submit_topic">{% trans "Создать" %}</button>
+      </form>
+    </details>
+  </section>
+</div>
+
+<section id="photos" class="psection">
+  <div class="psection__head">
+    <h2>{% trans "Фотографии" %}</h2>
+  </div>
+  {% if photos %}
+    <div class="photo-grid">
+      {% for p in photos %}<img src="{{ p.image.url }}" alt="{{ p.caption }}" loading="lazy">{% endfor %}
+    </div>
+  {% else %}
+    <p class="pempty"><strong>{% trans "Фотографий пока нет." %}</strong>
+      {% trans "Снимки со спевок и праздников выкладывают сами участники." %}</p>
+  {% endif %}
+  <details id="add-photo" style="margin-top:var(--sp-3)">
+    <summary class="link-more" style="cursor:pointer">{% trans "Загрузить фото" %}</summary>
+    <form method="post" enctype="multipart/form-data" class="pform" style="margin-top:var(--sp-3)">
+      {% csrf_token %}{{ photo_form.as_p }}
+      <button type="submit" name="submit_photo">{% trans "Загрузить" %}</button>
+    </form>
+  </details>
+</section>
+{% endblock %}

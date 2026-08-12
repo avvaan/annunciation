@@ -28,7 +28,7 @@ class PageTextTranslationOptions(TranslationOptions):
 
 @register(SiteSettings)
 class SiteSettingsTranslationOptions(TranslationOptions):
-    fields = ("parish_name", "city", "address", "hero_lede")
+    fields = ("parish_name", "parish_name_short", "city", "address", "hero_lede")
 
 
 @register(FirstVisitPage)

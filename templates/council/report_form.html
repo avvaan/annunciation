@@ -1,9 +1,5 @@
-{% extends "council/_portal_base.html" %}
+{% extends "council/_form_page.html" %}
 {% load i18n %}
-{% block portal_content %}
-<form method="post" enctype="multipart/form-data" style="max-width:44rem">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">{% trans "Сохранить" %}</button>
-</form>
-{% endblock %}
+{% block title %}{% if report %}{% trans "Правка отчёта" %}{% else %}{% trans "Новый отчёт" %}{% endif %} — {{ block.super }}{% endblock %}
+{% block portal_title %}{% if report %}{% trans "Правка отчёта" %}{% else %}{% trans "Новый отчёт" %}{% endif %}{% endblock %}
+{% block cancel_url %}{% url 'council:report_list' %}{% endblock %}

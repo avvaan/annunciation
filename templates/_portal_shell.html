@@ -1,0 +1,73 @@
+{% load i18n %}<!DOCTYPE html>
+<html lang="{{ LANGUAGE_CODE }}">
+{% comment %}
+Оболочка рабочей части сайта: совет прихода и служения.
+
+Не наследует base.html намеренно. Публичная шапка с десятью пунктами меню,
+чёрная плита с засечным заголовком и подвал с кнопкой «Пожертвовать» — это
+обращение к гостю. Член совета заходит сюда третий раз за неделю посмотреть
+поручения, и вся эта мебель стоит у него между глазами и делом.
+
+Палитра и шрифт тела — те же, что на сайте: приход один. Разница в плотности
+и в том, что здесь ничего не уговаривает.
+{% endcomment %}
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}{% trans "Портал" %} — {{ site_settings.parish_name }}{% endblock %}</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#f3ece0">
+<link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg">
+<link rel="preload" as="font" type="font/woff2" href="/static/fonts/ptsans-400-cyrillic.woff2" crossorigin>
+<link rel="preload" as="font" type="font/woff2" href="/static/fonts/ptsans-700-cyrillic.woff2" crossorigin>
+<link rel="stylesheet" href="/static/css/base.css">
+<link rel="stylesheet" href="/static/css/portal.css">
+</head>
+<body class="portal">
+<a class="skip-link" href="#main">{% trans "Перейти к содержимому" %}</a>
+
+<header class="pnav">
+  <div class="shell">
+    <div class="pnav__bar">
+      <a href="{% url 'core:home' %}" class="pnav__home">
+        {{ site_settings.parish_name_short }}
+        <span>· {% block portal_area %}{% trans "Портал" %}{% endblock %}</span>
+      </a>
+      <span class="pnav__spacer"></span>
+      {% if user.is_authenticated %}
+        <span class="pnav__who">
+          <strong>{{ user.get_full_name|default:user.username }}</strong>
+          <form method="post" action="{% url 'ministries:logout' %}" style="display:inline">
+            {% csrf_token %}<button type="submit" class="pnav__out">{% trans "Выйти" %}</button>
+          </form>
+        </span>
+      {% else %}
+        <a href="{% url 'ministries:login' %}" class="pbtn pbtn--quiet">{% trans "Войти" %}</a>
+      {% endif %}
+    </div>
+    <nav class="pnav__sections" aria-label="{% trans "Разделы портала" %}">
+      {% block portal_sections %}{% endblock %}
+    </nav>
+  </div>
+</header>
+
+<main id="main" class="pmain">
+  <div class="shell">
+    {% if messages %}
+      <ul class="messages">
+        {% for message in messages %}<li class="message message--{{ message.tags }}">{{ message }}</li>{% endfor %}
+      </ul>
+    {% endif %}
+    {% block portal_body %}{% endblock %}
+  </div>
+</main>
+
+<footer class="pfoot">
+  <div class="shell" style="display:flex;gap:var(--sp-3);flex-wrap:wrap;align-items:center">
+    <a href="{% url 'core:home' %}">{% trans "На сайт прихода" %}</a>
+    <a href="{% url 'services:schedule' %}">{% trans "Расписание" %}</a>
+    <span style="margin-left:auto">{{ site_settings.parish_name }}</span>
+  </div>
+</footer>
+</body>
+</html>

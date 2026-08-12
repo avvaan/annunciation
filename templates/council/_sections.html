@@ -1,0 +1,16 @@
+{% load i18n %}
+{% comment %}
+Текущий раздел вычисляется из имени маршрута, а не передаётся из шаблона:
+дочерний шаблон не может отдать значение родителю, а список разделов живёт
+в родителе. Условия расписаны явно — так видно, что «новый протокол» и
+«протокол» подсвечивают один и тот же раздел.
+{% endcomment %}
+{% with n=request.resolver_match.url_name %}
+<a href="{% url 'council:dashboard' %}"{% if n == "dashboard" %} aria-current="page"{% endif %}>{% trans "Сводка" %}</a>
+<a href="{% url 'council:meeting_list' %}"{% if n == "meeting_list" or n == "meeting_new" or n == "meeting_detail" or n == "meeting_edit" %} aria-current="page"{% endif %}>{% trans "Заседания" %}</a>
+<a href="{% url 'council:protocol_list' %}"{% if n == "protocol_list" or n == "protocol_new" or n == "protocol_detail" or n == "protocol_edit" %} aria-current="page"{% endif %}>{% trans "Протоколы" %}</a>
+<a href="{% url 'council:report_list' %}"{% if n == "report_list" or n == "report_new" or n == "report_edit" %} aria-current="page"{% endif %}>{% trans "Отчёты" %}</a>
+<a href="{% url 'council:task_list' %}"{% if n == "task_list" or n == "task_new" or n == "task_edit" %} aria-current="page"{% endif %}>{% trans "Поручения" %}</a>
+<a href="{% url 'council:project_list' %}"{% if n == "project_list" %} aria-current="page"{% endif %}>{% trans "Проекты" %}</a>
+<a href="{% url 'ministries:ministry_list' %}">{% trans "Служения" %}</a>
+{% endwith %}

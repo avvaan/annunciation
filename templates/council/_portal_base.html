@@ -1,34 +1,15 @@
-{% extends "base.html" %}
+{% extends "_portal_shell.html" %}
 {% load i18n %}
-{% comment %}
-Shared shell for the council portal: a page head plus the portal's own nav.
-The portal keeps the site's palette and type, but drops the photography —
-people come here to work, not to be persuaded.
-{% endcomment %}
 
-{% block content %}
-<section class="page-head">
-  <div class="shell">
+{% block portal_area %}{% trans "Совет" %}{% endblock %}
+{% block portal_sections %}{% include "council/_sections.html" %}{% endblock %}
+
+{% block portal_body %}
+  <div class="phead">
     <h1>{% block portal_title %}{% trans "Совет прихода" %}{% endblock %}</h1>
+    {% block portal_count %}{% endblock %}
+    <div class="phead__actions">{% block portal_actions %}{% endblock %}</div>
     {% block portal_lede %}{% endblock %}
   </div>
-</section>
-
-<nav class="portal-nav" aria-label="{% trans "Разделы портала" %}">
-  <div class="shell portal-nav__row">
-    <a href="{% url 'council:dashboard' %}">{% trans "Сводка" %}</a>
-    <a href="{% url 'council:meeting_list' %}">{% trans "Заседания" %}</a>
-    <a href="{% url 'council:protocol_list' %}">{% trans "Протоколы" %}</a>
-    <a href="{% url 'council:report_list' %}">{% trans "Отчёты" %}</a>
-    <a href="{% url 'council:task_list' %}">{% trans "Поручения" %}</a>
-    <a href="{% url 'council:project_list' %}">{% trans "Проекты" %}</a>
-    <a href="{% url 'ministries:ministry_list' %}">{% trans "Служения" %}</a>
-  </div>
-</nav>
-
-<section class="band">
-  <div class="shell">
-    {% block portal_content %}{% endblock %}
-  </div>
-</section>
+  {% block portal_content %}{% endblock %}
 {% endblock %}

@@ -1,0 +1,11 @@
+{% load i18n %}
+<li class="prow">
+  <span class="prow__lead">{% include "_icons.html" with icon="document" %}</span>
+  <a href="{% url 'council:protocol_detail' pk=p.pk %}" class="prow__title">{{ p.title }}
+    </a>
+  <span class="prow__meta">
+    {% if not p.is_published %}<span class="tag tag--draft">{% trans "черновик" %}</span>{% endif %}
+    {% if not p.council_only %}<span class="tag">{% trans "видит приход" %}</span>{% endif %}
+    <span class="prow__date">{% if p.meeting %}{{ p.meeting.date|date:"d.m.Y" }}{% else %}{{ p.created_at|date:"d.m.Y" }}{% endif %}</span>
+  </span>
+</li>

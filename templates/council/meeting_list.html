@@ -1,30 +1,59 @@
 {% extends "council/_portal_base.html" %}
 {% load i18n %}
+{% block title %}{% trans "Заседания" %} — {{ block.super }}{% endblock %}
 {% block portal_title %}{% trans "Заседания совета" %}{% endblock %}
+{% block portal_actions %}
+  {% if is_council %}<a href="{% url 'council:meeting_new' %}" class="pbtn pbtn--primary">{% trans "Назначить заседание" %}</a>{% endif %}
+{% endblock %}
+
 {% block portal_content %}
-{% if is_council %}
-  <p><a href="{% url 'council:meeting_new' %}" class="btn btn--accent">{% trans "Назначить заседание" %}</a></p>
-{% endif %}
+<section>
+  <div class="psection__head">
+    <h2>{% trans "Предстоящие" %}</h2>
+    <span class="phead__count" style="margin-left:auto">{{ upcoming|length }}</span>
+  </div>
+  <ul class="prows">
+    {% for m in upcoming %}
+      <li class="prow">
+        <a href="{% url 'council:meeting_detail' pk=m.pk %}" class="prow__title">{{ m.title }}
+          {% if m.location %}<span class="prow__sub">{{ m.location }}</span>{% endif %}
+        </a>
+        <span class="prow__meta">
+          <span class="prow__date">{{ m.date|date:"d.m.Y" }}{% if m.time %}<br>{{ m.time|time:"H:i" }}{% endif %}</span>
+        </span>
+      </li>
+    {% empty %}
+      <li class="pempty">
+        <strong>{% trans "Заседаний не назначено." %}</strong>
+        {% trans "Назначьте следующее — оно появится в сводке у всего совета." %}
+        {% if is_council %}<a href="{% url 'council:meeting_new' %}" class="pbtn">{% trans "Назначить" %}</a>{% endif %}
+      </li>
+    {% endfor %}
+  </ul>
+</section>
 
-<h2>{% trans "Предстоящие" %}</h2>
-<ul class="rota">
-  {% for m in upcoming %}
-    <li>
-      <span class="rota__date">{{ m.date|date:"d.m.Y" }}{% if m.time %} {{ m.time|time:"H:i" }}{% endif %}</span>
-      <a href="{% url 'council:meeting_detail' pk=m.pk %}" style="flex:1">{{ m.title }}</a>
-      {% if m.location %}<span class="meta">{{ m.location }}</span>{% endif %}
-    </li>
-  {% empty %}<li><span class="empty">{% trans "Заседаний не назначено." %}</span></li>{% endfor %}
-</ul>
-
-<h2 style="margin-top:var(--sp-6)">{% trans "Прошедшие" %}</h2>
-<ul class="rota">
-  {% for m in past %}
-    <li>
-      <span class="rota__date">{{ m.date|date:"d.m.Y" }}</span>
-      <a href="{% url 'council:meeting_detail' pk=m.pk %}" style="flex:1">{{ m.title }}</a>
-      <span class="status">{{ m.get_status_display }}</span>
-    </li>
-  {% empty %}<li><span class="empty">{% trans "Пока пусто." %}</span></li>{% endfor %}
-</ul>
+<section class="psection">
+  <div class="psection__head">
+    <h2>{% trans "Прошедшие" %}</h2>
+    <span class="phead__count" style="margin-left:auto">{{ past|length }}</span>
+  </div>
+  <ul class="prows">
+    {% for m in past %}
+      <li class="prow">
+        <a href="{% url 'council:meeting_detail' pk=m.pk %}" class="prow__title">{{ m.title }}
+          {% with n=m.protocols.count %}{% if n %}
+            <span class="prow__sub">{% blocktrans count n=n %}{{ n }} протокол{% plural %}{{ n }} протоколов{% endblocktrans %}</span>
+          {% else %}<span class="prow__sub">{% trans "протокола нет" %}</span>{% endif %}{% endwith %}
+        </a>
+        <span class="prow__meta">
+          {% if m.status == 'cancelled' %}<span class="tag tag--draft">{{ m.get_status_display }}</span>{% endif %}
+          <span class="prow__date">{{ m.date|date:"d.m.Y" }}</span>
+        </span>
+      </li>
+    {% empty %}
+      <li class="pempty"><strong>{% trans "Пока пусто." %}</strong>
+        {% trans "Здесь останутся заседания, которые уже прошли." %}</li>
+    {% endfor %}
+  </ul>
+</section>
 {% endblock %}

@@ -1,9 +1,6 @@
-{% extends "council/_portal_base.html" %}
+{% extends "council/_form_page.html" %}
 {% load i18n %}
-{% block portal_content %}
-<form method="post" enctype="multipart/form-data" style="max-width:44rem">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">{% trans "Сохранить" %}</button>
-</form>
-{% endblock %}
+{% block title %}{% if protocol %}{% trans "Правка протокола" %}{% else %}{% trans "Новый протокол" %}{% endif %} — {{ block.super }}{% endblock %}
+{% block portal_title %}{% if protocol %}{% trans "Правка протокола" %}{% else %}{% trans "Новый протокол" %}{% endif %}{% endblock %}
+{% block portal_lede %}<p class="phead__lede">{% trans "Пока протокол не опубликован, его видит только совет. «Только совет» оставляет его закрытым и после публикации." %}</p>{% endblock %}
+{% block cancel_url %}{% url 'council:protocol_list' %}{% endblock %}

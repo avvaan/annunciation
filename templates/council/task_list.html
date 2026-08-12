@@ -1,25 +1,31 @@
 {% extends "council/_portal_base.html" %}
 {% load i18n %}
+{% block title %}{% trans "Поручения" %} — {{ block.super }}{% endblock %}
 {% block portal_title %}{% trans "Поручения" %}{% endblock %}
+{% block portal_count %}
+  <span class="phead__count">{% blocktrans count n=open_count %}{{ n }} открытое{% plural %}{{ n }} открытых{% endblocktrans %}</span>
+{% endblock %}
+{% block portal_actions %}
+  {% if is_council %}<a href="{% url 'council:task_new' %}" class="pbtn pbtn--primary">{% trans "Новое поручение" %}</a>{% endif %}
+{% endblock %}
+
 {% block portal_content %}
-<p class="row-actions">
-  <a href="?scope=mine" class="btn{% if scope == 'mine' %} btn--accent{% endif %}">{% trans "Мои" %}</a>
-  <a href="?scope=all" class="btn{% if scope != 'mine' %} btn--accent{% endif %}">{% trans "Все" %}</a>
-  <a href="?scope={{ scope }}&show={% if show == 'all' %}open{% else %}all{% endif %}" class="link-more">
+<div class="ptoolbar">
+  <span class="seg">
+    <a href="?scope=mine{% if show == 'all' %}&show=all{% endif %}" aria-current="{% if scope == 'mine' %}true{% else %}false{% endif %}">{% trans "Мои" %}</a>
+    <a href="?scope=all{% if show == 'all' %}&show=all{% endif %}" aria-current="{% if scope != 'mine' %}true{% else %}false{% endif %}">{% trans "Все" %}</a>
+  </span>
+  <a href="?scope={{ scope }}&show={% if show == 'all' %}open{% else %}all{% endif %}" class="ptoolbar__link">
     {% if show == 'all' %}{% trans "Только открытые" %}{% else %}{% trans "Показать выполненные" %}{% endif %}
   </a>
-</p>
-<ul class="rota">
-  {% for t in tasks %}
-    <li>
-      <form method="post" action="{% url 'council:task_toggle' pk=t.pk %}" class="inline-form">
-        {% csrf_token %}
-        <button type="submit" class="btn">{% if t.status == 'done' %}{% trans "Вернуть" %}{% else %}{% trans "Готово" %}{% endif %}</button>
-      </form>
-      <span style="flex:1">{{ t.title }}</span>
-      {% if t.assignee %}<span class="meta">{{ t.assignee.get_full_name|default:t.assignee }}</span>{% endif %}
-      {% if t.due_date %}<span class="{% if t.is_overdue %}status status--accent{% else %}meta{% endif %}">{{ t.due_date|date:"d.m.Y" }}</span>{% endif %}
+</div>
+
+<ul class="prows">
+  {% for t in tasks %}{% include "council/_task_row.html" with show_assignee=True %}{% empty %}
+    <li class="pempty">
+      <strong>{% if scope == 'mine' %}{% trans "За вами поручений нет." %}{% else %}{% trans "Открытых поручений нет." %}{% endif %}</strong>
+      {% trans "Поручения ставят на заседании — они появятся здесь вместе с протоколом." %}
     </li>
-  {% empty %}<li><span class="empty">{% trans "Поручений нет." %}</span></li>{% endfor %}
+  {% endfor %}
 </ul>
 {% endblock %}

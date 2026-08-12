@@ -525,8 +525,11 @@ ul.helptext, form ul { padding-left: 1.2em; }
 .errorlist { list-style: none; padding: 0; margin: 0 0 var(--sp-2); color: var(--accent-deep); font-size: var(--fs-sm); font-weight: 700; }
 
 /* form submits wear the same drawn plate — but not the language switch, whose
-   job is to show which language is active, not to look like a primary action */
-button[type="submit"]:not(.lang-switch__btn):not(.btn) {
+   job is to show which language is active, not to look like a primary action.
+   Печатная плашка — деталь публичной части. В портале тот же селектор одевал
+   в неё флажок «готово» и ссылку «выйти», и они становились самым громким
+   на странице; поэтому правило заперто вне body.portal. */
+body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn) {
   display: inline-flex; align-items: center; justify-content: center;
   min-height: var(--tap); padding: 0.75em 1.75em;
   font-family: var(--font-body); font-size: var(--fs-sm); font-weight: 700;
@@ -536,8 +539,8 @@ button[type="submit"]:not(.lang-switch__btn):not(.btn) {
   border-image: url("/static/images/ornament/plate-accent.png") 60 fill / 10px / 0 repeat;
   transition: filter 0.18s ease;
 }
-button[type="submit"]:not(.lang-switch__btn):not(.btn):hover,
-button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-visible { filter: brightness(1.12); }
+body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):hover,
+body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-visible { filter: brightness(1.12); }
 
 .messages { list-style: none; margin: 0; padding: var(--sp-3) var(--sp-3) 0; max-width: var(--wide); margin-inline: auto; }
 .message {

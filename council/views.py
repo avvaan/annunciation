@@ -235,10 +235,17 @@ def task_list(request):
     scope = request.GET.get("scope", "mine")
     if scope == "mine":
         tasks = tasks.filter(assignee=request.user)
+    # Счёт открытых берётся до фильтра «показать выполненные»: заголовок
+    # отвечает на вопрос «сколько за мной висит», а не «сколько строк на экране».
+    open_count = tasks.filter(status=ActionItem.Status.OPEN).count()
     if request.GET.get("show") != "all":
         tasks = tasks.filter(status=ActionItem.Status.OPEN)
     return render(request, "council/task_list.html", {
-        "tasks": tasks, "scope": scope, "show": request.GET.get("show", "open"),
+        "tasks": tasks,
+        "scope": scope,
+        "show": request.GET.get("show", "open"),
+        "open_count": open_count,
+        "is_council": is_council_member(request.user),
     })
 
 

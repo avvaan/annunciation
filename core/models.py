@@ -26,6 +26,12 @@ class SiteSettings(SingletonModel):
     """Parish-wide contact details and external-service links, edited from one admin screen."""
 
     parish_name = models.CharField(max_length=200, default="Приход Благовещения Пресвятой Богородицы")
+    # Полное название — четыре длинных слова; в узкой рабочей полосе портала
+    # оно занимает две строки и вытесняет всё остальное.
+    parish_name_short = models.CharField(
+        "Короткое название", max_length=60, default="Благовещение",
+        help_text="Для тесных мест: шапка портала, вкладка браузера.",
+    )
     city = models.CharField(max_length=120, default="Джексонвиль, Флорида")
     address = models.CharField(max_length=255, blank=True)
     phone = models.CharField(max_length=50, blank=True)
