@@ -1,0 +1,81 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Записки о поминовении" %} — {{ block.super }}{% endblock %}
+{% block content %}
+
+<section class="page-head">
+  <div class="shell">
+    <h1>{% trans "Записки о поминовении" %}</h1>
+    <p>{% trans "Подайте имена о здравии и о упокоении — их помянут на проскомидии перед литургией." %}</p>
+  </div>
+</section>
+
+<section class="band">
+  <div class="shell">
+    <form method="post" class="note-form">
+      {% csrf_token %}
+      {{ form.form_timestamp }}
+
+      {% if form.non_field_errors %}{{ form.non_field_errors }}{% endif %}
+
+      <fieldset class="note-form__block">
+        <legend>{{ form.kind.label }}</legend>
+        {{ form.kind.errors }}
+        {{ form.kind }}
+        <p class="meta">
+          {% blocktrans with n=sorokoust_liturgies %}Сорокоуст — поминовение на {{ n }} литургиях подряд; имена читают до конца круга, повторно подавать записку не нужно.{% endblocktrans %}
+        </p>
+      </fieldset>
+
+      <div class="note-form__names">
+        <div>
+          <label for="{{ form.living_names.id_for_label }}">{{ form.living_names.label }}</label>
+          {{ form.living_names.errors }}
+          {{ form.living_names }}
+          <p class="helptext">{{ form.living_names.help_text }}</p>
+        </div>
+        <div>
+          <label for="{{ form.departed_names.id_for_label }}">{{ form.departed_names.label }}</label>
+          {{ form.departed_names.errors }}
+          {{ form.departed_names }}
+          <p class="helptext">{{ form.departed_names.help_text }}</p>
+        </div>
+      </div>
+
+      <fieldset class="note-form__block">
+        <legend>{% trans "Как с вами связаться" %}</legend>
+        <div class="note-form__contact">
+          <p>{{ form.requester_name.errors }}<label for="{{ form.requester_name.id_for_label }}">{{ form.requester_name.label }}</label>{{ form.requester_name }}</p>
+          <p>{{ form.email.errors }}<label for="{{ form.email.id_for_label }}">{{ form.email.label }}</label>{{ form.email }}</p>
+          <p>{{ form.phone.errors }}<label for="{{ form.phone.id_for_label }}">{{ form.phone.label }}</label>{{ form.phone }}</p>
+        </div>
+        <p>{{ form.notes.errors }}<label for="{{ form.notes.id_for_label }}">{{ form.notes.label }}</label>{{ form.notes }}</p>
+      </fieldset>
+
+      <div class="honeypot-wrap" aria-hidden="true">{{ form.website }}</div>
+
+      <button type="submit">{% trans "Подать записку" %}</button>
+    </form>
+
+    <div class="ornament" role="presentation"></div>
+
+    <div class="grid grid--2">
+      <div>
+        <h2>{% trans "Как писать имена" %}</h2>
+        <ul>
+          <li>{% trans "Только крещёные в православии — по одному имени в строке." %}</li>
+          <li>{% trans "Имя в родительном падеже и в церковной форме: Марии, а не Маши; Иоанна, а не Вани." %}</li>
+          <li>{% trans "Фамилии, отчества, звания и слова «раба Божия» писать не нужно." %}</li>
+          <li>{% trans "При надобности ставьте пометы: мл. — младенца, отр. — отрока, бол. — болящего, воина." %}</li>
+        </ul>
+      </div>
+      <div>
+        <h2>{% trans "Что дальше" %}</h2>
+        <p>{% trans "Записку принимает секретарь прихода и передаёт в алтарь к ближайшей литургии. Пожертвование за поминовение можно принести в храм или отправить со страницы пожертвований — приём записки от него не зависит." %}</p>
+        <p><a href="{% url 'core:donation' %}" class="link-more">{% trans "Пожертвовать" %}{% include "_icons.html" with icon="arrow" %}</a></p>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

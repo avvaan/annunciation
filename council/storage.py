@@ -1,7 +1,6 @@
-from django.conf import settings
-from django.core.files.storage import FileSystemStorage
+from core.storage import private_storage
 
-# Council protocols, financial reports and meeting files live outside
-# MEDIA_ROOT and are never served by the webserver directly — every download
-# goes through a view that checks portal membership first.
-council_storage = FileSystemStorage(location=str(settings.PRIVATE_MEDIA_ROOT))
+# Протоколы совета, финансовые отчёты и файлы заседаний лежат вне
+# MEDIA_ROOT и никогда не отдаются веб-сервером напрямую — каждая
+# загрузка проходит через вьюху, которая сперва проверяет членство.
+council_storage = private_storage
