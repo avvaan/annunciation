@@ -749,7 +749,7 @@ body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-v
   background: url("/static/images/ornament/border-strip.png") center / auto 100% repeat-x;
   opacity: 0.85;
 }
-.site-footer__emblem { width: 2.25rem; height: auto; margin-bottom: var(--sp-3); }
+.site-footer__logo { width: 11rem; height: auto; margin-bottom: var(--sp-3); }
 /* .meta задан для светлого фона (--ink-2); на умбре подвала это 2.48:1.
    Тёмные полосы .band--deep это уже учитывали, подвал — нет. */
 .site-footer .meta { color: var(--ink-on-deep-2); }
