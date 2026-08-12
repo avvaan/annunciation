@@ -262,6 +262,11 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent-deep); }
 }
 .section-head h2 { margin-bottom: 0; }
 
+.section-head--center { flex-direction: column; align-items: center; text-align: center; }
+.section-head--center .section-head__lede {
+  max-width: 34rem; margin: 0; color: var(--ink-2); font-size: var(--fs-base);
+}
+
 /* Ornament: the donor spends its whole ornamental budget on shape and
    shadow, not drawn motifs — so a section break here is a plain gold rule
    with a small centred dot, authored in CSS, not an image. */
@@ -346,6 +351,29 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent-deep); }
 }
 .site-nav a:hover, .site-nav a:focus-visible { background: var(--paper); color: var(--accent-deep); }
 
+/* Nav submenu — a native <details>/<summary>, same no-JS device as the
+   mobile menu toggle above. Mobile: an inline accordion row inside the
+   vertical nav list. Desktop: a floating rounded panel under the pill. */
+.nav-drop { border-bottom: 1px solid var(--line); }
+.nav-drop summary {
+  display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2);
+  padding: var(--sp-3) var(--sp-4);
+  font-family: var(--font-display); font-size: var(--fs-lg);
+  min-height: var(--tap); cursor: pointer; list-style: none;
+}
+.nav-drop summary::-webkit-details-marker { display: none; }
+.nav-drop summary:hover, .nav-drop summary:focus-visible { background: var(--paper); color: var(--accent-deep); }
+.nav-drop summary svg { width: 1rem; height: 1rem; flex: none; transition: transform 0.15s ease; }
+.nav-drop[open] summary svg { transform: rotate(180deg); }
+.nav-drop__panel { display: flex; flex-direction: column; background: var(--paper); }
+.nav-drop__panel a {
+  display: block; padding: var(--sp-2) var(--sp-4) var(--sp-2) var(--sp-5);
+  font-family: var(--font-body); font-size: var(--fs-base);
+  border-bottom: 1px solid var(--line); min-height: var(--tap);
+}
+.nav-drop__panel a:last-child { border-bottom: none; }
+.nav-drop__panel a:hover, .nav-drop__panel a:focus-visible { color: var(--accent-deep); }
+
 .site-header__cta { padding: 0 var(--sp-4) var(--sp-3); }
 .site-header__cta .btn { width: 100%; }
 
@@ -365,23 +393,44 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent-deep); }
 }
 
 @media (min-width: 60rem) {
-  .site-header__bar { display: flex; align-items: center; }
+  /* Visible, not hidden: the "Приход" submenu is an absolutely-positioned
+     panel that must float past the bar's own bottom edge. The mobile
+     accordion below this breakpoint still needs the hidden overflow to
+     mask its square-cornered rows inside the rounded card. */
+  .site-header__bar { display: flex; align-items: center; overflow: visible; }
   .nav-toggle-btn { display: none; }
   .site-header__cta { display: none; }
   .site-header__row { padding-right: var(--sp-2); }
   .site-nav {
     display: flex !important; flex-direction: row; align-items: center; flex-wrap: wrap;
     background: transparent; border-top: none; color: inherit;
-    flex: 1 1 auto; padding-block: var(--sp-2); gap: var(--sp-1);
+    flex: 1 1 auto; padding-block: var(--sp-2); gap: 0.125rem;
   }
   .site-nav a {
-    border-bottom: none; padding: 0.55em 0.9em; border-radius: var(--radius-pill);
+    border-bottom: none; padding: 0.55em 0.7em; border-radius: var(--radius-pill);
     font-family: var(--font-body); font-weight: 600; font-size: var(--fs-sm); min-height: 0;
   }
   .site-nav a:hover { background: var(--paper); }
   .lang-switch { margin-left: auto; padding: 0; }
   .lang-switch__btn { min-height: 2.25rem; }
   .site-header__bar .site-header__donate { display: inline-flex; margin: 0 var(--sp-4) 0 var(--sp-1); }
+
+  .nav-drop { position: relative; border-bottom: none; }
+  .nav-drop summary {
+    padding: 0.55em 0.7em; border-radius: var(--radius-pill); gap: 0.3rem;
+    font-family: var(--font-body); font-weight: 600; font-size: var(--fs-sm); min-height: 0;
+  }
+  .nav-drop[open] summary { background: var(--paper); color: var(--accent-deep); }
+  .nav-drop__panel {
+    position: absolute; top: calc(100% + var(--sp-1)); left: 0; z-index: 10;
+    min-width: 13rem; padding: var(--sp-1);
+    background: var(--surface); border-radius: var(--radius-md); box-shadow: var(--shadow-md);
+  }
+  .nav-drop__panel a {
+    border-radius: var(--radius-sm); padding: 0.6em 0.9em; border-bottom: none;
+    font-family: var(--font-body); font-size: var(--fs-sm); min-height: 0;
+  }
+  .nav-drop__panel a:hover, .nav-drop__panel a:focus-visible { background: var(--paper); color: var(--accent-deep); }
 }
 
 /* --------------------------------------------------------------------------
@@ -605,8 +654,8 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent-deep); }
 }
 
 .grid { display: grid; gap: var(--sp-4); grid-template-columns: 1fr; }
-@media (min-width: 44rem) { .grid--2 { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 60rem) { .grid--3 { grid-template-columns: repeat(3, 1fr); } }
+@media (min-width: 44rem) { .grid--2 { grid-template-columns: repeat(2, 1fr); } .grid--4 { grid-template-columns: repeat(2, 1fr); } }
+@media (min-width: 60rem) { .grid--3 { grid-template-columns: repeat(3, 1fr); } .grid--4 { grid-template-columns: repeat(4, 1fr); } }
 
 /* The donor's signature card: a rounded photo with its caption printed
    straight onto a dark gradient at the foot of the image, not set below it. */
