@@ -1,20 +1,42 @@
 {% extends "council/_portal_base.html" %}
 {% load i18n %}
+{% block title %}{% trans "Отчёты" %} — {{ block.super }}{% endblock %}
 {% block portal_title %}{% trans "Отчёты" %}{% endblock %}
+{% block portal_count %}<span class="phead__count">{{ reports|length }}</span>{% endblock %}
+{% block portal_actions %}
+  {% if is_council %}<a href="{% url 'council:report_new' %}" class="pbtn pbtn--primary">{% trans "Новый отчёт" %}</a>{% endif %}
+{% endblock %}
+
 {% block portal_content %}
-{% if is_council %}<p><a href="{% url 'council:report_new' %}" class="btn btn--accent">{% trans "Новый отчёт" %}</a></p>{% endif %}
-<div class="stack">
-  {% for r in reports %}
-    <article class="card">
-      <h3>{{ r.title }}</h3>
-      <p class="meta">{{ r.get_category_display }}{% if r.period %} · {{ r.period }}{% endif %}
-        {% if r.council_only %} · <span class="status">{% trans "только совет" %}</span>{% endif %}</p>
-      {% if r.body %}<div class="prose">{{ r.body|linebreaks }}</div>{% endif %}
-      <div class="row-actions">
-        {% if r.file %}<a href="{% url 'council:report_download' pk=r.pk %}" class="btn">{% trans "Скачать" %}</a>{% endif %}
-        {% if is_council %}<a href="{% url 'council:report_edit' pk=r.pk %}" class="link-more">{% trans "Править" %}</a>{% endif %}
-      </div>
-    </article>
-  {% empty %}<p class="empty">{% trans "Отчётов пока нет." %}</p>{% endfor %}
-</div>
+{% comment %}
+Отчёт — не строка списка: у него есть текст, который читают на месте.
+Поэтому здесь панель, а не .prow.
+{% endcomment %}
+{% for r in reports %}
+  <article class="ppanel">
+    <div class="ppanel__head">
+      <h2>{{ r.title }}</h2>
+      {% if not r.council_only %}<span class="tag">{% trans "видит приход" %}</span>{% endif %}
+      {% if not r.is_published %}<span class="tag tag--draft">{% trans "черновик" %}</span>{% endif %}
+      <span class="phead__count" style="margin-left:auto">
+        {{ r.get_category_display }}{% if r.period %} · {{ r.period }}{% endif %}
+      </span>
+    </div>
+    {% if r.body %}<div class="ppanel__body">{{ r.body|linebreaks }}</div>{% endif %}
+    <div class="ppanel__actions">
+      {% if r.file %}
+        <a href="{% url 'council:report_download' pk=r.pk %}" class="pbtn">
+          {% include "_icons.html" with icon="document" %}{% trans "Скачать" %}
+        </a>
+      {% endif %}
+      {% if is_council %}<a href="{% url 'council:report_edit' pk=r.pk %}" class="pbtn pbtn--quiet">{% trans "Править" %}</a>{% endif %}
+    </div>
+  </article>
+{% empty %}
+  <p class="pempty">
+    <strong>{% trans "Отчётов пока нет." %}</strong>
+    {% trans "Казначей выкладывает сюда квартальный отчёт, ревизионная комиссия — годовой." %}
+    {% if is_council %}<a href="{% url 'council:report_new' %}" class="pbtn">{% trans "Добавить отчёт" %}</a>{% endif %}
+  </p>
+{% endfor %}
 {% endblock %}

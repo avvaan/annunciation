@@ -1,16 +1,28 @@
 {% extends "council/_portal_base.html" %}
 {% load i18n %}
+{% block title %}{% trans "Проекты" %} — {{ block.super }}{% endblock %}
 {% block portal_title %}{% trans "Проекты совета" %}{% endblock %}
+{% block portal_count %}<span class="phead__count">{{ projects|length }}</span>{% endblock %}
+
 {% block portal_content %}
-<div class="stack">
-  {% for p in projects %}
-    <article class="card">
-      <h3>{{ p.title }}</h3>
-      <p class="meta"><span class="status">{{ p.get_status_display }}</span>
-        {% if p.owner %} · {{ p.owner.get_full_name|default:p.owner }}{% endif %}
-        {% if p.due_date %} · {{ p.due_date|date:"d.m.Y" }}{% endif %}</p>
-      {% if p.description %}<div class="prose">{{ p.description|linebreaks }}</div>{% endif %}
-    </article>
-  {% empty %}<p class="empty">{% trans "Проектов пока нет." %}</p>{% endfor %}
-</div>
+{% for p in projects %}
+  <article class="ppanel">
+    <div class="ppanel__head">
+      <h2>{{ p.title }}</h2>
+      <span class="tag{% if p.status == 'done' %} tag--done{% elif p.status == 'in_progress' %} tag--soon{% endif %}">
+        {{ p.get_status_display }}
+      </span>
+      <span class="phead__count" style="margin-left:auto">
+        {% if p.owner %}{{ p.owner.get_full_name|default:p.owner }}{% endif %}
+        {% if p.due_date %} · {% trans "срок" %} {{ p.due_date|date:"d.m.Y" }}{% endif %}
+      </span>
+    </div>
+    {% if p.description %}<div class="ppanel__body">{{ p.description|linebreaks }}</div>{% endif %}
+  </article>
+{% empty %}
+  <p class="pempty">
+    <strong>{% trans "Проектов пока нет." %}</strong>
+    {% trans "Проект — это то, что тянется дольше одного заседания: ремонт, покупка, стройка." %}
+  </p>
+{% endfor %}
 {% endblock %}

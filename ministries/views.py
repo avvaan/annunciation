@@ -114,8 +114,18 @@ def ministry_detail(request, slug):
         "photo_form": MinistryPhotoForm(),
         "supply_form": MinistrySupplyRequestForm(),
         "schedule_form": MinistryScheduleEntryForm(),
+        "pending_members": ministry.memberships.filter(
+            status=MinistryMembership.Status.PENDING
+        ).select_related("user") if is_leader else [],
     }
-    return render(request, "ministries/ministry_detail.html", context)
+    # Один адрес — две страницы. Гость решает, вступать ли: ему нужна
+    # фотография, рассказ и одна кнопка. Участник пришёл работать: ему
+    # нужен график, файлы и заявки, плотно и без витрины.
+    template = (
+        "ministries/ministry_work.html" if is_member
+        else "ministries/ministry_public.html"
+    )
+    return render(request, template, context)
 
 
 @login_required

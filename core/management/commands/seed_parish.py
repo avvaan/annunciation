@@ -32,6 +32,7 @@ class Command(BaseCommand):
             "Приход Благовещения Пресвятой Богородицы",
             "Annunciation Orthodox Church",
         ),
+        "parish_name_short": ("Благовещение", "Annunciation"),
         "city": ("Джексонвиль, Флорида", "Jacksonville, Florida"),
         "address": ("9795 Old St. Augustine Road, Jacksonville, FL 32257",) * 2,
         "phone": ("(904) 361-3445",) * 2,

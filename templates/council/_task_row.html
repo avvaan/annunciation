@@ -1,0 +1,31 @@
+{% load i18n %}
+{% comment %}
+Строка поручения. Управление слева — но флажком, а не кнопкой во всю
+строку: главное здесь то, что нужно сделать, а не чем это закрыть.
+Метка появляется, только когда со сроком что-то не так; у поручения,
+которое идёт по плану, никакого шума нет.
+{% endcomment %}
+<li class="prow">
+  <form method="post" action="{% url 'council:task_toggle' pk=t.pk %}" class="pcheck-form prow__lead">
+    {% csrf_token %}
+    <button type="submit" class="pcheck" data-done="{% if t.status == 'done' %}true{% else %}false{% endif %}"
+      aria-label="{% if t.status == 'done' %}{% blocktrans with title=t.title %}Вернуть в работу: {{ title }}{% endblocktrans %}{% else %}{% blocktrans with title=t.title %}Отметить выполненным: {{ title }}{% endblocktrans %}{% endif %}"></button>
+  </form>
+  <span class="prow__title"{% if t.status == 'done' %} style="color:var(--ink-2);text-decoration:line-through"{% endif %}>
+    {{ t.title }}
+    {% if t.meeting %}<span class="prow__sub">{% trans "по заседанию" %} {{ t.meeting.date|date:"d.m.Y" }}</span>{% endif %}
+  </span>
+  <span class="prow__meta">
+    {% if t.is_overdue %}
+      <span class="tag tag--overdue">{% trans "просрочено" %}</span>
+    {% elif t.is_due_soon %}
+      {# timeuntil дал бы «2 дня, 3 часа»: часы в списке дел — шум #}
+      <span class="tag tag--soon">
+        {% if t.days_left == 0 %}{% trans "сегодня" %}
+        {% else %}{% blocktrans count n=t.days_left %}{{ n }} день{% plural %}{{ n }} дн.{% endblocktrans %}{% endif %}
+      </span>
+    {% endif %}
+    {% if show_assignee and t.assignee %}<span class="prow__who">{{ t.assignee.get_full_name|default:t.assignee }}</span>{% endif %}
+    <span class="prow__date">{% if t.due_date %}{{ t.due_date|date:"d.m.Y" }}{% else %}—{% endif %}</span>
+  </span>
+</li>

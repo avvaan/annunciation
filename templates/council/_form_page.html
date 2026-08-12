@@ -1,0 +1,17 @@
+{% extends "council/_portal_base.html" %}
+{% load i18n %}
+{% comment %}
+Общая страница формы портала. Четыре формы совета отличались только
+заголовком, а он-то как раз и не был задан — человек, правящий протокол,
+видел над формой «Совет прихода».
+{% endcomment %}
+{% block portal_content %}
+<form method="post" enctype="multipart/form-data" class="pform">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <div class="ppanel__actions" style="margin-top:0">
+    <button type="submit">{% block save_label %}{% trans "Сохранить" %}{% endblock %}</button>
+    <a href="{% block cancel_url %}{% url 'council:dashboard' %}{% endblock %}" class="pbtn pbtn--quiet">{% trans "Отмена" %}</a>
+  </div>
+</form>
+{% endblock %}

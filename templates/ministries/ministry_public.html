@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{{ ministry.name }} — {{ block.super }}{% endblock %}
+{% block body_class %}has-hero{% endblock %}
+{% block content %}
+
+<section class="hero">
+  <div class="hero__media">
+    <img src="{% if ministry.image %}{{ ministry.image.url }}{% else %}/static/images/photos/greenery.jpg{% endif %}"
+         alt="" fetchpriority="high">
+  </div>
+  <div class="hero__inner">
+    <p><a href="{% url 'ministries:ministry_list' %}" class="link-more" style="color:var(--ink-on-deep-2)">{% trans "Все служения" %}</a></p>
+    <h1 class="hero__title">
+      {{ ministry.name }}{% if ministry.is_private %} {% include "_icons.html" with icon="lock" %}{% endif %}
+    </h1>
+    <div class="hero__actions">
+      {% if not user.is_authenticated %}
+        <a href="{% url 'ministries:login' %}" class="btn btn--light">{% trans "Войти, чтобы присоединиться" %}</a>
+      {% elif membership and membership.status == "pending" %}
+        <span class="status status--accent">{% trans "Заявка на рассмотрении" %}</span>
+      {% elif is_member %}
+        <form method="post" action="{% url 'ministries:ministry_leave' slug=ministry.slug %}" class="inline-form">
+          {% csrf_token %}<button type="submit" class="btn btn--light">{% trans "Выйти из служения" %}</button>
+        </form>
+      {% else %}
+        <form method="post" action="{% url 'ministries:ministry_join' slug=ministry.slug %}" class="inline-form">
+          {% csrf_token %}<button type="submit" class="btn btn--accent">{% trans "Присоединиться" %}</button>
+        </form>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% if ministry.announcement %}
+<section class="band--deep">
+  <div class="shell prose"><p style="margin:0">{{ ministry.announcement }}</p></div>
+</section>
+{% endif %}
+
+<div class="shell">
+
+  {% if ministry.description %}
+    <section class="portal-section"><div class="prose">{{ ministry.description|linebreaks }}</div></section>
+  {% endif %}
+
+
+  <section class="portal-section">
+    <h2>{% trans "Ближайший график" %}</h2>
+    <ul class="rota">
+      {% for e in schedule_entries %}
+        <li>
+          <span class="rota__date">{{ e.date|date:"d.m.Y" }}</span>
+          <span>{{ e.person.get_full_name|default:e.person|default:"—" }}</span>
+        </li>
+      {% empty %}<li><span class="empty">{% trans "График пока не составлен." %}</span></li>{% endfor %}
+    </ul>
+  </section>
+
+  {% if photos %}
+    <section class="portal-section">
+      <h2>{% trans "Фотографии" %}</h2>
+      <div class="photo-grid">
+        {% for p in photos %}<img src="{{ p.image.url }}" alt="{{ p.caption }}" loading="lazy">{% endfor %}
+      </div>
+    </section>
+  {% endif %}
+
+</div>
+{% endblock %}

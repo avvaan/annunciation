@@ -280,12 +280,30 @@ class ActionItem(models.Model):
     def __str__(self):
         return self.title
 
+    # Порог «скоро»: неделя. Совет собирается раз в месяц, но поручения
+    # исполняются между заседаниями, и неделя — это горизонт, на который
+    # человек реально планирует ближайшие дела.
+    DUE_SOON_DAYS = 7
+
+    @property
+    def days_left(self):
+        """Дней до срока; отрицательное — просрочено. None, если срока нет."""
+        if self.due_date is None:
+            return None
+        return (self.due_date - timezone.now().date()).days
+
     @property
     def is_overdue(self):
+        left = self.days_left
+        return self.status == self.Status.OPEN and left is not None and left < 0
+
+    @property
+    def is_due_soon(self):
+        left = self.days_left
         return (
             self.status == self.Status.OPEN
-            and self.due_date is not None
-            and self.due_date < timezone.now().date()
+            and left is not None
+            and 0 <= left <= self.DUE_SOON_DAYS
         )
 
 

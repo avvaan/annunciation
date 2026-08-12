@@ -1,0 +1,14 @@
+{% load i18n %}
+{% comment %}
+Разделы служения — якоря внутри одной страницы, а не отдельные адреса:
+работа служения помещается на один экран прокрутки, и разносить её по
+шести страницам значило бы заставить старосту хора кликать там, где
+достаточно пролистать.
+{% endcomment %}
+<a href="{% url 'ministries:ministry_list' %}">{% trans "Все служения" %}</a>
+<a href="#schedule">{% trans "График" %}</a>
+<a href="#work">{% trans "Дела" %}</a>
+<a href="#library">{% trans "Файлы" %}</a>
+<a href="#photos">{% trans "Фото" %}</a>
+<a href="#discussion">{% trans "Обсуждение" %}</a>
+{% if is_leader %}<a href="#members">{% trans "Участники" %}</a>{% endif %}

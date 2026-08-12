@@ -1,24 +1,39 @@
 {% extends "council/_portal_base.html" %}
 {% load i18n %}
-{% block portal_title %}{% trans "Рассылка" %}{% endblock %}
-{% block portal_lede %}<p>{% trans "Адреса получателей уходят в скрытую копию — никто не видит чужой почты." %}</p>{% endblock %}
-{% block portal_content %}
-<form method="post" enctype="multipart/form-data" style="max-width:44rem">
-  {% csrf_token %}
-  {{ form.as_p }}
-  <button type="submit">{% trans "Отправить" %}</button>
-</form>
+{% block title %}{% trans "Рассылка" %} — {{ block.super }}{% endblock %}
+{% block portal_title %}{% trans "Написать группе" %}{% endblock %}
+{% block portal_lede %}
+  <p class="phead__lede">{% trans "Адреса получателей уходят в скрытую копию — никто не видит чужой почты." %}</p>
+{% endblock %}
 
-<section class="portal-section">
-  <h2>{% trans "Что уже отправляли" %}</h2>
-  <ul class="rota">
-    {% for m in history %}
-      <li>
-        <span class="rota__date">{{ m.created_at|date:"d.m.Y" }}</span>
-        <span style="flex:1">{{ m.subject }}</span>
-        <span class="meta">{{ m.audience_label }} · {{ m.recipient_count }}</span>
-      </li>
-    {% empty %}<li><span class="empty">{% trans "Рассылок ещё не было." %}</span></li>{% endfor %}
-  </ul>
-</section>
+{% block portal_content %}
+<div class="pgrid pgrid--2">
+  <form method="post" enctype="multipart/form-data" class="pform">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">{% trans "Отправить" %}</button>
+  </form>
+
+  <section>
+    <div class="psection__head">
+      <h2>{% trans "Что уже отправляли" %}</h2>
+    </div>
+    <ul class="prows">
+      {% for g in history %}
+        <li class="prow">
+          <span class="prow__title">{{ g.subject }}
+            <span class="prow__sub">{{ g.audience_label }}{% if g.sent_by %} · {{ g.sent_by.get_full_name|default:g.sent_by }}{% endif %}</span>
+          </span>
+          <span class="prow__meta">
+            <span class="prow__who">{% blocktrans count n=g.recipient_count %}{{ n }} адрес{% plural %}{{ n }} адресов{% endblocktrans %}</span>
+            <span class="prow__date">{{ g.created_at|date:"d.m.Y" }}</span>
+          </span>
+        </li>
+      {% empty %}
+        <li class="pempty"><strong>{% trans "Рассылок ещё не было." %}</strong>
+          {% trans "Здесь останется список того, что уходило приходу — на случай «а мы это рассылали?»." %}</li>
+      {% endfor %}
+    </ul>
+  </section>
+</div>
 {% endblock %}

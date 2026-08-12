@@ -1,39 +1,50 @@
-{% extends "base.html" %}
+{% extends "_portal_shell.html" %}
 {% load i18n %}
 {% block title %}{{ topic.title }} — {{ block.super }}{% endblock %}
-{% block content %}
+{% block portal_area %}{% trans "Служения" %}{% endblock %}
+{% block portal_sections %}
+  <a href="{% url 'ministries:ministry_list' %}">{% trans "Все служения" %}</a>
+  <a href="{% url 'ministries:ministry_detail' slug=ministry.slug %}" aria-current="page">{{ ministry.name }}</a>
+{% endblock %}
 
-<section class="page-head">
-  <div class="shell">
-    <p><a href="{% url 'ministries:ministry_detail' slug=ministry.slug %}" class="link-more" style="color:var(--ink-on-deep-2)">{{ ministry.name }}</a></p>
-    <h1>{{ topic.title }}</h1>
-    <p>{{ topic.author.get_full_name|default:topic.author }} · {{ topic.created_at|date:"d.m.Y H:i" }}</p>
-  </div>
-</section>
+{% block portal_body %}
+<div class="phead">
+  <h1>{{ topic.title }}</h1>
+  <p class="phead__lede">
+    {{ topic.author.get_full_name|default:topic.author }} · {{ topic.created_at|date:"j E Y, H:i" }}
+  </p>
+</div>
 
-<section class="band">
-  <div class="shell" style="max-width:44rem">
-    {% if topic.body %}<div class="prose">{{ topic.body|linebreaks }}</div>{% endif %}
+{% comment %}
+Обсуждение читают подряд, поэтому здесь книжная мера строки, а не рабочая
+ширина портала: реплика на 78rem не читается.
+{% endcomment %}
+<div style="max-width:42rem">
+  {% if topic.body %}<div class="ppanel__body" style="font-size:var(--pp-base)">{{ topic.body|linebreaks }}</div>{% endif %}
 
-    <div class="ornament" role="presentation"></div>
-
-    <div class="stack">
-      {% for c in comments %}
-        <article class="card">
-          <p class="meta">{{ c.author.get_full_name|default:c.author }} · {{ c.created_at|date:"d.m.Y H:i" }}</p>
-          <div class="prose">{{ c.body|linebreaks }}</div>
-        </article>
-      {% empty %}
-        <p class="empty">{% trans "Ответов пока нет." %}</p>
-      {% endfor %}
+  <section class="psection">
+    <div class="psection__head">
+      <h2>{% trans "Ответы" %}</h2>
+      <span class="phead__count" style="margin-left:auto">{{ comments|length }}</span>
     </div>
+    {% for c in comments %}
+      <article class="ppanel">
+        <div class="ppanel__head">
+          <strong>{{ c.author.get_full_name|default:c.author }}</strong>
+          <span class="phead__count" style="margin-left:auto">{{ c.created_at|date:"j E, H:i" }}</span>
+        </div>
+        <div class="ppanel__body">{{ c.body|linebreaks }}</div>
+      </article>
+    {% empty %}
+      <p class="pempty"><strong>{% trans "Ответов пока нет." %}</strong>
+        {% trans "Будьте первым — участники служения получат уведомление." %}</p>
+    {% endfor %}
+  </section>
 
-    <form method="post" style="margin-top:var(--sp-5)">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">{% trans "Ответить" %}</button>
-    </form>
-  </div>
-</section>
-
+  <form method="post" class="pform psection">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">{% trans "Ответить" %}</button>
+  </form>
+</div>
 {% endblock %}

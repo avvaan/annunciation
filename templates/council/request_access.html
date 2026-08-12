@@ -1,20 +1,20 @@
-{% extends "base.html" %}
+{% extends "_portal_shell.html" %}
 {% load i18n %}
 {% block title %}{% trans "Запрос доступа" %} — {{ block.super }}{% endblock %}
-{% block content %}
-<section class="page-head">
-  <div class="shell">
-    <h1>{% trans "Запрос доступа к порталу" %}</h1>
-    <p>{% trans "Портал совета прихода: протоколы, отчёты, поручения. Доступ открывает настоятель или администратор." %}</p>
+{% block portal_area %}{% trans "Совет" %}{% endblock %}
+
+{% block portal_body %}
+<div class="phead">
+  <h1>{% trans "Запрос доступа к порталу" %}</h1>
+  <p class="phead__lede">{% trans "Протоколы, отчёты и поручения совета. Доступ открывает настоятель или администратор — обычно в течение нескольких дней." %}</p>
+</div>
+
+<form method="post" class="pform">
+  {% csrf_token %}
+  {{ form.as_p }}
+  <div class="ppanel__actions" style="margin-top:0">
+    <button type="submit">{% trans "Отправить заявку" %}</button>
+    <a href="{% url 'core:home' %}" class="pbtn pbtn--quiet">{% trans "Отмена" %}</a>
   </div>
-</section>
-<section class="band">
-  <div class="shell" style="max-width:32rem">
-    <form method="post">
-      {% csrf_token %}
-      {{ form.as_p }}
-      <button type="submit">{% trans "Отправить заявку" %}</button>
-    </form>
-  </div>
-</section>
+</form>
 {% endblock %}

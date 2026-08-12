@@ -1,17 +1,20 @@
 {% extends "council/_portal_base.html" %}
 {% load i18n %}
+{% block title %}{% trans "Протоколы" %} — {{ block.super }}{% endblock %}
 {% block portal_title %}{% trans "Протоколы" %}{% endblock %}
+{% block portal_count %}<span class="phead__count">{{ protocols|length }}</span>{% endblock %}
+{% block portal_actions %}
+  {% if is_council %}<a href="{% url 'council:protocol_new' %}" class="pbtn pbtn--primary">{% trans "Новый протокол" %}</a>{% endif %}
+{% endblock %}
+
 {% block portal_content %}
-{% if is_council %}<p><a href="{% url 'council:protocol_new' %}" class="btn btn--accent">{% trans "Новый протокол" %}</a></p>{% endif %}
-<ul class="doc-list">
-  {% for p in protocols %}
-    <li><a href="{% url 'council:protocol_detail' pk=p.pk %}">
-      {% include "_icons.html" with icon="document" %}
-      <span class="doc-list__title">{{ p.title }}</span>
-      {% if p.council_only %}<span class="status">{% trans "только совет" %}</span>{% endif %}
-      {% if not p.is_published %}<span class="status status--accent">{% trans "черновик" %}</span>{% endif %}
-      <span class="doc-list__period">{{ p.created_at|date:"d.m.Y" }}</span>
-    </a></li>
-  {% empty %}<li><p class="empty" style="padding:var(--sp-3) 0">{% trans "Протоколов пока нет." %}</p></li>{% endfor %}
+<ul class="prows">
+  {% for p in protocols %}{% include "council/_protocol_row.html" %}{% empty %}
+    <li class="pempty">
+      <strong>{% trans "Протоколов пока нет." %}</strong>
+      {% trans "Протокол пишут после заседания; пока он не опубликован, его видит только совет." %}
+      {% if is_council %}<a href="{% url 'council:protocol_new' %}" class="pbtn">{% trans "Написать первый" %}</a>{% endif %}
+    </li>
+  {% endfor %}
 </ul>
 {% endblock %}
