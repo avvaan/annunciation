@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-11 20:57-0400\n"
+"POT-Creation-Date: 2026-08-12 13:57-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -39,18 +39,18 @@ msgid "E-mail"
 msgstr "Email"
 
 #: commemorations/forms.py:54 commemorations/models.py:84 core/forms.py:13
-#: core/models.py:176 core/models.py:181 templates/core/about.html:55
-#: templates/core/contact.html:29 templates/core/first_visit.html:89
+#: core/models.py:176 core/models.py:181 templates/core/about.html:56
+#: templates/core/contact.html:30 templates/core/first_visit.html:89
 msgid "Телефон"
 msgstr "Phone"
 
 #: commemorations/forms.py:55 commemorations/models.py:86
-#: templates/commemorations/accepted.html:31
+#: templates/commemorations/accepted.html:32
 msgid "О здравии"
 msgstr "For the living"
 
 #: commemorations/forms.py:56 commemorations/models.py:87
-#: templates/commemorations/accepted.html:39
+#: templates/commemorations/accepted.html:40
 msgid "О упокоении"
 msgstr "For the departed"
 
@@ -82,8 +82,7 @@ msgstr "The note could not be accepted."
 msgid ""
 "Не больше %(limit)d имён в одном списке. Разделите записку на несколько."
 msgstr ""
-"No more than %(limit)d names in one list. Please split the note into "
-"several."
+"No more than %(limit)d names in one list. Please split the note into several."
 
 #: commemorations/forms.py:104
 #, python-format
@@ -455,7 +454,7 @@ msgstr "To buy"
 msgid "Куплено"
 msgstr "Bought"
 
-#: publications/models.py:9 templates/base.html:42
+#: publications/models.py:9 templates/base.html:43
 msgid "Календарь"
 msgstr "Calendar"
 
@@ -467,11 +466,11 @@ msgstr "Bulletin"
 msgid "Обычный день"
 msgstr "No fast"
 
-#: services/models.py:31 templates/services/schedule.html:59
+#: services/models.py:31 templates/services/schedule.html:60
 msgid "Пост"
 msgstr "Fast"
 
-#: services/models.py:32 templates/services/schedule.html:61
+#: services/models.py:32 templates/services/schedule.html:62
 msgid "Рыба, вино и елей"
 msgstr "Fish, wine and oil"
 
@@ -483,7 +482,7 @@ msgstr "Wine and oil"
 msgid "Сухоядение"
 msgstr "Xerophagy"
 
-#: services/models.py:35 templates/services/schedule.html:57
+#: services/models.py:35 templates/services/schedule.html:58
 msgid "Строгий пост"
 msgstr "Strict fast"
 
@@ -611,9 +610,9 @@ msgstr "Skip to content"
 msgid "Выйти"
 msgstr "Sign out"
 
-#: templates/_portal_shell.html:45 templates/ministries/login.html:18
-#: templates/ministries/ministry_list.html:12
-#: templates/ministries/ministry_locked.html:21
+#: templates/_portal_shell.html:45 templates/ministries/login.html:19
+#: templates/ministries/ministry_list.html:13
+#: templates/ministries/ministry_locked.html:22
 msgid "Войти"
 msgstr "Sign in"
 
@@ -625,42 +624,28 @@ msgstr "Portal sections"
 msgid "На сайт прихода"
 msgstr "Back to the parish site"
 
-#: templates/_portal_shell.html:68 templates/base.html:40
+#: templates/_portal_shell.html:68 templates/base.html:41
 msgid "Расписание"
 msgstr "Services"
 
-#: templates/base.html:35
+#: templates/base.html:36
 msgid "Меню"
 msgstr "Menu"
 
-#: templates/base.html:38
+#: templates/base.html:39
 msgid "Основная навигация"
 msgstr "Main navigation"
 
-#: templates/base.html:39 templates/core/first_visit.html:3
+#: templates/base.html:40 templates/core/first_visit.html:3
 #: templates/core/first_visit.html:12 templates/core/home.html:45
 msgid "Впервые здесь?"
 msgstr "First time here?"
 
-#: templates/base.html:41
+#: templates/base.html:42 templates/core/home.html:101
 msgid "Записки"
 msgstr "Commemorations"
 
-#: templates/base.html:43 templates/core/about.html:23
-#: templates/core/clergy.html:3 templates/core/clergy.html:8
-msgid "Духовенство"
-msgstr "Clergy"
-
-#: templates/base.html:44
-msgid "Строительство"
-msgstr "Building"
-
-#: templates/base.html:45 templates/core/home.html:108
-#: templates/school/page.html:3 templates/school/page.html:12
-msgid "Русская школа"
-msgstr "Russian School"
-
-#: templates/base.html:46 templates/core/home.html:116
+#: templates/base.html:44 templates/core/home.html:131
 #: templates/council/_sections.html:15
 #: templates/ministries/ministry_list.html:3
 #: templates/ministries/ministry_work.html:10
@@ -668,33 +653,52 @@ msgstr "Russian School"
 msgid "Служения"
 msgstr "Ministries"
 
-#: templates/base.html:47 templates/core/about.html:3
-#: templates/core/about.html:8
+#: templates/base.html:45 templates/core/home.html:121
+#: templates/school/page.html:3 templates/school/page.html:12
+msgid "Русская школа"
+msgstr "Russian School"
+
+#: templates/base.html:47
+msgid "Приход"
+msgstr "Parish"
+
+#: templates/base.html:49 templates/core/about.html:3
+#: templates/core/about.html:9
 msgid "О приходе"
 msgstr "About"
 
-#: templates/base.html:48 templates/core/contact.html:3
-#: templates/core/contact.html:8 templates/school/page.html:47
+#: templates/base.html:50 templates/core/about.html:24
+#: templates/core/clergy.html:3 templates/core/clergy.html:9
+msgid "Духовенство"
+msgstr "Clergy"
+
+#: templates/base.html:51
+msgid "Строительство"
+msgstr "Building"
+
+#: templates/base.html:52 templates/core/contact.html:3
+#: templates/core/contact.html:9 templates/school/page.html:47
 msgid "Контакты"
 msgstr "Contact"
 
-#: templates/base.html:88 templates/services/schedule.html:3
-#: templates/services/schedule.html:8
+#: templates/base.html:56 templates/base.html:65 templates/base.html:104
+#: templates/commemorations/accepted.html:66
+#: templates/commemorations/submit.html:76 templates/core/donation.html:39
+msgid "Пожертвовать"
+msgstr "Give"
+
+#: templates/base.html:99 templates/services/schedule.html:3
+#: templates/services/schedule.html:9
 msgid "Расписание богослужений"
 msgstr "Schedule of services"
 
-#: templates/base.html:89 templates/commemorations/submit.html:57
+#: templates/base.html:100 templates/commemorations/submit.html:58
 msgid "Подать записку"
 msgstr "Submit the note"
 
-#: templates/base.html:90 templates/core/about.html:49
+#: templates/base.html:101 templates/core/about.html:50
 msgid "Как нас найти"
 msgstr "Finding us"
-
-#: templates/base.html:93 templates/commemorations/accepted.html:65
-#: templates/commemorations/submit.html:75 templates/core/donation.html:38
-msgid "Пожертвовать"
-msgstr "Give"
 
 #: templates/building/project.html:16
 msgid "Поддержать строительство"
@@ -724,27 +728,27 @@ msgstr "No building updates yet."
 msgid "Фотографии"
 msgstr "Photographs"
 
-#: templates/building/project.html:71 templates/core/about.html:32
-#: templates/core/clergy.html:23 templates/school/page.html:66
+#: templates/building/project.html:71 templates/core/about.html:33
+#: templates/core/clergy.html:24 templates/school/page.html:66
 msgid "Фото появится позже"
 msgstr "Photograph coming later"
 
 #: templates/commemorations/accepted.html:3
-#: templates/commemorations/accepted.html:15
+#: templates/commemorations/accepted.html:16
 msgid "Записка принята"
 msgstr "Your note has been received"
 
-#: templates/commemorations/accepted.html:18
+#: templates/commemorations/accepted.html:19
 #, python-format
 msgid "Имена будут помянуты на проскомидии в %(weekday)s, %(when)s."
 msgstr ""
 "The names will be commemorated at the Proskomedia on %(weekday)s, %(when)s."
 
-#: templates/commemorations/accepted.html:21
+#: templates/commemorations/accepted.html:22
 msgid "Имена будут помянуты на ближайшей литургии."
 msgstr "The names will be commemorated at the next Liturgy."
 
-#: templates/commemorations/accepted.html:49
+#: templates/commemorations/accepted.html:50
 #, python-format
 msgid ""
 "Сорокоуст: имена читают на %(n)s литургиях подряд. Подавать записку заново "
@@ -753,7 +757,7 @@ msgstr ""
 "A sorokoust is commemoration at %(n)s consecutive liturgies; the names are "
 "read to the end of the cycle, so there is no need to submit the note again."
 
-#: templates/commemorations/accepted.html:56
+#: templates/commemorations/accepted.html:57
 msgid ""
 "Если в именах ошибка — позвоните или напишите в приход, секретарь поправит "
 "до службы."
@@ -761,16 +765,16 @@ msgstr ""
 "If a name is wrong, call or write to the parish and the secretary will "
 "correct it before the service."
 
-#: templates/commemorations/accepted.html:62
+#: templates/commemorations/accepted.html:63
 msgid "Подать ещё одну записку"
 msgstr "Submit another note"
 
 #: templates/commemorations/submit.html:3
-#: templates/commemorations/submit.html:8
+#: templates/commemorations/submit.html:9
 msgid "Записки о поминовении"
 msgstr "Commemoration notes"
 
-#: templates/commemorations/submit.html:9
+#: templates/commemorations/submit.html:10
 msgid ""
 "Подайте имена о здравии и о упокоении — их помянут на проскомидии перед "
 "литургией."
@@ -778,7 +782,7 @@ msgstr ""
 "Submit names for the living and the departed — they are commemorated at the "
 "Proskomedia before the Liturgy."
 
-#: templates/commemorations/submit.html:26
+#: templates/commemorations/submit.html:27
 #, python-format
 msgid ""
 "Сорокоуст — поминовение на %(n)s литургиях подряд; имена читают до конца "
@@ -787,77 +791,77 @@ msgstr ""
 "A sorokoust is commemoration at %(n)s consecutive liturgies; the names are "
 "read to the end of the cycle, so there is no need to submit the note again."
 
-#: templates/commemorations/submit.html:46
+#: templates/commemorations/submit.html:47
 msgid "Как с вами связаться"
 msgstr "How to reach you"
 
-#: templates/commemorations/submit.html:64
+#: templates/commemorations/submit.html:65
 msgid "Как писать имена"
 msgstr "How to write the names"
 
-#: templates/commemorations/submit.html:66
+#: templates/commemorations/submit.html:67
 msgid "Только крещёные в православии — по одному имени в строке."
 msgstr "Only those baptised in the Orthodox Church, one name per line."
 
-#: templates/commemorations/submit.html:67
+#: templates/commemorations/submit.html:68
 msgid ""
-"Имя в родительном падеже и в церковной форме: Марии, а не Маши; Иоанна, а не"
-" Вани."
+"Имя в родительном падеже и в церковной форме: Марии, а не Маши; Иоанна, а не "
+"Вани."
 msgstr ""
 "Use the baptismal form of the name: Maria, not Masha; John, not Johnny."
 
-#: templates/commemorations/submit.html:68
+#: templates/commemorations/submit.html:69
 msgid "Фамилии, отчества, звания и слова «раба Божия» писать не нужно."
 msgstr ""
 "Surnames, patronymics, titles and the words “servant of God” are not needed."
 
-#: templates/commemorations/submit.html:69
+#: templates/commemorations/submit.html:70
 msgid ""
 "При надобности ставьте пометы: мл. — младенца, отр. — отрока, бол. — "
 "болящего, воина."
 msgstr "Add a mark where it applies: infant, child, the sick, a soldier."
 
-#: templates/commemorations/submit.html:73
+#: templates/commemorations/submit.html:74
 msgid "Что дальше"
 msgstr "What happens next"
 
-#: templates/commemorations/submit.html:74
+#: templates/commemorations/submit.html:75
 msgid ""
 "Записку принимает секретарь прихода и передаёт в алтарь к ближайшей "
 "литургии. Пожертвование за поминовение можно принести в храм или отправить "
 "со страницы пожертвований — приём записки от него не зависит."
 msgstr ""
 "The parish secretary receives the note and brings it to the altar for the "
-"next Liturgy. An offering for the commemoration may be brought to the church"
-" or sent from the giving page — the note is accepted either way."
+"next Liturgy. An offering for the commemoration may be brought to the church "
+"or sent from the giving page — the note is accepted either way."
 
-#: templates/core/about.html:41 templates/core/clergy.html:32
+#: templates/core/about.html:42 templates/core/clergy.html:33
 msgid "Информация о духовенстве появится позже."
 msgstr "Clergy details will appear here soon."
 
-#: templates/core/about.html:52 templates/core/contact.html:26
+#: templates/core/about.html:53 templates/core/contact.html:27
 #: templates/core/first_visit.html:86
 msgid "Адрес"
 msgstr "Address"
 
-#: templates/core/about.html:58 templates/core/contact.html:32
+#: templates/core/about.html:59 templates/core/contact.html:33
 #: templates/core/first_visit.html:92
 msgid "Почта"
 msgstr "Email"
 
-#: templates/core/about.html:62 templates/core/first_visit.html:18
+#: templates/core/about.html:63 templates/core/first_visit.html:18
 msgid "Написать нам"
 msgstr "Write to us"
 
-#: templates/core/clergy.html:9
+#: templates/core/clergy.html:10
 msgid "Настоятель и клир прихода."
 msgstr "The rector and clergy of the parish."
 
-#: templates/core/clergy.html:40
+#: templates/core/clergy.html:41
 msgid "Связаться со священником"
 msgstr "Reach a priest"
 
-#: templates/core/clergy.html:41
+#: templates/core/clergy.html:42
 msgid ""
 "Об исповеди, крещении, венчании, отпевании и любом другом требе — напишите "
 "или позвоните."
@@ -865,76 +869,76 @@ msgstr ""
 "For confession, baptism, marriage, funerals or any other need — write or "
 "call."
 
-#: templates/core/clergy.html:43
+#: templates/core/clergy.html:44
 msgid "Написать"
 msgstr "Write"
 
-#: templates/core/contact.html:9
+#: templates/core/contact.html:10
 msgid "Напишите нам — настоятель или секретарь прихода ответит вам."
 msgstr "Write to us — the rector or the parish secretary will reply."
 
-#: templates/core/contact.html:20 templates/core/first_visit.html:77
+#: templates/core/contact.html:21 templates/core/first_visit.html:77
 #: templates/council/mailing.html:14
 msgid "Отправить"
 msgstr "Send"
 
-#: templates/core/donation.html:3 templates/core/donation.html:8
+#: templates/core/donation.html:3 templates/core/donation.html:9
 msgid "Пожертвования"
 msgstr "Giving"
 
-#: templates/core/donation.html:9
+#: templates/core/donation.html:10
 msgid ""
 "Приход живёт приношением прихожан — им оплачивается всё, от свечей до "
 "строительства."
 msgstr ""
-"The parish lives on the offerings of its people — everything from candles to"
-" construction."
+"The parish lives on the offerings of its people — everything from candles to "
+"construction."
 
-#: templates/core/donation.html:21
+#: templates/core/donation.html:22
 msgid "Как пожертвовать"
 msgstr "How to give"
 
-#: templates/core/donation.html:29
+#: templates/core/donation.html:30
 msgid "Перейти"
 msgstr "Go"
 
-#: templates/core/donation.html:36
+#: templates/core/donation.html:37
 msgid "Онлайн"
 msgstr "Online"
 
-#: templates/core/donation.html:37
+#: templates/core/donation.html:38
 msgid "Разовое или регулярное пожертвование через систему прихода."
 msgstr "A one-off or recurring gift through the parish's giving system."
 
-#: templates/core/donation.html:41
+#: templates/core/donation.html:42
 msgid "Способы пожертвования пока не настроены."
 msgstr "No ways to give have been set up yet."
 
-#: templates/core/donation.html:50
+#: templates/core/donation.html:51
 msgid "На что идут средства"
 msgstr "Where the money goes"
 
-#: templates/core/donation.html:53 templates/core/home.html:100
+#: templates/core/donation.html:54 templates/core/home.html:111
 msgid "Строительство храма"
 msgstr "Building the church"
 
-#: templates/core/donation.html:54
+#: templates/core/donation.html:55
 msgid "Отдельный сбор с открытым отчётом о ходе работ."
 msgstr "A separate fund, with the progress reported openly."
 
-#: templates/core/donation.html:56
+#: templates/core/donation.html:57
 msgid "Смотреть проект"
 msgstr "See the project"
 
-#: templates/core/donation.html:60
+#: templates/core/donation.html:61
 msgid "Членство в приходе"
 msgstr "Parish membership"
 
-#: templates/core/donation.html:61
+#: templates/core/donation.html:62
 msgid "Регулярное участие в жизни и содержании прихода."
 msgstr "Regular participation in the life and upkeep of the parish."
 
-#: templates/core/donation.html:64
+#: templates/core/donation.html:65
 msgid "Стать членом прихода"
 msgstr "Become a member"
 
@@ -975,10 +979,10 @@ msgstr "Write to us"
 msgid ""
 "Ответим на любой вопрос — о службе, о вере или о том, как до нас доехать."
 msgstr ""
-"We will answer any question — about the service, the faith, or simply how to"
-" find us."
+"We will answer any question — about the service, the faith, or simply how to "
+"find us."
 
-#: templates/core/home.html:20 templates/services/schedule.html:20
+#: templates/core/home.html:20 templates/services/schedule.html:21
 msgid "Ближайшее богослужение"
 msgstr "Next service"
 
@@ -986,7 +990,7 @@ msgstr "Next service"
 msgid "Ближайшие службы"
 msgstr "Upcoming services"
 
-#: templates/core/home.html:63 templates/services/schedule.html:50
+#: templates/core/home.html:63 templates/services/schedule.html:51
 msgid "Расписание пока не заполнено."
 msgstr "The schedule has not been filled in yet."
 
@@ -1002,15 +1006,27 @@ msgstr "Read more"
 msgid "Жизнь прихода"
 msgstr "Parish life"
 
-#: templates/core/home.html:101
+#: templates/core/home.html:94
+msgid ""
+"Богослужения, записки, стройка, школа и служения — чем приход живёт между "
+"воскресеньями."
+msgstr ""
+"Services, commemorations, the building project, school and ministries — "
+"what the parish does between Sundays."
+
+#: templates/core/home.html:102
+msgid "Подать имена о здравии и упокоении."
+msgstr "Submit names for the living and the departed."
+
+#: templates/core/home.html:112
 msgid "Как идёт стройка и на чём мы сейчас стоим."
 msgstr "How the building work is going, and where we stand."
 
-#: templates/core/home.html:109
+#: templates/core/home.html:122
 msgid "Язык, история и традиции для детей прихожан."
 msgstr "Language, history and tradition for the children of the parish."
 
-#: templates/core/home.html:117
+#: templates/core/home.html:132
 msgid "Чем живёт приход между службами и как присоединиться."
 msgstr "What the parish does between services, and how to join in."
 
@@ -1061,9 +1077,8 @@ msgstr "Minutes"
 msgid "Отчёты"
 msgstr "Reports"
 
-#: templates/council/_sections.html:13
-#: templates/council/meeting_detail.html:56 templates/council/task_list.html:3
-#: templates/council/task_list.html:4
+#: templates/council/_sections.html:13 templates/council/meeting_detail.html:56
+#: templates/council/task_list.html:3 templates/council/task_list.html:4
 msgid "Поручения"
 msgstr "Tasks"
 
@@ -1130,8 +1145,7 @@ msgid "Новых заявок нет."
 msgstr "No new requests."
 
 #: templates/council/approvals.html:33
-msgid ""
-"Заявка появляется здесь, когда прихожанин запрашивает доступ к порталу."
+msgid "Заявка появляется здесь, когда прихожанин запрашивает доступ к порталу."
 msgstr ""
 "A request appears here when a parishioner asks for access to the portal."
 
@@ -1217,8 +1231,7 @@ msgid "Рассылка"
 msgstr "Group mailing"
 
 #: templates/council/mailing.html:6
-msgid ""
-"Адреса получателей уходят в скрытую копию — никто не видит чужой почты."
+msgid "Адреса получателей уходят в скрытую копию — никто не видит чужой почты."
 msgstr ""
 "Recipients go in the blind copy field — nobody sees anyone else’s address."
 
@@ -1278,8 +1291,8 @@ msgstr "No files."
 #: templates/council/meeting_detail.html:48
 msgid "Сметы, презентации и записи прикладывают к заседанию из админки."
 msgstr ""
-"Estimates, presentations and recordings are attached to the meeting from the"
-" admin."
+"Estimates, presentations and recordings are attached to the meeting from the "
+"admin."
 
 #: templates/council/meeting_detail.html:61
 msgid "Поручений нет."
@@ -1356,11 +1369,10 @@ msgid "Доступ не запрошен"
 msgstr "Access not requested"
 
 #: templates/council/pending.html:27
-msgid ""
-"У вас есть учётная запись, но доступ к порталу совета пока не запрошен."
+msgid "У вас есть учётная запись, но доступ к порталу совета пока не запрошен."
 msgstr ""
-"You have an account, but access to the council portal has not been requested"
-" yet."
+"You have an account, but access to the council portal has not been requested "
+"yet."
 
 #: templates/council/pending.html:30
 msgid "Запросить доступ"
@@ -1419,8 +1431,8 @@ msgid ""
 "Пока протокол не опубликован, его видит только совет. «Только совет» "
 "оставляет его закрытым и после публикации."
 msgstr ""
-"Until minutes are published only the council sees them. “Council only” keeps"
-" them closed even after publishing."
+"Until minutes are published only the council sees them. “Council only” keeps "
+"them closed even after publishing."
 
 #: templates/council/protocol_list.html:15
 msgid ""
@@ -1451,8 +1463,8 @@ msgstr "Download"
 msgid ""
 "Казначей выкладывает сюда квартальный отчёт, ревизионная комиссия — годовой."
 msgstr ""
-"The treasurer posts the quarterly report here; the audit committee posts the"
-" annual one."
+"The treasurer posts the quarterly report here; the audit committee posts the "
+"annual one."
 
 #: templates/council/report_list.html:39
 msgid "Добавить отчёт"
@@ -1515,22 +1527,21 @@ msgid "Открытых поручений нет."
 msgstr "No open tasks."
 
 #: templates/council/task_list.html:27
-msgid ""
-"Поручения ставят на заседании — они появятся здесь вместе с протоколом."
+msgid "Поручения ставят на заседании — они появятся здесь вместе с протоколом."
 msgstr ""
 "Tasks are set at a meeting — they appear here together with the minutes."
 
-#: templates/history/page.html:3 templates/history/page.html:8
+#: templates/history/page.html:3 templates/history/page.html:9
 msgid "История прихода"
 msgstr "Parish history"
 
-#: templates/history/page.html:33
+#: templates/history/page.html:34
 msgid "Вехи истории пока не заполнены."
 msgstr "The history has not been filled in yet."
 
 #: templates/ministries/_sections.html:8
-#: templates/ministries/ministry_list.html:31
-#: templates/ministries/ministry_locked.html:8
+#: templates/ministries/ministry_list.html:32
+#: templates/ministries/ministry_locked.html:9
 #: templates/ministries/ministry_public.html:12
 #: templates/ministries/topic_detail.html:6
 msgid "Все служения"
@@ -1562,23 +1573,23 @@ msgstr "Members"
 msgid "Вход"
 msgstr "Sign in"
 
-#: templates/ministries/login.html:8
+#: templates/ministries/login.html:9
 msgid "Вход в портал служений"
 msgstr "Sign in to the ministries portal"
 
-#: templates/ministries/login.html:9
+#: templates/ministries/login.html:10
 msgid "Портал для участников служений прихода."
 msgstr "A portal for members of the parish ministries."
 
-#: templates/ministries/login.html:22 templates/ministries/signup.html:9
+#: templates/ministries/login.html:23 templates/ministries/signup.html:9
 msgid "Зарегистрироваться"
 msgstr "Create an account"
 
-#: templates/ministries/ministry_list.html:8
+#: templates/ministries/ministry_list.html:9
 msgid "Служения прихода"
 msgstr "Parish ministries"
 
-#: templates/ministries/ministry_list.html:9
+#: templates/ministries/ministry_list.html:10
 msgid ""
 "Хор, воскресная школа, трапеза, помощь храму — то, чем приход живёт между "
 "службами."
@@ -1586,23 +1597,23 @@ msgstr ""
 "Choir, church school, the shared meal, help around the church — what the "
 "parish does between services."
 
-#: templates/ministries/ministry_list.html:21
+#: templates/ministries/ministry_list.html:22
 msgid "Мои служения"
 msgstr "My ministries"
 
-#: templates/ministries/ministry_list.html:31
+#: templates/ministries/ministry_list.html:32
 msgid "Другие служения"
 msgstr "Other ministries"
 
-#: templates/ministries/ministry_list.html:34
+#: templates/ministries/ministry_list.html:35
 msgid "Служения пока не заведены."
 msgstr "No ministries have been set up yet."
 
-#: templates/ministries/ministry_locked.html:10
+#: templates/ministries/ministry_locked.html:11
 msgid "Это закрытое служение — его содержимое видно только участникам."
 msgstr "This ministry is closed — its contents are visible to members only."
 
-#: templates/ministries/ministry_locked.html:18
+#: templates/ministries/ministry_locked.html:19
 msgid "Подать заявку на участие"
 msgstr "Request to join"
 
@@ -1760,19 +1771,19 @@ msgstr "Reply"
 msgid "Подписка на новости"
 msgstr "Newsletter"
 
-#: templates/newsletter/subscribe.html:8
+#: templates/newsletter/subscribe.html:9
 msgid "Подписка на новости прихода"
 msgstr "Parish newsletter"
 
-#: templates/newsletter/subscribe.html:9
+#: templates/newsletter/subscribe.html:10
 msgid "Расписание, объявления и новости строительства — письмом на почту."
 msgstr "Services, announcements and building news — by email."
 
-#: templates/newsletter/subscribe.html:19
+#: templates/newsletter/subscribe.html:20
 msgid "Подписаться"
 msgstr "Subscribe"
 
-#: templates/newsletter/subscribe.html:22
+#: templates/newsletter/subscribe.html:23
 msgid ""
 "После отправки мы пришлём письмо со ссылкой для подтверждения. Отписаться "
 "можно в один клик из любого письма."
@@ -1780,27 +1791,27 @@ msgstr ""
 "We will send you an email with a confirmation link. You can unsubscribe in "
 "one click from any message."
 
-#: templates/publications/list.html:3 templates/publications/list.html:8
+#: templates/publications/list.html:3 templates/publications/list.html:9
 msgid "Календарь и бюллетень"
 msgstr "Calendar and bulletin"
 
-#: templates/publications/list.html:9
+#: templates/publications/list.html:10
 msgid "Приходские листки и календарь богослужений — для чтения и печати."
 msgstr "Parish bulletins and the calendar of services — to read or to print."
 
-#: templates/publications/list.html:15
+#: templates/publications/list.html:16
 msgid "Бюллетени"
 msgstr "Bulletins"
 
-#: templates/publications/list.html:26
+#: templates/publications/list.html:27
 msgid "Пока нет опубликованных бюллетеней."
 msgstr "No bulletins published yet."
 
-#: templates/publications/list.html:30
+#: templates/publications/list.html:31
 msgid "Календари"
 msgstr "Calendars"
 
-#: templates/publications/list.html:41
+#: templates/publications/list.html:42
 msgid "Пока нет опубликованных календарей."
 msgstr "No calendars published yet."
 
@@ -1841,26 +1852,26 @@ msgstr "No service"
 msgid "ст. ст."
 msgstr "O.S."
 
-#: templates/services/schedule.html:55
+#: templates/services/schedule.html:56
 msgid "Условные обозначения"
 msgstr "What the marks mean"
 
-#: templates/services/schedule.html:58
+#: templates/services/schedule.html:59
 msgid "и сухоядение — без рыбы, вина и растительного масла."
 msgstr "and dry eating — no fish, wine or oil."
 
-#: templates/services/schedule.html:60
+#: templates/services/schedule.html:61
 msgid "— постная пища; «вино и елей» означает послабление."
 msgstr "— fasting food; “wine and oil” marks a relaxation."
 
-#: templates/services/schedule.html:62
+#: templates/services/schedule.html:63
 msgid "— день поста с наибольшим послаблением."
 msgstr "— a fast day with the greatest relaxation."
 
-#: templates/services/schedule.html:63
+#: templates/services/schedule.html:64
 msgid "«Ст. ст.» — дата по юлианскому календарю, на 13 дней раньше."
 msgstr "“O.S.” is the Julian calendar date, thirteen days earlier."
 
-#: templates/services/schedule.html:69
+#: templates/services/schedule.html:70
 msgid "Календарь и бюллетень в PDF"
 msgstr "Calendar and bulletin as PDF"
