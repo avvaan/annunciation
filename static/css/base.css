@@ -147,6 +147,9 @@ h1, h2, h3, h4 {
   text-wrap: balance;
 }
 h1 { font-size: var(--fs-3xl); }
+/* Кириллические слова длинные, а системный шрифт может быть увеличен вдвое.
+   Без переноса «богослужений» шире экрана телефона уже на 320px. */
+h1, h2, h3, h4, .site-header__title, .site-footer__name { overflow-wrap: anywhere; }
 h2 { font-size: var(--fs-2xl); }
 h3 { font-size: var(--fs-xl); font-weight: 400; }
 h4 { font-size: var(--fs-lg); }
@@ -214,14 +217,19 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
 .site-header__row {
   max-width: var(--wide); margin-inline: auto;
   padding: var(--sp-3);
-  display: flex; align-items: center; justify-content: space-between; gap: var(--sp-3);
+  display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2) var(--sp-3);
+  /* при системном шрифте 200% имя прихода и кнопка «Меню» не встают в строку */
+  flex-wrap: wrap;
 }
 .site-header__title {
   font-family: var(--font-display); font-weight: 700;
   font-size: var(--fs-sm); line-height: 1.15;
-  text-decoration: none; max-width: 18ch;
+  text-decoration: none;
+  /* ch растёт вместе с кеглем, поэтому предел в ch при 200% работает против
+     себя; ограничиваем долей строки и позволяем сжиматься */
+  min-width: 0; flex: 1 1 12rem;
 }
-@media (min-width: 60rem) { .site-header__title { font-size: var(--fs-lg); max-width: 24ch; } }
+@media (min-width: 60rem) { .site-header__title { font-size: var(--fs-lg); flex: 0 1 auto; max-width: 30rem; } }
 .site-header__title:hover { color: inherit; }
 
 .nav-toggle-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
@@ -257,7 +265,18 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
   background: transparent; border: 1px solid currentColor; color: inherit;
   padding: 0 var(--sp-2); min-height: var(--tap); min-width: 3.25rem; cursor: pointer;
 }
-.lang-switch__btn.is-active { background: var(--accent); border-color: var(--accent); color: var(--surface); }
+/* Активный язык обозначается весом и подчёркиванием, а не заливкой: заливка
+   акцентом делала переключатель самым громким объектом в шапке, громче любого
+   настоящего действия. */
+.lang-switch__btn { border-color: transparent; color: var(--ink-2); }
+.has-hero .site-header .lang-switch__btn { color: var(--ink-on-deep-2); }
+.lang-switch__btn:hover { color: var(--accent); }
+.has-hero .site-header .lang-switch__btn:hover { color: #e8b877; }
+.lang-switch__btn.is-active {
+  color: inherit; background: transparent; border-color: transparent;
+  text-decoration: underline; text-decoration-thickness: 2px; text-underline-offset: 0.35em;
+  text-decoration-color: var(--accent);
+}
 
 @media (min-width: 60rem) {
   .nav-toggle-btn { display: none; }
@@ -343,65 +362,128 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
 .page-head p { color: var(--ink-on-deep-2); max-width: var(--measure); margin-bottom: 0; }
 
 /* --------------------------------------------------------------------------
-   Schedule — the site's centre of gravity; must stay glanceable
-   -------------------------------------------------------------------------- */
-.service-day {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  padding: var(--sp-4);
-  margin-bottom: var(--sp-3);
-}
-/* the card keeps its parchment surface on a dark band, so it must keep its
-   ink too — inheriting the band's light text renders it invisible */
-.band--deep .service-day { color: var(--ink); border-color: var(--line); }
-.band--deep .service-day .service-day__weekday,
-.band--deep .service-day .service-day__old,
-.band--deep .service-day .service-day__note,
-.band--deep .service-day .meta { color: var(--ink-2); }
-.service-day__date {
-  display: flex; align-items: baseline; gap: var(--sp-2); flex-wrap: wrap;
-  margin-bottom: var(--sp-1);
-}
-.service-day__day {
-  font-family: var(--font-display); font-weight: 700; font-size: var(--fs-xl);
-  font-variant-numeric: tabular-nums; letter-spacing: -0.01em;
-}
-.service-day__weekday { font-size: var(--fs-sm); text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-2); }
-.service-day__old { font-size: var(--fs-sm); color: var(--ink-2); font-style: italic; font-family: var(--font-display); }
-.service-day__feast {
-  font-family: var(--font-display); font-size: var(--fs-lg); font-weight: 700;
-  margin: var(--sp-1) 0 var(--sp-2);
-}
-/* A great feast is what the parish calendar sets in capitals — carried here by
-   the same convention, plus a brass rule, rather than by another colour. */
-.service-day--major { border-color: var(--brass); }
-.service-day--major .service-day__feast {
-  text-transform: uppercase; letter-spacing: 0.02em;
-  font-size: var(--fs-xl); line-height: 1.15;
-  padding-bottom: var(--sp-2); border-bottom: 1px solid var(--brass);
-}
-.service-day__items { list-style: none; margin: 0; padding: 0; }
-.service-day__items li {
-  display: flex; gap: var(--sp-3); align-items: baseline;
-  padding: var(--sp-2) 0; border-top: 1px solid var(--line);
-}
-.service-day__items li:first-child { border-top: none; }
-.service-day__time {
-  font-weight: 700; font-variant-numeric: tabular-nums;
-  min-width: 4.25rem; flex: none; letter-spacing: 0.01em;
-}
-.service-day__note { color: var(--ink-2); font-size: var(--fs-sm); }
+   Расписание — центр тяжести сайта
 
-.fast-flag {
-  display: inline-flex; align-items: center; gap: 0.4em;
-  margin-top: var(--sp-3);
-  font-size: var(--fs-xs); font-weight: 700;
-  text-transform: uppercase; letter-spacing: 0.08em;
-  color: var(--accent-deep); background: var(--accent-tint);
-  border: 1px solid rgba(122,34,48,0.35);
-  padding: 0.4em 0.75em;
+   Иерархия карточки перевёрнута: ведёт день недели, число стоит справочно.
+   Прежде самым крупным было «16.08.2026», а «Воскресенье» — самым мелким и
+   самым серым, то есть ответ был набран как сноска. Степень поста поднята
+   в шапку: раньше она стояла под временем служб, и указание про пост
+   приходило после того, как его пролистали.
+   -------------------------------------------------------------------------- */
+
+/* Ближайшая служба — отдельный вопрос, а не первый элемент списка. */
+.next-service { background: var(--deep); color: var(--ink-on-deep); padding-block: var(--sp-5); }
+.next-service__kicker {
+  font-size: var(--fs-sm); letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-on-deep-2); margin-bottom: var(--sp-1);
 }
-.fast-flag svg { width: 0.9rem; height: 0.9rem; flex: none; }
+.next-service__when, .next-service__feast, .next-service__items { overflow-wrap: anywhere; }
+.next-service__when {
+  font-family: var(--font-display); font-weight: 700;
+  font-size: var(--fs-2xl); line-height: 1.1; margin-bottom: var(--sp-1);
+}
+.next-service__feast { font-size: var(--fs-lg); color: var(--ink-on-deep-2); margin-bottom: var(--sp-3); }
+.next-service__items { list-style: none; margin: 0 0 var(--sp-3); padding: 0; max-width: 34rem; }
+.next-service__items li {
+  display: flex; gap: var(--sp-3); align-items: baseline; flex-wrap: wrap;
+  padding-block: var(--sp-1); border-top: 1px solid var(--line-deep); font-size: var(--fs-lg);
+}
+.next-service__time {
+  font-family: var(--font-display); font-weight: 700; font-size: var(--fs-xl);
+  font-variant-numeric: tabular-nums; min-width: 4.5rem; flex: none;
+}
+
+/* Заголовок месяца режет список на куски, которые человек держит в голове. */
+.month-rule {
+  font-size: var(--fs-xl); margin-bottom: var(--sp-3);
+  padding-bottom: var(--sp-1); border-bottom: 2px solid var(--ink);
+}
+.month-rule + .sdays { margin-bottom: var(--sp-6); }
+
+/* align-items:start — иначе сетка растягивает короткую карточку до высоты
+   соседней, и строка «ст. ст.», прижатая к низу, повисает в пустоте. */
+.sdays { display: grid; gap: var(--sp-3); align-items: start; }
+@media (min-width: 52rem) { .sdays { grid-template-columns: 1fr 1fr; } }
+@media (min-width: 76rem) { .sdays { grid-template-columns: 1fr 1fr 1fr; } }
+
+.sday {
+  background: var(--surface); border: 1px solid var(--line);
+  padding: var(--sp-3); display: flex; flex-direction: column;
+}
+/* Карточка сохраняет пергаментную подложку и на тёмной полосе — значит,
+   должна вернуть себе и чернила: унаследовав светлый текст полосы, она
+   становится невидимой. */
+.band--deep .sday { color: var(--ink); border-color: var(--line); }
+.band--deep .sday .sday__num,
+.band--deep .sday .sday__note,
+.band--deep .sday .sday__old,
+.band--deep .sday .sday__extra,
+.band--deep .sday .sday__none { color: var(--ink-2); }
+.band--deep .sday .sday__rel { color: var(--accent); }
+.sday__head {
+  display: flex; align-items: flex-start; justify-content: space-between;
+  gap: var(--sp-2); flex-wrap: wrap; margin-bottom: var(--sp-2);
+}
+/* при системном шрифте 200% «Понедельник» в 44px не влезает в колонку —
+   слово должно переноситься, а не распирать карточку */
+.sday__when { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.6em; min-width: 0; }
+.sday__weekday, .sday__num, .sday__rel, .sday__feast, .sday__what { overflow-wrap: anywhere; min-width: 0; }
+.sday { min-width: 0; overflow-wrap: anywhere; }
+.sday__items li { flex-wrap: wrap; }
+.sday__weekday {
+  font-family: var(--font-display); font-weight: 700; font-size: var(--fs-xl); line-height: 1.1;
+}
+.sday__num { font-size: var(--fs-sm); color: var(--ink-2); font-variant-numeric: tabular-nums; }
+.sday__rel {
+  font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.06em;
+  text-transform: uppercase; color: var(--accent);
+}
+.sday--today { border-color: var(--accent); border-width: 2px; }
+
+.sday__feast { font-size: var(--fs-base); margin-bottom: var(--sp-2); }
+.sday--major { border-color: var(--brass); }
+.sday--major .sday__feast {
+  font-family: var(--font-display); font-weight: 700; font-size: var(--fs-lg);
+  text-transform: uppercase; letter-spacing: 0.02em;
+  border-top: 2px solid var(--brass); padding-top: var(--sp-1);
+}
+
+.sday__items { list-style: none; margin: 0 0 var(--sp-2); padding: 0; }
+.sday__items li {
+  display: flex; gap: var(--sp-2); align-items: baseline;
+  padding-block: 0.35em; border-top: 1px solid var(--line);
+}
+.sday__time {
+  font-family: var(--font-display); font-weight: 700; font-size: var(--fs-lg);
+  font-variant-numeric: tabular-nums; min-width: 3.6rem; flex: none;
+}
+.sday__what { flex: 1 1 auto; min-width: 0; }
+.sday__note { display: block; font-size: var(--fs-sm); color: var(--ink-2); }
+.sday__none { color: var(--ink-2); font-style: italic; margin-bottom: var(--sp-2); }
+.sday__old { font-size: var(--fs-xs); color: var(--ink-2); margin: 0; padding-top: var(--sp-2); }
+.sday__extra { font-size: var(--fs-sm); color: var(--ink-2); margin: var(--sp-1) 0 0; }
+
+/* Три ступени поста, а не одна метка на все шесть градаций: сухоядение и
+   «рыба, вино и елей» — противоположные указания, и одинаковая плашка на
+   них прямо вводила в заблуждение. */
+.fast {
+  display: inline-flex; align-items: center; gap: 0.4em; margin: 0;
+  padding: 0.15em 0.55em; font-size: var(--fs-xs); font-weight: 700;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  border: 1px solid transparent; max-width: 100%; overflow-wrap: anywhere;
+}
+.fast svg { width: 0.95em; height: 0.95em; flex: none; }
+.fast--strict { background: var(--accent); border-color: var(--accent); color: #fff; }
+.fast--fast   { border-color: var(--accent); color: var(--accent-deep); background: var(--accent-tint); }
+.fast--light  { border-color: var(--brass); color: var(--ink); background: transparent; }
+.next-service .fast--fast { background: transparent; color: #f0c9c2; border-color: #f0c9c2; }
+.next-service .fast--light { color: var(--ink-on-deep); }
+
+.fast-legend { margin-top: var(--sp-6); border-top: 1px solid var(--line); padding-top: var(--sp-3); }
+.fast-legend h2 { font-size: var(--fs-lg); }
+.fast-legend ul { list-style: none; margin: 0; padding: 0; max-width: var(--measure); }
+.fast-legend li { margin-bottom: var(--sp-2); font-size: var(--fs-sm); color: var(--ink-2); }
+.fast-legend .fast { margin-right: 0.4em; }
 
 /* --------------------------------------------------------------------------
    Cards, tiles, lists
@@ -479,6 +561,13 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent); }
 .btn--light:hover, .btn--light:focus-visible { background: var(--ink-on-deep); color: var(--deep); filter: none; }
 
 .btn[disabled], .btn[aria-disabled="true"] { opacity: 0.45; pointer-events: none; }
+
+/* При системном шрифте 200% «ПОЖЕРТВОВАТЬ» — одно неразрывное слово с
+   разрядкой и отступами по 1.75em — становится шире телефона и утаскивает
+   за собой всю страницу. Кнопка должна ужиматься и переносить слово. */
+.btn, button[type="submit"] {
+  max-width: 100%; overflow-wrap: anywhere; text-align: center;
+}
 
 .link-more {
   display: inline-flex; align-items: center; gap: 0.5em;
@@ -592,6 +681,9 @@ body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-v
 .facts div { display: grid; gap: 0.15rem; padding-block: var(--sp-3); border-top: 1px solid var(--line); }
 @media (min-width: 40rem) { .facts div { grid-template-columns: 14rem 1fr; gap: var(--sp-3); align-items: baseline; } }
 .facts dt { font-size: var(--fs-sm); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-2); }
+/* --ink-2 рассчитан на пергамент; на умбре это 2.48:1 */
+.band--deep .facts dt { color: var(--ink-on-deep-2); }
+.band--deep .facts div { border-top-color: var(--line-deep); }
 .facts dd { margin: 0; }
 
 /* --------------------------------------------------------------------------
@@ -647,7 +739,7 @@ body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-v
    -------------------------------------------------------------------------- */
 .site-footer {
   background: var(--deep); color: var(--ink-on-deep);
-  padding-block: var(--sp-7) var(--sp-5); margin-top: var(--sp-7);
+  padding-block: var(--sp-5) var(--sp-4); margin-top: var(--sp-6);
   position: relative;
 }
 /* drawn Byzantine band along the footer's top edge — woven-textile weight,
@@ -658,14 +750,24 @@ body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-v
   opacity: 0.85;
 }
 .site-footer__emblem { width: 2.25rem; height: auto; margin-bottom: var(--sp-3); }
+/* .meta задан для светлого фона (--ink-2); на умбре подвала это 2.48:1.
+   Тёмные полосы .band--deep это уже учитывали, подвал — нет. */
+.site-footer .meta { color: var(--ink-on-deep-2); }
 .site-footer a { color: var(--ink-on-deep); }
 .site-footer a:hover { color: #e8b877; }
 .site-footer__grid { display: grid; gap: var(--sp-5); }
-@media (min-width: 48rem) { .site-footer__grid { grid-template-columns: 1.4fr 1fr 1fr; } }
+@media (min-width: 48rem) { .site-footer__grid { grid-template-columns: 1.4fr 1fr; } }
+.site-footer__grid > * { min-width: 0; }
 .site-footer__name { font-family: var(--font-display); font-size: var(--fs-xl); font-weight: 700; margin-bottom: var(--sp-2); }
-.site-footer h4 { font-family: var(--font-body); font-size: var(--fs-xs); text-transform: uppercase; letter-spacing: 0.1em; color: var(--ink-on-deep-2); margin-bottom: var(--sp-2); }
-.site-footer ul { list-style: none; margin: 0; padding: 0; }
-.site-footer li { margin-bottom: var(--sp-1); }
+/* Заголовки h4 в общем подвале ломали порядок заголовков на страницах,
+   которые заканчивались на h1 или h2. Разделы подвала их больше не носят. */
+.site-footer__quick { display: flex; flex-direction: column; align-items: flex-start; margin: 0; }
+.site-footer__quick a { display: inline-flex; align-items: center; min-height: var(--tap); }
+.site-footer li { margin-bottom: 0; }
+/* строчные ссылки были 24px высотой при пальце в 44 */
+.site-footer li a, .site-footer .meta a {
+  display: inline-flex; align-items: center; min-height: var(--tap);
+}
 .site-footer__actions { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-3); }
 .site-footer__legal { border-top: 1px solid var(--line-deep); margin-top: var(--sp-5); padding-top: var(--sp-3); color: var(--ink-on-deep-2); font-size: var(--fs-sm); }
 
@@ -726,4 +828,53 @@ body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-v
 .honeypot-wrap {
   position: absolute; left: -9999px; top: -9999px;
   width: 1px; height: 1px; overflow: hidden;
+}
+
+/* --------------------------------------------------------------------------
+   Первый экран главной — время ближайшей службы, а не второе имя прихода
+   -------------------------------------------------------------------------- */
+.hero__title, .hero__lede, .hero__feast, .hero__times { overflow-wrap: anywhere; }
+.hero__kicker {
+  font-size: var(--fs-sm); letter-spacing: 0.1em; text-transform: uppercase;
+  color: var(--ink-on-deep-2); margin-bottom: var(--sp-1);
+}
+.hero__feast { font-size: var(--fs-lg); color: var(--ink-on-deep-2); margin-bottom: var(--sp-3); max-width: var(--measure); }
+.hero__times { list-style: none; margin: 0 0 var(--sp-4); padding: 0; max-width: 30rem; }
+.hero__times li {
+  display: flex; gap: var(--sp-3); align-items: baseline; flex-wrap: wrap;
+  padding-block: var(--sp-1); border-top: 1px solid rgba(243,236,224,0.25);
+  font-size: var(--fs-lg);
+}
+.hero__time {
+  font-family: var(--font-display); font-weight: 700; font-size: var(--fs-xl);
+  font-variant-numeric: tabular-nums; min-width: 4.2rem; flex: none;
+}
+
+/* Ссылка-действие на тёмном фоне: латунь по умбре читается, но текст должен
+   быть светлым, а не наследовать чернила светлого фона. */
+.link-more--on-deep { color: var(--ink-on-deep); }
+.link-more--on-deep:hover { color: #e8b877; border-bottom-color: #e8b877; }
+.hero__actions { display: flex; flex-wrap: wrap; gap: var(--sp-3); align-items: center; }
+
+/* --------------------------------------------------------------------------
+   Подтверждение записки — имена набраны так, как их прочтут
+   -------------------------------------------------------------------------- */
+.accepted { display: grid; gap: var(--sp-5); }
+@media (min-width: 44rem) { .accepted { grid-template-columns: 1fr 1fr; align-items: start; } }
+.accepted h2 { font-size: var(--fs-lg); padding-bottom: var(--sp-1); border-bottom: 2px solid var(--ink); }
+.accepted__names { list-style: none; margin: 0; padding: 0; counter-reset: n; }
+.accepted__names li {
+  counter-increment: n; display: flex; gap: var(--sp-2); align-items: baseline;
+  font-family: var(--font-display); font-size: var(--fs-lg);
+  padding-block: 0.3em; border-bottom: 1px solid var(--line);
+}
+.accepted__names li::before {
+  content: counter(n) "."; font-family: var(--font-body); font-size: var(--fs-xs);
+  color: var(--ink-2); min-width: 1.6rem; flex: none; text-align: right;
+  font-variant-numeric: tabular-nums;
+}
+.accepted__kind {
+  margin-top: var(--sp-4); padding: var(--sp-2) var(--sp-3);
+  border-left: 3px solid var(--brass); background: var(--surface);
+  font-size: var(--fs-sm); max-width: var(--measure);
 }

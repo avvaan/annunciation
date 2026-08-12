@@ -1,13 +1,12 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n photos %}
 {% block title %}{{ project.title }} — {{ block.super }}{% endblock %}
 {% block body_class %}has-hero{% endblock %}
 {% block content %}
 
 <section class="hero">
   <div class="hero__media">
-    <img src="{% if project.cover_image %}{{ project.cover_image.url }}{% else %}/static/images/photos/font-candles.jpg{% endif %}"
-         alt="" fetchpriority="high">
+    {% parish_photo project.cover_image "font-candles" sizes="100vw" eager=True %}
   </div>
   <div class="hero__inner">
     <h1 class="hero__title">{{ project.title }}</h1>
@@ -39,7 +38,7 @@
 
 {% if project.description %}
 <section class="band">
-  <div class="shell prose">{{ project.description|linebreaks }}</div>
+  <div class="shell"><div class="prose">{{ project.description|linebreaks }}</div></div>
 </section>
 {% endif %}
 

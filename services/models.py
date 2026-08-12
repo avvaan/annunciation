@@ -1,6 +1,7 @@
 import datetime
 
 from django.db import models
+from django.utils import timezone
 from django.utils.translation import gettext_lazy as _
 
 
@@ -39,6 +40,21 @@ class FastingLevel(models.TextChoices):
 WEEKDAY_NAMES = [
     _("Понедельник"), _("Вторник"), _("Среда"), _("Четверг"),
     _("Пятница"), _("Суббота"), _("Воскресенье"),
+]
+
+# «В среду», а не «Среда»: относительная подпись читается предложением,
+# и предложный падеж здесь не украшение, а грамматика.
+WEEKDAY_IN_PREPOSITIONAL = [
+    _("В понедельник"), _("Во вторник"), _("В среду"), _("В четверг"),
+    _("В пятницу"), _("В субботу"), _("В воскресенье"),
+]
+
+# Месяцы в родительном падеже: «12 августа», а не «12 Август». Django-шный
+# фильтр date:"j F" уже даёт нужную форму для ru, но заголовок месяца
+# («Август 2026») требует именительного — держим оба списка явно.
+MONTH_NOMINATIVE = [
+    _("Январь"), _("Февраль"), _("Март"), _("Апрель"), _("Май"), _("Июнь"),
+    _("Июль"), _("Август"), _("Сентябрь"), _("Октябрь"), _("Ноябрь"), _("Декабрь"),
 ]
 
 # The Julian/Gregorian gap is 13 days for the whole 20th–21st century and only
@@ -136,6 +152,60 @@ class ServiceDay(models.Model):
     @property
     def weekday_label(self):
         return WEEKDAY_NAMES[self.date.weekday()]
+
+    # ------------------------------------------------------------------
+    # Ориентация во времени. Прихожанин спрашивает «а завтра служба есть?»,
+    # а не «что стоит в клетке 16.08.2026». Раньше он должен был сначала
+    # вспомнить сегодняшнее число и вычесть его в уме.
+    # ------------------------------------------------------------------
+
+    @property
+    def days_away(self):
+        return (self.date - timezone.localdate()).days
+
+    @property
+    def is_today(self):
+        return self.days_away == 0
+
+    @property
+    def is_tomorrow(self):
+        return self.days_away == 1
+
+    @property
+    def relative_label(self):
+        """«Сегодня», «Завтра», «В воскресенье» — или ничего, если далеко.
+
+        Дальше недели относительная подпись перестаёт помогать: «через
+        девятнадцать дней» человек всё равно переводит обратно в дату.
+        """
+        days = self.days_away
+        if days == 0:
+            return _("Сегодня")
+        if days == 1:
+            return _("Завтра")
+        if 2 <= days <= 6:
+            return WEEKDAY_IN_PREPOSITIONAL[self.date.weekday()]
+        return ""
+
+    # Шесть градаций поста — это шкала, а не список: сухоядение и «рыба,
+    # вино и елей» противоположны по смыслу, и одинаковая метка на них
+    # вводила в заблуждение. Три ступени видимости — столько и различает
+    # глаз при беглом взгляде.
+    FASTING_TIERS = {
+        FastingLevel.STRICT: "strict",
+        FastingLevel.DRY: "strict",
+        FastingLevel.FAST: "fast",
+        FastingLevel.WINE_OIL: "fast",
+        FastingLevel.FISH_WINE_OIL: "light",
+    }
+
+    @property
+    def fasting_tier(self):
+        return self.FASTING_TIERS.get(self.fasting_level, "")
+
+    @property
+    def has_services(self):
+        return self.items.exists()
 
 
 class ServiceItem(models.Model):

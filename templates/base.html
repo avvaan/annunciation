@@ -73,36 +73,24 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         <p class="site-footer__name">{{ site_settings.parish_name }}</p>
         <p class="meta">
           {{ site_settings.city }}{% if site_settings.address %}<br>{{ site_settings.address }}{% endif %}
-          {% if site_settings.phone %}<br>{{ site_settings.phone }}{% endif %}
+          {% if site_settings.phone %}<br><a href="tel:{{ site_settings.phone }}">{{ site_settings.phone }}</a>{% endif %}
           {% if site_settings.email %}<br><a href="mailto:{{ site_settings.email }}">{{ site_settings.email }}</a>{% endif %}
+        </p>
+      </div>
+      <div>
+        {% comment %}
+        Раньше подвал повторял одиннадцатью ссылками то же самое меню, что
+        стоит в шапке, и занимал больше половины страницы. Оставлены только
+        три вещи, за которыми сюда действительно доходят, и одно действие.
+        {% endcomment %}
+        <p class="site-footer__quick">
+          <a href="{% url 'services:schedule' %}">{% trans "Расписание богослужений" %}</a>
+          <a href="{% url 'commemorations:submit' %}">{% trans "Подать записку" %}</a>
+          <a href="{% url 'core:contact' %}">{% trans "Как нас найти" %}</a>
         </p>
         <div class="site-footer__actions">
           <a href="{% url 'core:donation' %}" class="btn btn--accent">{% trans "Пожертвовать" %}</a>
-          {% if site_settings.realm_membership_url %}
-            <a href="{{ site_settings.realm_membership_url }}" class="btn btn--light">{% trans "Стать членом прихода" %}</a>
-          {% endif %}
         </div>
-      </div>
-      <div>
-        <h4>{% trans "Приход" %}</h4>
-        <ul>
-          <li><a href="{% url 'core:first_visit' %}">{% trans "Впервые здесь?" %}</a></li>
-          <li><a href="{% url 'services:schedule' %}">{% trans "Расписание богослужений" %}</a></li>
-          <li><a href="{% url 'publications:list' %}">{% trans "Календарь и бюллетень" %}</a></li>
-          <li><a href="{% url 'core:clergy' %}">{% trans "Духовенство" %}</a></li>
-          <li><a href="{% url 'history:page' %}">{% trans "История прихода" %}</a></li>
-        </ul>
-      </div>
-      <div>
-        <h4>{% trans "Участие" %}</h4>
-        <ul>
-          <li><a href="{% url 'commemorations:submit' %}">{% trans "Записки о поминовении" %}</a></li>
-          <li><a href="{% url 'core:donation' %}">{% trans "Пожертвования" %}</a></li>
-          <li><a href="{% url 'building:project' %}">{% trans "Строительство храма" %}</a></li>
-          <li><a href="{% url 'school:page' %}">{% trans "Русская школа" %}</a></li>
-          <li><a href="{% url 'ministries:ministry_list' %}">{% trans "Служения" %}</a></li>
-          <li><a href="{% url 'newsletter:subscribe' %}">{% trans "Подписка на новости" %}</a></li>
-        </ul>
       </div>
     </div>
     <p class="site-footer__legal">{{ site_settings.parish_name }} · {{ site_settings.city }}</p>

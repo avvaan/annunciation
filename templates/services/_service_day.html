@@ -1,26 +1,41 @@
 {% load i18n %}
-<article class="service-day{% if day.is_major %} service-day--major{% endif %}">
-  <div class="service-day__date">
-    <span class="service-day__day">{{ day.date|date:"d.m.Y" }}</span>
-    <span class="service-day__weekday">{{ day.weekday_label }}</span>
-    <span class="service-day__old">{% trans "ст. ст." %} {{ day.old_style_date|date:"d.m" }}</span>
+{% comment %}
+Карточка дня. Иерархия перевёрнута относительно прежней: раньше самым
+крупным было число «16.08.2026», а день недели — самым мелким и серым,
+хотя ищут глазами именно его. Теперь строку ведёт день недели, число
+стоит рядом справочно, а степень поста поднята в шапку — прежде она
+печаталась под временем служб, и ответ про пост приходил уже после того,
+как человек его пролистал.
+{% endcomment %}
+<article class="sday{% if day.is_major %} sday--major{% endif %}{% if day.is_today %} sday--today{% endif %}">
+  <div class="sday__head">
+    <p class="sday__when">
+      <span class="sday__weekday">{{ day.weekday_label }}</span>
+      <span class="sday__num">{{ day.date|date:"j E" }}</span>
+      {% if day.relative_label %}<span class="sday__rel">{{ day.relative_label }}</span>{% endif %}
+    </p>
+    {% if day.fasting_tier %}
+      <p class="fast fast--{{ day.fasting_tier }}">
+        {% include "_icons.html" with icon="fast" %}{{ day.get_fasting_level_display }}
+      </p>
+    {% endif %}
   </div>
 
-  {% if day.feast_title %}
-    <p class="service-day__feast">{{ day.feast_title }}</p>
+  {% if day.feast_title %}<p class="sday__feast">{{ day.feast_title }}</p>{% endif %}
+
+  {% if day.items.all %}
+    <ul class="sday__items">
+      {% for item in day.items.all %}
+        <li>
+          <span class="sday__time">{{ item.time|time:"H:i" }}</span>
+          <span class="sday__what">{{ item.service_type.name }}{% if item.note %}<span class="sday__note">{{ item.note }}</span>{% endif %}</span>
+        </li>
+      {% endfor %}
+    </ul>
+  {% else %}
+    <p class="sday__none">{% trans "Богослужения нет" %}</p>
   {% endif %}
 
-  <ul class="service-day__items">
-    {% for item in day.items.all %}
-      <li>
-        <span class="service-day__time">{{ item.time|time:"H:i" }}</span>
-        <span>{{ item.service_type.name }}{% if item.note %} <span class="service-day__note">— {{ item.note }}</span>{% endif %}</span>
-      </li>
-    {% endfor %}
-  </ul>
-
-  {% if day.fasting_level != "none" %}
-    <p class="fast-flag">{% include "_icons.html" with icon="fast" %}{{ day.get_fasting_level_display }}</p>
-  {% endif %}
-  {% if day.note %}<p class="meta" style="margin-top:var(--sp-2)">{{ day.note }}</p>{% endif %}
+  <p class="sday__old">{% trans "ст. ст." %} {{ day.old_style_date|date:"j E" }}</p>
+  {% if day.note %}<p class="sday__extra">{{ day.note }}</p>{% endif %}
 </article>

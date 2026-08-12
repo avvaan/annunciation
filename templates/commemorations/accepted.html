@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% block title %}{% trans "Записка принята" %} — {{ block.super }}{% endblock %}
+{% block content %}
+
+{% comment %}
+Единственный экран сайта, где человек только что доверил приходу имена
+своих живых и своих усопших. Раньше в ответ он получал тонкую белую
+полоску «принято» и ту же пустую форму. Здесь он видит свои имена в том
+виде, в каком их прочтут, и день, когда это произойдёт.
+{% endcomment %}
+
+<section class="page-head">
+  <div class="shell">
+    <h1>{% trans "Записка принята" %}</h1>
+    {% if next_liturgy %}
+      <p>
+        {% blocktrans with when=next_liturgy.date|date:"j E" weekday=next_liturgy.weekday_label|lower %}Имена будут помянуты на проскомидии в {{ weekday }}, {{ when }}.{% endblocktrans %}
+      </p>
+    {% else %}
+      <p>{% trans "Имена будут помянуты на ближайшей литургии." %}</p>
+    {% endif %}
+  </div>
+</section>
+
+<section class="band">
+  <div class="shell">
+    <div class="accepted">
+      {% if note.living_list %}
+        <section>
+          <h2>{% trans "О здравии" %}</h2>
+          <ol class="accepted__names">
+            {% for name in note.living_list %}<li>{{ name }}</li>{% endfor %}
+          </ol>
+        </section>
+      {% endif %}
+      {% if note.departed_list %}
+        <section>
+          <h2>{% trans "О упокоении" %}</h2>
+          <ol class="accepted__names">
+            {% for name in note.departed_list %}<li>{{ name }}</li>{% endfor %}
+          </ol>
+        </section>
+      {% endif %}
+    </div>
+
+    {% if note.kind == "sorokoust" %}
+      <p class="accepted__kind">
+        {% blocktrans with n=note.total_liturgies %}Сорокоуст: имена читают на {{ n }} литургиях подряд. Подавать записку заново не нужно.{% endblocktrans %}
+      </p>
+    {% endif %}
+
+    <div class="ornament" role="presentation"></div>
+
+    <div class="prose">
+      <p>{% trans "Если в именах ошибка — позвоните или напишите в приход, секретарь поправит до службы." %}</p>
+      <p class="meta">
+        {% if site_settings.phone %}<a href="tel:{{ site_settings.phone }}">{{ site_settings.phone }}</a>{% endif %}
+        {% if site_settings.email %} · <a href="mailto:{{ site_settings.email }}">{{ site_settings.email }}</a>{% endif %}
+      </p>
+      <p style="margin-top:var(--sp-4)">
+        <a href="{% url 'commemorations:submit' %}" class="link-more">{% trans "Подать ещё одну записку" %}{% include "_icons.html" with icon="arrow" %}</a>
+      </p>
+      <p>
+        <a href="{% url 'core:donation' %}" class="link-more">{% trans "Пожертвовать" %}{% include "_icons.html" with icon="arrow" %}</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

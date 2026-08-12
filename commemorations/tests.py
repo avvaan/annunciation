@@ -32,8 +32,10 @@ def payload(**overrides):
 class SubmitFormTests(TestCase):
     def test_accepts_a_normal_note(self):
         response = self.client.post(reverse("commemorations:submit"), payload())
-        self.assertRedirects(response, reverse("commemorations:submit"))
         note = Commemoration.objects.get()
+        self.assertRedirects(
+            response, reverse("commemorations:accepted", args=[note.pk])
+        )
         self.assertEqual(note.living_list, ["Марии", "Иоанна"])
         self.assertEqual(note.departed_list, ["мл. Николая"])
         self.assertEqual(note.total_liturgies, 1)
@@ -155,6 +157,29 @@ class PrintingTests(TempPrivateMedia, TestCase):
         self.assertNotIn(self.single, second.notes.all())
         self.assertIn(self.sorokoust, first.notes.all())
         self.assertIn(self.sorokoust, second.notes.all())
+
+
+class AcceptedPageTests(TestCase):
+    """Подтверждение показывает имена — значит, чужую записку по номеру
+    открыть быть не должно."""
+
+    def test_shows_the_names_that_were_submitted(self):
+        self.client.post(reverse("commemorations:submit"), payload())
+        note = Commemoration.objects.get()
+        page = self.client.get(reverse("commemorations:accepted", args=[note.pk]))
+        self.assertEqual(page.status_code, 200)
+        body = page.content.decode()
+        self.assertIn("Марии", body)
+        self.assertIn("мл. Николая", body)
+
+    def test_someone_elses_note_is_not_readable_by_number(self):
+        self.client.post(reverse("commemorations:submit"), payload())
+        note = Commemoration.objects.get()
+        other = self.client.__class__()          # чистая сессия, как у чужого
+        self.assertEqual(
+            other.get(reverse("commemorations:accepted", args=[note.pk])).status_code,
+            404,
+        )
 
 
 class BatchDownloadTests(TempPrivateMedia, TestCase):

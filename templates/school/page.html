@@ -1,13 +1,12 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n photos %}
 {% block title %}{% trans "Русская школа" %} — {{ block.super }}{% endblock %}
 {% block body_class %}has-hero{% endblock %}
 {% block content %}
 
 <section class="hero">
   <div class="hero__media">
-    <img src="{% if page.cover_image %}{{ page.cover_image.url }}{% else %}/static/images/photos/school-eggs.jpg{% endif %}"
-         alt="" fetchpriority="high">
+    {% parish_photo page.cover_image "school-eggs" sizes="100vw" eager=True %}
   </div>
   <div class="hero__inner">
     <h1 class="hero__title">{% trans "Русская школа" %}</h1>

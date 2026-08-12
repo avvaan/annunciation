@@ -12,12 +12,13 @@
 
 {% if page.intro %}
 <section class="band">
-  <div class="shell prose">{{ page.intro|linebreaks }}</div>
+  <div class="shell"><div class="prose">{{ page.intro|linebreaks }}</div></div>
 </section>
 {% endif %}
 
 <section class="band">
   <div class="shell">
+    <h2>{% trans "Как пожертвовать" %}</h2>
     <div class="stack" style="max-width:44rem">
       {% for m in methods %}
         <article class="card">

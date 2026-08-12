@@ -13,14 +13,19 @@ from .models import Announcement, ClergyMember, DonationPage, FirstVisitPage
 
 def home(request):
     announcements = Announcement.objects.filter(is_active=True)
-    upcoming_days = (
+    upcoming_days = list(
         ServiceDay.objects.filter(is_published=True, date__gte=datetime.date.today())
         .prefetch_related("items__service_type")
-        .order_by("date")[:3]
+        .order_by("date")[:4]
     )
+    # Первый экран должен отвечать на вопрос, с которым сюда заходят, а не
+    # повторять название прихода второй раз подряд. Ближайшая служба — это
+    # первый день, где службы действительно есть.
+    next_day = next((d for d in upcoming_days if d.items.all()), None)
     return render(request, "core/home.html", {
         "announcements": announcements,
-        "upcoming_days": upcoming_days,
+        "upcoming_days": upcoming_days[:3],
+        "next_day": next_day,
         "building_project": BuildingProject.get_solo(),
         "school_page": RussianSchoolPage.get_solo(),
         "first_visit": FirstVisitPage.get_solo(),
