@@ -2,7 +2,9 @@
 <a class="tile" href="{% url 'ministries:ministry_detail' slug=m.slug %}">
   <div class="tile__media">
     {% parish_photo m.image "greenery" sizes="(min-width:60rem) 24rem, 100vw" %}
+    <div class="tile__caption">
+      <h3>{{ m.name }}{% if m.is_private %} {% include "_icons.html" with icon="lock" %}{% endif %}</h3>
+      <p>{{ m.description|truncatewords:18 }}</p>
+    </div>
   </div>
-  <h3>{{ m.name }}{% if m.is_private %} {% include "_icons.html" with icon="lock" %}{% endif %}</h3>
-  <p>{{ m.description|truncatewords:18 }}</p>
 </a>
