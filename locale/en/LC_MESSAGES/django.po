@@ -5,7 +5,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2026-08-12 21:26-0400\n"
+"POT-Creation-Date: 2026-08-12 23:10-0400\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -34,12 +34,12 @@ msgid "Ваше имя"
 msgstr "Your name"
 
 #: commemorations/forms.py:53 commemorations/models.py:83 core/forms.py:12
-#: core/models.py:180 ministries/forms.py:17 newsletter/forms.py:11
+#: core/models.py:189 ministries/forms.py:17 newsletter/forms.py:11
 msgid "E-mail"
 msgstr "Email"
 
 #: commemorations/forms.py:54 commemorations/models.py:84 core/forms.py:13
-#: core/models.py:176 core/models.py:181 templates/core/about.html:56
+#: core/models.py:185 core/models.py:190 templates/core/about.html:56
 #: templates/core/contact.html:30 templates/core/first_visit.html:89
 msgid "Телефон"
 msgstr "Phone"
@@ -173,7 +173,8 @@ msgstr "Batches"
 
 #: commemorations/models.py:104
 msgid "Первая литургия"
-msgstr "First liturgy"
+msgstr "First Liturgy"
+
 
 #: commemorations/models.py:105
 msgid "Всего литургий"
@@ -199,12 +200,12 @@ msgstr "commemoration note"
 msgid "записки"
 msgstr "commemoration notes"
 
-#: core/forms.py:12 core/models.py:179 ministries/forms.py:18
+#: core/forms.py:12 core/models.py:188 ministries/forms.py:18
 #: newsletter/forms.py:11
 msgid "Имя"
 msgstr "Idea"
 
-#: core/forms.py:13 core/models.py:187
+#: core/forms.py:13 core/models.py:196
 msgid "Сообщение"
 msgstr "Xerophagy"
 
@@ -216,83 +217,98 @@ msgstr "For example, weekdays after 6 pm"
 msgid "Оставьте e-mail или телефон — иначе мы не сможем вам ответить."
 msgstr "Please leave an email or a phone number — otherwise we cannot reply."
 
-#: core/models.py:170
+#: core/models.py:179
 msgid "Я православный христианин"
 msgstr "I am an Orthodox Christian"
 
-#: core/models.py:171
+#: core/models.py:180
 msgid "Я не православный, но хочу узнать больше"
 msgstr "I am not Orthodox, but I would like to know more"
 
-#: core/models.py:172
+#: core/models.py:181
 msgid "Хочу поговорить со священником"
 msgstr "Reach a priest"
 
-#: core/models.py:175
+#: core/models.py:184
 msgid "Электронная почта"
 msgstr "Email"
 
-#: core/models.py:177
+#: core/models.py:186
 msgid "Всё равно"
 msgstr "Full schedule"
 
-#: core/models.py:182
+#: core/models.py:191
 msgid "О себе"
 msgstr "About you"
 
-#: core/models.py:184
+#: core/models.py:193
 msgid "Как удобнее связаться"
 msgstr "How best to reach you"
 
-#: core/models.py:186
+#: core/models.py:195
 msgid "Удобное время"
 msgstr "Best time"
 
-#: core/trebas.py:26
+#: core/trebas.py:26 core/worship.py:66
 msgid "Крещение"
 msgstr "Baptism"
+
 
 #: core/trebas.py:27
 msgid "Первое таинство Церкви — рождение в жизнь во Христе."
 msgstr "The first sacrament of the Church — birth into life in Christ."
+
 
 #: core/trebas.py:29
 msgid ""
 "Первое и основополагающее таинство Церкви — дверь в жизнь во Христе. В "
 "крещении человек омывается от греха, соединяется со Христом в Его смерти и "
 "воскресении и рождается заново чадом Божиим."
-msgstr "Baptism is the first and foundational sacrament of the Orthodox Church — the gateway into life in Christ. In Baptism we are washed of sin, united with Christ in His death and Resurrection, and born anew as children of God."
+msgstr ""
+"Baptism is the first and foundational sacrament of the Orthodox Church — the "
+"gateway into life in Christ. In Baptism we are washed of sin, united with "
+"Christ in His death and Resurrection, and born anew as children of God."
 
 #: core/trebas.py:32
 msgid ""
 "Крестят и младенцев, и взрослых. Взрослый перед крещением проходит оглашение "
 "— беседы о вере, которые готовят к сознательному шагу."
-msgstr "Both infants and adults are baptised. An adult is first received as a catechumen — instruction in the faith that prepares for a deliberate step."
+msgstr ""
+"Both infants and adults are baptised. An adult is first received as a "
+"catechumen — instruction in the faith that prepares for a deliberate step."
 
-#: core/trebas.py:38
+#: core/trebas.py:38 core/worship.py:73
 msgid "Венчание"
 msgstr "Marriage"
 
+
 #: core/trebas.py:39
 msgid "Таинство, в котором двое соединяются во Христе."
-msgstr "The sacrament in which two are united in Christ."
+msgstr "The sacrament in which two are joined in Christ."
+
 
 #: core/trebas.py:41
 msgid ""
 "«И будут два одною плотью» (Мф. 19:5). Таинство, в котором мужчина и женщина "
 "соединяются во Христе, становясь одним сердцем, умом и душой."
-msgstr "“And the two shall become one flesh” (Matthew 19:5). The sacrament in which a man and a woman are united in Christ, becoming one in heart, mind and soul."
+msgstr ""
+"“And the two shall become one flesh” (Matthew 19:5). The sacrament in which "
+"a man and a woman are united in Christ, becoming one in heart, mind and soul."
 
 #: core/trebas.py:43
 msgid ""
 "Средоточие чина — венчание: на головы жениха и невесты возлагаются венцы. "
 "Обетов, которые супруги произносили бы вслух, в православном чине нет: "
 "молится и благословляет Церковь."
-msgstr "The heart of the service is the crowning: crowns are placed on the heads of the bride and groom. There are no vows spoken aloud by the couple in the Orthodox rite — it is the Church that prays and blesses."
+msgstr ""
+"The heart of the service is the crowning: crowns are placed on the heads of "
+"the bride and groom. There are no vows spoken aloud by the couple in the "
+"Orthodox rite — it is the Church that prays and blesses."
 
 #: core/trebas.py:50
 msgid "Отпевание"
 msgstr "Funeral"
+
 
 #: core/trebas.py:51
 msgid "Чин погребения — прощание в надежде на воскресение."
@@ -302,40 +318,53 @@ msgstr "The funeral rite — a farewell in the hope of the Resurrection."
 msgid ""
 "Прощание, полное надежды на воскресение. Приход разделяет с семьёй время "
 "скорби и совершает древний чин погребения."
-msgstr "A farewell filled with hope in the Resurrection. The parish stands with the family in its grief and serves the Church’s ancient funeral rite."
+msgstr ""
+"A farewell filled with hope in the Resurrection. The parish stands with the "
+"family in its grief and serves the Church’s ancient funeral rite."
 
 #: core/trebas.py:55
 msgid ""
 "Отпевание — не только скорбь. В пасхальные дни за ним поют «Христос "
 "воскресе», потому что христианская смерть — не конец, а сон до общего "
 "воскресения."
-msgstr "A funeral is not only grief. In the paschal season “Christ is Risen” is sung at it, because a Christian death is not an end but a sleep until the general resurrection."
+msgstr ""
+"A funeral is not only grief. In the paschal season “Christ is Risen” is sung "
+"at it, because a Christian death is not an end but a sleep until the general "
+"resurrection."
 
 #: core/trebas.py:62
 msgid "Молебен"
 msgstr "Moleben"
 
+
 #: core/trebas.py:63
 msgid ""
 "Краткое молебное или благодарственное последование, совершаемое о живых."
-msgstr "A short service of supplication or thanksgiving, served for the living."
+msgstr ""
+"A short service of supplication or thanksgiving, served for the living."
 
 #: core/trebas.py:65
 msgid ""
 "Краткое богослужение прошения или благодарения: о болящем, о семье в беде, "
 "перед операцией, дорогой или началом учебного года, о всяком добром деле — "
 "или в благодарность за уже полученное."
-msgstr "A short service of asking or thanking: for the sick, for a family in trouble, before an operation, a journey or the start of the school year, before any good work — or in thanksgiving for what has already been given."
+msgstr ""
+"A short service of asking or thanking: for the sick, for a family in "
+"trouble, before an operation, a journey or the start of the school year, "
+"before any good work — or in thanksgiving for what has already been given."
 
 #: core/trebas.py:68
 msgid ""
 "Молебен служится о живых; о усопших служится панихида. Имена подают "
 "крещёные, по одному в строке, только имя — без фамилий и званий."
-msgstr "A moleben is served for the living; a panikhida is served for the departed. Send baptismal names, one per line, given name only — no surnames or titles."
+msgstr ""
+"A moleben is served for the living; a panikhida is served for the departed. "
+"Send baptismal names, one per line, given name only — no surnames or titles."
 
 #: core/trebas.py:74
 msgid "Панихида"
 msgstr "Panikhida"
+
 
 #: core/trebas.py:75
 msgid "Заупокойное богослужение о усопших, молитва об упокоении их душ."
@@ -346,37 +375,51 @@ msgid ""
 "Заупокойное богослужение о усопших, молитва об упокоении их душ. Служится в "
 "третий, девятый и сороковой день, в годовщину, в родительские субботы и на "
 "Радоницу."
-msgstr "The memorial service for the departed, praying for their repose. It is served on the third, ninth and fortieth days, on the anniversary, on the memorial Saturdays and at Radonitsa."
+msgstr ""
+"The memorial service for the departed, praying for their repose. It is "
+"served on the third, ninth and fortieth days, on the anniversary, on the "
+"memorial Saturdays and at Radonitsa."
 
 #: core/trebas.py:80
 msgid ""
 "Может совершаться в храме, дома или на могиле. Умершим помогает молитва, "
 "милостыня и прежде всего литургия."
-msgstr "It may be served in church, at home or at the graveside. The departed are helped by prayer, by almsgiving, and above all by the Liturgy."
+msgstr ""
+"It may be served in church, at home or at the graveside. The departed are "
+"helped by prayer, by almsgiving, and above all by the Liturgy."
 
 #: core/trebas.py:86
 msgid "Освящение дома"
-msgstr "House Blessing"
+msgstr "House blessing"
+
 
 #: core/trebas.py:87
 msgid ""
 "Священник приходит к вам домой, молится в комнатах и окропляет их святой "
 "водой."
-msgstr "The priest comes to your home, prays through its rooms, and sprinkles them with holy water."
+msgstr ""
+"The priest comes to your home, prays through its rooms, and sprinkles them "
+"with holy water."
 
 #: core/trebas.py:89
 msgid ""
 "Священник приходит к вам домой, молится в комнатах и окропляет их святой "
 "водой. На четырёх стенах ставится крест, стены помазуются, у каждого креста "
 "зажигается свеча."
-msgstr "The priest comes to your home, prays through its rooms, and sprinkles them with holy water. A cross is marked on each of the four walls, the walls are anointed, and a candle is lit at each cross."
+msgstr ""
+"The priest comes to your home, prays through its rooms, and sprinkles them "
+"with holy water. A cross is marked on each of the four walls, the walls are "
+"anointed, and a candle is lit at each cross."
 
 #: core/trebas.py:92
 msgid ""
 "Храм освящают, а жилище благословляют — разница не в словах: благодать не "
 "заперта в церковных стенах. Занимает это около получаса и возможно в любой "
 "день."
-msgstr "A church is consecrated, a dwelling is blessed — the difference is not merely in words: grace is not confined to church walls. It takes about half an hour and may be done on any day."
+msgstr ""
+"A church is consecrated, a dwelling is blessed — the difference is not "
+"merely in words: grace is not confined to church walls. It takes about half "
+"an hour and may be done on any day."
 
 #: core/trebas.py:99
 msgid "Освящение автомобиля"
@@ -386,21 +429,141 @@ msgstr "Blessing of a Car"
 msgid ""
 "Краткое молитвословие над автомобилем с прошением к Богу хранить всех, кто в "
 "нём ездит."
-msgstr "A short prayer over a vehicle, asking God to guard everyone who travels in it."
+msgstr ""
+"A short prayer over a vehicle, asking God to guard everyone who travels in "
+"it."
 
 #: core/trebas.py:102
 msgid ""
 "Краткое молитвословие над автомобилем с прошением к Богу хранить всех, кто в "
 "нём ездит. У Церкви есть молитвы на дом, на поле, на колодец, на лодку, на "
 "семена перед севом, на новое орудие труда."
-msgstr "A short prayer over a vehicle, asking God to guard everyone who travels in it. The Church has prayers for a house, a field, a well, a boat, for seed before sowing, for a new tool."
+msgstr ""
+"A short prayer over a vehicle, asking God to guard everyone who travels in "
+"it. The Church has prayers for a house, a field, a well, a boat, for seed "
+"before sowing, for a new tool."
 
 #: core/trebas.py:105
 msgid ""
 "Это не оберег. Освящённая машина так же бьётся, если ехать пьяным или "
 "невнимательным, и икона на панели — не талисман. Благословляется не металл, "
 "а дорога и люди."
-msgstr "It is not a charm. A blessed car crashes just the same if you drive drunk or inattentive, and an icon on the dashboard is not a talisman. What is blessed is not the metal but the road and the people."
+msgstr ""
+"It is not a charm. A blessed car crashes just the same if you drive drunk or "
+"inattentive, and an icon on the dashboard is not a talisman. What is blessed "
+"is not the metal but the road and the people."
+
+#: core/worship.py:21
+#| msgid "Записка принята"
+msgid "Записки и требы"
+msgstr "Notes and trebas"
+
+
+#: core/worship.py:22
+msgid ""
+"Имена о здравии и упокоении, молебен, панихида, крещение, венчание, "
+"освящение дома. Подать записку можно на сайте — её прочитают на ближайшей "
+"литургии."
+msgstr "Names of the living and the departed, a moleben, a panikhida, baptism, marriage, the blessing of a home. Notes can be submitted here — they are read at the next Liturgy."
+
+
+#: core/worship.py:29 templates/base.html:114 templates/school/page.html:3
+#: templates/school/page.html:12
+msgid "Русская школа"
+msgstr "Russian school"
+
+
+#: core/worship.py:30
+#| msgid "Язык, история и традиции для детей прихожан."
+msgid ""
+"Язык, история и традиции для детей прихожан. Занятия по субботам, группы по "
+"возрасту и уровню языка."
+msgstr "Language, history and tradition for parish children. Saturday classes, grouped by age and level of Russian."
+
+
+#: core/worship.py:36 templates/base.html:52
+#: templates/council/_sections.html:15
+#: templates/ministries/ministry_list.html:3
+#: templates/ministries/ministry_work.html:10
+#: templates/ministries/topic_detail.html:4
+msgid "Служения"
+msgstr "Ministries"
+
+
+#: core/worship.py:37
+msgid ""
+"Трапеза, украшение храма, хор, помощь семьям. Каждое служение открыто для "
+"новых людей — начните с разговора после литургии."
+msgstr "The meal, adorning the church, the choir, helping families. Every ministry is open to newcomers — begin with a conversation after Liturgy."
+
+
+#: core/worship.py:52
+#| msgid "Первая литургия"
+msgid "Божественная литургия"
+msgstr "Divine Liturgy"
+
+
+#: core/worship.py:53
+msgid ""
+"Средоточие церковной жизни: по воскресеньям часы и литургия утром, в "
+"праздники — по расписанию."
+msgstr "The heart of church life: Hours and Liturgy on Sunday mornings; on feasts, as the schedule shows."
+
+
+#: core/worship.py:59
+#| msgid "Новое поручение"
+msgid "Всенощное бдение"
+msgstr "All-Night Vigil"
+
+
+#: core/worship.py:60
+msgid ""
+"По субботам и накануне праздников — вечерня с утреней, к которой готовятся "
+"причащающиеся."
+msgstr "On Saturdays and the eves of feasts — Vespers with Matins, the preparation of those who will commune."
+
+
+#: core/worship.py:67
+#| msgid "Первое таинство Церкви — рождение в жизнь во Христе."
+msgid ""
+"Первое таинство Церкви — рождение в жизнь во Христе. Крестят и младенцев, и "
+"взрослых после оглашения."
+msgstr "The first sacrament of the Church — birth into life in Christ. Both infants and adults are baptized, adults after catechesis."
+
+
+#: core/worship.py:74
+#| msgid "Таинство, в котором двое соединяются во Христе."
+msgid ""
+"Таинство, в котором двое соединяются во Христе. О дне венчания условливаются "
+"со священником заранее."
+msgstr "The sacrament in which two are joined in Christ. The day is arranged with the priest in advance."
+
+
+#: core/worship.py:80
+#| msgid "Отпевание"
+msgid "Отпевание и панихида"
+msgstr "Funeral and panikhida"
+
+
+#: core/worship.py:81
+msgid ""
+"Церковь разделяет с семьёй время скорби: чин погребения, панихида в третий, "
+"девятый и сороковой день."
+msgstr "The Church shares the time of grief with the family: the burial rite, and a panikhida on the third, ninth and fortieth day."
+
+
+#: core/worship.py:87
+#| msgid "Освящение дома"
+msgid "Молебен и освящение дома"
+msgstr "Moleben and house blessing"
+
+
+#: core/worship.py:88
+msgid ""
+"Молитва о болящем, перед дорогой или началом учебного года; священник "
+"приезжает освятить новый дом."
+msgstr "A prayer for the sick, before a journey or at the start of the school year; the priest comes to bless a new home."
+
 
 #: council/models.py:59
 msgid "На рассмотрении"
@@ -608,9 +771,10 @@ msgstr "To buy"
 msgid "Куплено"
 msgstr "Bought"
 
-#: publications/models.py:9 templates/base.html:48
+#: publications/models.py:9
 msgid "Календарь"
 msgstr "Calendar"
+
 
 #: publications/models.py:10
 msgid "Бюллетень"
@@ -620,13 +784,15 @@ msgstr "Bulletin"
 msgid "Обычный день"
 msgstr "No fast"
 
-#: services/models.py:31 templates/services/schedule.html:60
+#: services/models.py:31 templates/services/schedule.html:53
 msgid "Пост"
 msgstr "Fast"
 
-#: services/models.py:32 templates/services/schedule.html:62
+
+#: services/models.py:32 templates/services/schedule.html:55
 msgid "Рыба, вино и елей"
 msgstr "Fish, wine and oil"
+
 
 #: services/models.py:33
 msgid "Вино и елей"
@@ -636,35 +802,36 @@ msgstr "Wine and oil"
 msgid "Сухоядение"
 msgstr "Xerophagy"
 
-#: services/models.py:35 templates/services/schedule.html:58
+#: services/models.py:35 templates/services/schedule.html:51
 msgid "Строгий пост"
 msgstr "Strict fast"
 
-#: services/models.py:41 services/models.py:88
+
+#: services/models.py:41 services/models.py:94
 msgid "Понедельник"
 msgstr "Monday"
 
-#: services/models.py:41 services/models.py:88
+#: services/models.py:41 services/models.py:94
 msgid "Вторник"
 msgstr "Tuesday"
 
-#: services/models.py:41 services/models.py:88
+#: services/models.py:41 services/models.py:94
 msgid "Среда"
 msgstr "Wednesday"
 
-#: services/models.py:41 services/models.py:89
+#: services/models.py:41 services/models.py:95
 msgid "Четверг"
 msgstr "Thursday"
 
-#: services/models.py:42 services/models.py:89
+#: services/models.py:42 services/models.py:95
 msgid "Пятница"
 msgstr "Friday"
 
-#: services/models.py:42 services/models.py:89
+#: services/models.py:42 services/models.py:95
 msgid "Суббота"
 msgstr "Saturday"
 
-#: services/models.py:42 services/models.py:89
+#: services/models.py:42 services/models.py:95
 msgid "Воскресенье"
 msgstr "Sunday"
 
@@ -724,59 +891,97 @@ msgstr "On Saturdays"
 msgid "По воскресеньям"
 msgstr "On Sundays"
 
-#: services/models.py:64
+#: services/models.py:63
+msgid "Пн"
+msgstr "Mon"
+
+
+#: services/models.py:63
+#| msgid "Все"
+msgid "Вт"
+msgstr "Tue"
+
+
+#: services/models.py:63
+msgid "Ср"
+msgstr "Wed"
+
+
+#: services/models.py:63
+msgid "Чт"
+msgstr "Thu"
+
+
+#: services/models.py:63
+#| msgid "Пост"
+msgid "Пт"
+msgstr "Fri"
+
+
+#: services/models.py:63
+msgid "Сб"
+msgstr "Sat"
+
+
+#: services/models.py:63
+#| msgid "Все"
+msgid "Вс"
+msgstr "Sun"
+
+
+#: services/models.py:70
 msgid "Январь"
 msgstr "January"
 
-#: services/models.py:64
+#: services/models.py:70
 msgid "Февраль"
 msgstr "February"
 
-#: services/models.py:64
+#: services/models.py:70
 msgid "Март"
 msgstr "March"
 
-#: services/models.py:64
+#: services/models.py:70
 msgid "Апрель"
 msgstr "April"
 
-#: services/models.py:64
+#: services/models.py:70
 msgid "Май"
 msgstr "May"
 
-#: services/models.py:64
+#: services/models.py:70
 msgid "Июнь"
 msgstr "June"
 
-#: services/models.py:65
+#: services/models.py:71
 msgid "Июль"
 msgstr "July"
 
-#: services/models.py:65
+#: services/models.py:71
 msgid "Август"
 msgstr "August"
 
-#: services/models.py:65
+#: services/models.py:71
 msgid "Сентябрь"
 msgstr "September"
 
-#: services/models.py:65
+#: services/models.py:71
 msgid "Октябрь"
 msgstr "October"
 
-#: services/models.py:65
+#: services/models.py:71
 msgid "Ноябрь"
 msgstr "November"
 
-#: services/models.py:65
+#: services/models.py:71
 msgid "Декабрь"
 msgstr "December"
 
-#: services/models.py:226
+#: services/models.py:245
 msgid "Сегодня"
 msgstr "Today"
 
-#: services/models.py:228
+#: services/models.py:247
 msgid "Завтра"
 msgstr "Tomorrow"
 
@@ -806,86 +1011,96 @@ msgstr "Portal sections"
 msgid "На сайт прихода"
 msgstr "Back to the parish site"
 
-#: templates/_portal_shell.html:68 templates/base.html:40
+#: templates/_portal_shell.html:68 templates/base.html:49
 msgid "Расписание"
 msgstr "Services"
 
-#: templates/base.html:36
+#: templates/base.html:45
 msgid "Меню"
 msgstr "Menu"
 
-#: templates/base.html:39
+#: templates/base.html:48
 msgid "Основная навигация"
 msgstr "Main navigation"
 
-#: templates/base.html:41 templates/core/home.html:153
+
+#: templates/base.html:50
 msgid "Записки"
 msgstr "Commemorations"
 
-#: templates/base.html:42 templates/core/home.html:183
-#: templates/council/_sections.html:15
-#: templates/ministries/ministry_list.html:3
-#: templates/ministries/ministry_work.html:10
-#: templates/ministries/topic_detail.html:4
-msgid "Служения"
-msgstr "Ministries"
-
-#: templates/base.html:44
-msgid "Приход"
-msgstr "Parish"
-
-#: templates/base.html:46 templates/core/first_visit.html:3
-#: templates/core/first_visit.html:12 templates/core/home.html:45
-msgid "Впервые здесь?"
-msgstr "First time here?"
-
-#: templates/base.html:47 templates/core/home.html:124
-#: templates/core/trebas.html:3 templates/core/trebas.html:10
+#: templates/base.html:51 templates/core/trebas.html:3
+#: templates/core/trebas.html:14
 msgid "Требы"
 msgstr "Services by Request"
 
-#: templates/base.html:49 templates/core/home.html:173
-#: templates/school/page.html:3 templates/school/page.html:12
-msgid "Русская школа"
-msgstr "Russian School"
+#: templates/base.html:53 templates/core/home.html:27
+#| msgid "Впервые здесь?"
+msgid "Впервые здесь"
+msgstr "First time here"
 
-#: templates/base.html:50 templates/core/about.html:3
-#: templates/core/about.html:9
-msgid "О приходе"
-msgstr "About"
 
-#: templates/base.html:51 templates/core/about.html:24
+#: templates/base.html:54
+msgid "О церкви"
+msgstr "About the church"
+
+
+#: templates/base.html:56 templates/base.html:66 templates/base.html:98
+#: templates/commemorations/accepted.html:66
+#: templates/commemorations/submit.html:84 templates/core/donation.html:39
+msgid "Пожертвовать"
+msgstr "Give"
+
+#: templates/base.html:92
+#| msgid "Записаться"
+msgid "Связаться"
+msgstr "Contact"
+
+
+#: templates/base.html:109
+#| msgid "Рассылка"
+msgid "Быстрые ссылки"
+msgstr "Quick links"
+
+
+#: templates/base.html:111 templates/core/home.html:25
+#: templates/services/schedule.html:3 templates/services/schedule.html:17
+msgid "Расписание богослужений"
+msgstr "Service schedule"
+
+
+#: templates/base.html:112 templates/commemorations/submit.html:69
+#: templates/core/home.html:26
+msgid "Подать записку"
+msgstr "Submit the note"
+
+#: templates/base.html:113 templates/publications/list.html:3
+#: templates/publications/list.html:9
+msgid "Календарь и бюллетень"
+msgstr "Calendar and bulletin"
+
+
+#: templates/base.html:115 templates/core/donation.html:54
+#: templates/core/home.html:156
+msgid "Строительство храма"
+msgstr "Church building"
+
+
+#: templates/base.html:116 templates/core/about.html:24
 #: templates/core/clergy.html:3 templates/core/clergy.html:9
 msgid "Духовенство"
 msgstr "Clergy"
 
-#: templates/base.html:52
-msgid "Строительство"
-msgstr "Building"
 
-#: templates/base.html:53 templates/core/contact.html:3
-#: templates/core/contact.html:9 templates/school/page.html:47
-msgid "Контакты"
-msgstr "Contact"
-
-#: templates/base.html:57 templates/base.html:66 templates/base.html:105
-#: templates/commemorations/accepted.html:66
-#: templates/commemorations/submit.html:76 templates/core/donation.html:39
-msgid "Пожертвовать"
-msgstr "Give"
-
-#: templates/base.html:100 templates/services/schedule.html:3
-#: templates/services/schedule.html:9
-msgid "Расписание богослужений"
-msgstr "Schedule of services"
-
-#: templates/base.html:101 templates/commemorations/submit.html:58
-msgid "Подать записку"
-msgstr "Submit the note"
-
-#: templates/base.html:102 templates/core/about.html:50
+#: templates/base.html:117 templates/core/about.html:50
 msgid "Как нас найти"
-msgstr "Finding us"
+msgstr "How to find us"
+
+
+#: templates/base.html:122 templates/core/home.html:16
+#: templates/core/home.html:113
+msgid "Православная Церковь в Америке"
+msgstr "Orthodox Church in America"
+
 
 #: templates/building/project.html:16
 msgid "Поддержать строительство"
@@ -923,7 +1138,8 @@ msgstr "Photograph coming later"
 #: templates/commemorations/accepted.html:3
 #: templates/commemorations/accepted.html:16
 msgid "Записка принята"
-msgstr "Your note has been received"
+msgstr "Note received"
+
 
 #: templates/commemorations/accepted.html:19
 #, python-format
@@ -957,19 +1173,25 @@ msgid "Подать ещё одну записку"
 msgstr "Submit another note"
 
 #: templates/commemorations/submit.html:3
-#: templates/commemorations/submit.html:9
+#: templates/commemorations/submit.html:10
 msgid "Записки о поминовении"
 msgstr "Commemoration notes"
 
-#: templates/commemorations/submit.html:10
-msgid ""
-"Подайте имена о здравии и о упокоении — их помянут на проскомидии перед "
-"литургией."
-msgstr ""
-"Submit names for the living and the departed — they are commemorated at the "
-"Proskomedia before the Liturgy."
+#: templates/commemorations/submit.html:9
+msgid "Поминовение на проскомидии"
+msgstr "Commemoration at the Proskomedia"
 
-#: templates/commemorations/submit.html:27
+
+#: templates/commemorations/submit.html:11
+#| msgid ""
+#| "Подайте имена о здравии и о упокоении — их помянут на проскомидии перед "
+#| "литургией."
+msgid ""
+"Подайте имена о здравии и о упокоении — их помянут перед ближайшей литургией."
+msgstr "Submit names of the living and the departed — they will be commemorated before the next Liturgy."
+
+
+#: templates/commemorations/submit.html:36
 #, python-format
 msgid ""
 "Сорокоуст — поминовение на %(n)s литургиях подряд; имена читают до конца "
@@ -978,41 +1200,41 @@ msgstr ""
 "A sorokoust is commemoration at %(n)s consecutive liturgies; the names are "
 "read to the end of the cycle, so there is no need to submit the note again."
 
-#: templates/commemorations/submit.html:47
+#: templates/commemorations/submit.html:56
 msgid "Как с вами связаться"
 msgstr "How to reach you"
 
-#: templates/commemorations/submit.html:65
+#: templates/commemorations/submit.html:74
 msgid "Как писать имена"
 msgstr "How to write the names"
 
-#: templates/commemorations/submit.html:67
+#: templates/commemorations/submit.html:75
 msgid "Только крещёные в православии — по одному имени в строке."
 msgstr "Only those baptised in the Orthodox Church, one name per line."
 
-#: templates/commemorations/submit.html:68
+#: templates/commemorations/submit.html:76
 msgid ""
 "Имя в родительном падеже и в церковной форме: Марии, а не Маши; Иоанна, а не "
 "Вани."
 msgstr ""
 "Use the baptismal form of the name: Maria, not Masha; John, not Johnny."
 
-#: templates/commemorations/submit.html:69
+#: templates/commemorations/submit.html:77
 msgid "Фамилии, отчества, звания и слова «раба Божия» писать не нужно."
 msgstr ""
 "Surnames, patronymics, titles and the words “servant of God” are not needed."
 
-#: templates/commemorations/submit.html:70
+#: templates/commemorations/submit.html:78
 msgid ""
 "При надобности ставьте пометы: мл. — младенца, отр. — отрока, бол. — "
 "болящего, воина."
 msgstr "Add a mark where it applies: infant, child, the sick, a soldier."
 
-#: templates/commemorations/submit.html:74
+#: templates/commemorations/submit.html:81
 msgid "Что дальше"
 msgstr "What happens next"
 
-#: templates/commemorations/submit.html:75
+#: templates/commemorations/submit.html:82
 msgid ""
 "Записку принимает секретарь прихода и передаёт в алтарь к ближайшей "
 "литургии. Пожертвование за поминовение можно принести в храм или отправить "
@@ -1021,6 +1243,11 @@ msgstr ""
 "The parish secretary receives the note and brings it to the altar for the "
 "next Liturgy. An offering for the commemoration may be brought to the church "
 "or sent from the giving page — the note is accepted either way."
+
+#: templates/core/about.html:3 templates/core/about.html:9
+#: templates/core/home.html:122
+msgid "О приходе"
+msgstr "About"
 
 #: templates/core/about.html:42 templates/core/clergy.html:33
 msgid "Информация о духовенстве появится позже."
@@ -1059,6 +1286,11 @@ msgstr ""
 #: templates/core/clergy.html:44
 msgid "Написать"
 msgstr "Write"
+
+#: templates/core/contact.html:3 templates/core/contact.html:9
+#: templates/school/page.html:47
+msgid "Контакты"
+msgstr "Contact"
 
 #: templates/core/contact.html:10
 msgid "Напишите нам — настоятель или секретарь прихода ответит вам."
@@ -1105,10 +1337,6 @@ msgstr "No ways to give have been set up yet."
 msgid "На что идут средства"
 msgstr "Where the money goes"
 
-#: templates/core/donation.html:54 templates/core/home.html:163
-msgid "Строительство храма"
-msgstr "Building the church"
-
 #: templates/core/donation.html:55
 msgid "Отдельный сбор с открытым отчётом о ходе работ."
 msgstr "A separate fund, with the progress reported openly."
@@ -1127,7 +1355,13 @@ msgstr "Regular participation in the life and upkeep of the parish."
 
 #: templates/core/donation.html:65
 msgid "Стать членом прихода"
-msgstr "Become a member"
+msgstr "Become a parish member"
+
+
+#: templates/core/first_visit.html:3 templates/core/first_visit.html:12
+msgid "Впервые здесь?"
+msgstr "First time here?"
+
 
 #: templates/core/first_visit.html:15
 msgid ""
@@ -1137,12 +1371,12 @@ msgstr ""
 "Come to a Sunday service — you are welcome, and you need not know anything "
 "in advance."
 
-#: templates/core/first_visit.html:26
+#: templates/core/first_visit.html:26 templates/services/schedule.html:35
 msgid "Ближайшая служба"
-msgstr "The next service"
+msgstr "Next service"
 
-#: templates/core/first_visit.html:30 templates/core/home.html:43
-#: templates/core/home.html:81
+
+#: templates/core/first_visit.html:30 templates/core/home.html:80
 msgid "Всё расписание"
 msgstr "Full schedule"
 
@@ -1169,84 +1403,143 @@ msgstr ""
 "We will answer any question — about the service, the faith, or simply how to "
 "find us."
 
-#: templates/core/home.html:20 templates/services/schedule.html:21
-msgid "Ближайшее богослужение"
-msgstr "Next service"
+#: templates/core/home.html:22
+msgid "«Радуйся, Благодатная! Господь с Тобою» — Лк. 1:28"
+msgstr "“Rejoice, O Full of Grace! The Lord is with thee.” — Luke 1:28"
 
-#: templates/core/home.html:59
+
+#: templates/core/home.html:39
 msgid "Постоянное расписание"
 msgstr "Regular schedule"
 
-#: templates/core/home.html:79
-msgid "Ближайшие службы"
+#: templates/core/home.html:50
+#| msgid "Богослужения нет"
+msgid "Год основания церкви"
+msgstr "Church founded"
+
+
+#: templates/core/home.html:61
+#| msgid "Ближайшее богослужение"
+msgid "Ближайшие богослужения"
 msgstr "Upcoming services"
 
-#: templates/core/home.html:88 templates/services/schedule.html:51
+
+#: templates/core/home.html:71 templates/services/schedule.html:98
+#| msgid "Служения"
+msgid "Служб нет"
+msgstr "No services"
+
+
+#: templates/core/home.html:76 templates/services/schedule.html:107
 msgid "Расписание пока не заполнено."
 msgstr "The schedule has not been filled in yet."
 
-#: templates/core/home.html:96
-msgid "Объявления"
-msgstr "Announcements"
+#: templates/core/home.html:86
+#| msgid "Объявления"
+msgid "Объявления церкви"
+msgstr "Church announcements"
 
-#: templates/core/home.html:104
+
+#: templates/core/home.html:93
 msgid "Подробнее"
 msgstr "Read more"
 
-#: templates/core/home.html:126
-msgid "Подробно о каждой"
-msgstr "About each one"
+#: templates/core/home.html:98
+#| msgid "Объявления"
+msgid "Объявлений сейчас нет."
+msgstr "There are no announcements at the moment."
 
-#: templates/core/home.html:145
-msgid "Жизнь прихода"
-msgstr "Parish life"
 
-#: templates/core/home.html:146
-msgid ""
-"Богослужения, записки, стройка, школа и служения — чем приход живёт между "
-"воскресеньями."
-msgstr ""
-"Services, commemorations, the building project, school and ministries — what "
-"the parish does between Sundays."
+#: templates/core/home.html:113
+#, python-format
+#| msgid "Основная навигация"
+msgid "Основан в %(y)s году"
+msgstr "Founded in %(y)s"
+
+
+#: templates/core/home.html:132
+#| msgid "Жизнь прихода"
+msgid "Жизнь церкви"
+msgstr "Church life"
+
+
+#: templates/core/home.html:133
+msgid "Чем церковь живёт между воскресеньями"
+msgstr "How the church lives between Sundays"
+
 
 #: templates/core/home.html:154
-msgid "Подать имена о здравии и упокоении."
-msgstr "Submit names for the living and the departed."
+msgid "Строим храм <em>своими руками</em>"
+msgstr "Building our church <em>with our own hands</em>"
+
+
+#: templates/core/home.html:155
+msgid ""
+"Церковь строит свой храм на пожертвования прихожан. Отчёт о ходе работ и "
+"собранных средствах открыт: смотрите, на чём мы сейчас стоим и чем можно "
+"помочь."
+msgstr "The church is building its temple on the offerings of its parishioners. The account of the work and of the funds raised is open: see where we stand and how you can help."
+
 
 #: templates/core/home.html:164
-msgid "Как идёт стройка и на чём мы сейчас стоим."
-msgstr "How the building work is going, and where we stand."
+#| msgid "Богослужения нет"
+msgid "Богослужения и таинства"
+msgstr "Services and sacraments"
 
-#: templates/core/home.html:174
-msgid "Язык, история и традиции для детей прихожан."
-msgstr "Language, history and tradition for the children of the parish."
 
-#: templates/core/home.html:184
-msgid "Чем живёт приход между службами и как присоединиться."
-msgstr "What the parish does between services, and how to join in."
+#: templates/core/home.html:165
+#| msgid "Стать членом прихода"
+msgid "За чем к нам приходят"
+msgstr "What people come to us for"
+
+
+#: templates/core/home.html:180
+#| msgid "Подробно о каждой"
+msgid "Подробно о каждой требе"
+msgstr "In detail about each treba"
+
 
 #: templates/core/trebas.html:4
 msgid ""
 "Крещение, венчание, отпевание, молебен, панихида, освящение дома и "
 "автомобиля."
-msgstr "Baptism, marriage, funerals, molebens, panikhidas, blessing of a home or a car."
+msgstr ""
+"Baptism, marriage, funerals, molebens, panikhidas, blessing of a home or a "
+"car."
 
-#: templates/core/trebas.html:11
+#: templates/core/trebas.html:13
+#| msgid "Богослужения нет"
+msgid "Богослужения по просьбе"
+msgstr "Services by request"
+
+
+#: templates/core/trebas.html:15
 msgid ""
-"Богослужения, которые совершаются по просьбе: в семье, дома, на кладбище."
-msgstr "Services the Church performs on request: in the family, at home, at the grave."
+"Треба — это богослужение, которое Церковь совершает по просьбе человека или "
+"семьи: крещение младенца, венчание, отпевание, молебен о болящем, панихида в "
+"годовщину, освящение нового дома."
+msgstr "A treba is a service the Church celebrates at the request of a person or a family: the baptism of a child, a wedding, a funeral, a moleben for the sick, a panikhida on an anniversary, the blessing of a new home."
 
-#: templates/core/trebas.html:59
+
+#: templates/core/trebas.html:41
 msgid "Как условиться"
 msgstr "How to arrange it"
 
-#: templates/core/trebas.html:60
+
+#: templates/core/trebas.html:42
+msgid "Это разговор, а не форма"
+msgstr "This is a conversation, not a form"
+
+
+#: templates/core/trebas.html:43
 msgid ""
 "Позвоните или напишите в приход — согласуем день и время и скажем, что "
 "приготовить."
-msgstr "Call or write to the parish — we will agree on a day and time and tell you what to prepare."
+msgstr ""
+"Call or write to the parish — we will agree on a day and time and tell you "
+"what to prepare."
 
-#: templates/core/trebas.html:62
+#: templates/core/trebas.html:45
 msgid "Связаться с приходом"
 msgstr "Contact the parish"
 
@@ -1422,6 +1715,7 @@ msgstr "My tasks"
 msgid "Все"
 msgstr "All"
 
+
 #: templates/council/dashboard.html:55
 msgid "Поручений за вами нет."
 msgstr "No tasks assigned to you."
@@ -1448,7 +1742,8 @@ msgstr "The treasurer posts the quarterly report here."
 
 #: templates/council/mailing.html:3
 msgid "Рассылка"
-msgstr "Group mailing"
+msgstr "Newsletter"
+
 
 #: templates/council/mailing.html:6
 msgid "Адреса получателей уходят в скрытую копию — никто не видит чужой почты."
@@ -1718,6 +2013,7 @@ msgstr "Edit the task"
 #: templates/council/task_list.html:9
 msgid "Новое поручение"
 msgstr "New task"
+
 
 #: templates/council/task_list.html:6
 #, python-format
@@ -2011,10 +2307,6 @@ msgstr ""
 "We will send you an email with a confirmation link. You can unsubscribe in "
 "one click from any message."
 
-#: templates/publications/list.html:3 templates/publications/list.html:9
-msgid "Календарь и бюллетень"
-msgstr "Calendar and bulletin"
-
 #: templates/publications/list.html:10
 msgid "Приходские листки и календарь богослужений — для чтения и печати."
 msgstr "Parish bulletins and the calendar of services — to read or to print."
@@ -2041,7 +2333,8 @@ msgstr "Enrolment for the new school year is open."
 
 #: templates/school/page.html:18
 msgid "Записаться"
-msgstr "Enrol"
+msgstr "Sign up"
+
 
 #: templates/school/page.html:30
 msgid "Возраст"
@@ -2066,32 +2359,62 @@ msgstr "Fees"
 
 #: templates/services/_service_day.html:36
 msgid "Богослужения нет"
-msgstr "No service"
+msgstr "No services"
 
-#: templates/services/_service_day.html:39
+
+#: templates/services/_service_day.html:39 templates/services/schedule.html:78
 msgid "ст. ст."
 msgstr "O.S."
 
-#: templates/services/schedule.html:56
+
+#: templates/services/schedule.html:18
+msgid ""
+"Часы и литургия по воскресеньям, всенощное бдение накануне праздников. "
+"Расписание уточняется в церковном бюллетене."
+msgstr "Hours and Liturgy on Sundays, the All-Night Vigil on the eves of feasts. The schedule is confirmed in the parish bulletin."
+
+
+#: templates/services/schedule.html:49
 msgid "Условные обозначения"
-msgstr "What the marks mean"
+msgstr "Legend"
 
-#: templates/services/schedule.html:59
-msgid "и сухоядение — без рыбы, вина и растительного масла."
-msgstr "and dry eating — no fish, wine or oil."
 
-#: templates/services/schedule.html:61
-msgid "— постная пища; «вино и елей» означает послабление."
-msgstr "— fasting food; “wine and oil” marks a relaxation."
+#: templates/services/schedule.html:52
+#| msgid "и сухоядение — без рыбы, вина и растительного масла."
+msgid "Сухоядение — без рыбы, вина и растительного масла."
+msgstr "Xerophagy — no fish, wine or oil."
+
+
+#: templates/services/schedule.html:54
+#| msgid "— постная пища; «вино и елей» означает послабление."
+msgid "Постная пища; «вино и елей» означает послабление."
+msgstr "Fasting food; “wine and oil” means a relaxation."
+
+
+#: templates/services/schedule.html:56
+#| msgid "— день поста с наибольшим послаблением."
+msgid "День поста с наибольшим послаблением."
+msgstr "A fast day with the greatest relaxation."
+
+
+#: templates/services/schedule.html:57
+#| msgid "ст. ст."
+msgid "Ст. ст."
+msgstr "O.S."
+
+
+#: templates/services/schedule.html:58
+#| msgid "«Ст. ст.» — дата по юлианскому календарю, на 13 дней раньше."
+msgid "Дата по юлианскому календарю, на 13 дней раньше."
+msgstr "The date on the Julian calendar, thirteen days earlier."
+
 
 #: templates/services/schedule.html:63
-msgid "— день поста с наибольшим послаблением."
-msgstr "— a fast day with the greatest relaxation."
+#| msgid "Календарь"
+msgid "Календарь в PDF"
+msgstr "Calendar as PDF"
 
-#: templates/services/schedule.html:64
-msgid "«Ст. ст.» — дата по юлианскому календарю, на 13 дней раньше."
-msgstr "“O.S.” is the Julian calendar date, thirteen days earlier."
 
-#: templates/services/schedule.html:70
-msgid "Календарь и бюллетень в PDF"
-msgstr "Calendar and bulletin as PDF"
+#: templates/services/schedule.html:88
+msgid "Двунадесятый праздник"
+msgstr "Great Feast"

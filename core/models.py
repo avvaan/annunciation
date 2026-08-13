@@ -37,6 +37,15 @@ class SiteSettings(SingletonModel):
     phone = models.CharField(max_length=50, blank=True)
     email = models.EmailField(blank=True)
 
+    # Четвёртая клетка полосы под первым экраном: три первые заняты постоянным
+    # ритмом недели, эта — годом основания. Пустая по умолчанию и нарочно:
+    # придумывать приходу дату основания нельзя, а без неё полоса просто
+    # показывает три клетки вместо четырёх.
+    founded_year = models.PositiveIntegerField(
+        "Год основания", blank=True, null=True,
+        help_text="Показывается в полосе под первым экраном. Пусто — клетки не будет.",
+    )
+
     # Full-bleed photograph behind the homepage headline. Horizontal, at least
     # 2000px wide — it is cropped to the viewport. Until one is uploaded the
     # hero falls back to a ruled dark ground so the composition still holds.

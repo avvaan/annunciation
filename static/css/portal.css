@@ -17,7 +17,7 @@ body.portal {
   --pp-ground:  var(--surface);
   --pp-chrome:  var(--paper);
   --pp-chrome-2:var(--paper-deep);
-  --pp-row-hi:  #f7f0e0;
+  --pp-row-hi:  #e6f0f9;
 
   /* Шкала фиксированная, шаг ~1.18. Текучие заголовки в рабочем интерфейсе
      только мешают: человек сидит за одним и тем же экраном. */
@@ -38,20 +38,20 @@ body.portal {
    заперта вне body.portal (см. base.css), так что здесь достаточно задать
    собственный вид, ничего не перебивая. Флажок «готово», ссылка «выйти» и
    .pbtn — самостоятельные компоненты и одеваются ниже, поэтому исключены. */
-/* accent-bright + deep-blue text, not white: white on the text-safe gold
-   token is 3.25:1, short of the 4.5:1 floor for button-sized text — the same
-   fill-plus-dark-text pairing the public .btn--accent uses. */
+/* Белый по тёмно-синему, а не тёмный по заливке: пара «заливка + тёмный
+   текст» работала, пока заливка была золотой (5.65:1). После перехода на
+   синюю палитру та же пара даёт 3.11:1 — ниже порога для текста кнопки. */
 body.portal button[type="submit"]:not(.pcheck):not(.pnav__out):not(.pbtn) {
   display: inline-flex; align-items: center; justify-content: center;
   min-height: var(--tap); padding: 0.4em 1.1em;
   font-family: var(--font-body); font-size: var(--pp-sm); font-weight: 700;
   letter-spacing: normal; text-transform: none; cursor: pointer;
   border-radius: var(--radius-pill);
-  color: var(--deep); background: var(--accent-bright); border: 1px solid var(--accent-bright);
+  color: #fff; background: var(--deep-2); border: 1px solid var(--deep-2);
   transition: background 0.15s ease, border-color 0.15s ease;
 }
 body.portal button[type="submit"]:not(.pcheck):not(.pnav__out):not(.pbtn):hover {
-  background: #e0ad25; border-color: #e0ad25; filter: none;
+  background: var(--deep); border-color: var(--deep); filter: none;
 }
 
 /* Один шрифт на весь портал. Книжная антиква — голос публичной части;
@@ -224,7 +224,7 @@ a.prow__title:hover { color: var(--accent); text-decoration: underline; }
   color: var(--ink-2); background: var(--pp-chrome);
 }
 .tag svg { width: 0.9em; height: 0.9em; }
-.tag--overdue { color: var(--deep); background: var(--accent-bright); border-color: var(--accent-bright); }
+.tag--overdue { color: #fff; background: var(--deep-2); border-color: var(--deep-2); }
 .tag--soon    { color: var(--accent-deep); background: transparent; border-color: var(--accent); }
 .tag--done    { color: var(--ink-2); background: transparent; border-style: dashed; }
 .tag--draft   { color: var(--ink-2); background: transparent; }
@@ -246,9 +246,9 @@ a.prow__title:hover { color: var(--accent); text-decoration: underline; }
 }
 .pbtn:hover { background: var(--pp-chrome); color: var(--ink); }
 .pbtn--primary {
-  color: var(--deep); background: var(--accent-bright); border-color: var(--accent-bright);
+  color: #fff; background: var(--deep-2); border-color: var(--deep-2);
 }
-.pbtn--primary:hover { background: #e0ad25; border-color: #e0ad25; color: var(--deep); }
+.pbtn--primary:hover { background: var(--deep); border-color: var(--deep); color: #fff; }
 .pbtn--quiet { border-color: var(--line); color: var(--ink-2); }
 .pbtn--quiet:hover { border-color: var(--ink-2); color: var(--ink); }
 .pbtn[disabled], .pbtn[aria-disabled="true"] {
@@ -270,11 +270,10 @@ body.portal .pcheck {
   display: inline-grid; place-content: center;
   transition: border-color 0.15s ease, background 0.15s ease;
 }
-/* Checkmark drawn in deep blue, not white: white-on-gold falls under the
-   3:1 floor for UI graphics at this token's lightness. */
+/* Галочка белая: заливка стала тёмно-синей, и тёмный по ней не читается. */
 body.portal .pcheck::before {
   content: ""; width: 0.7rem; height: 0.4rem;
-  border-left: 2px solid var(--deep); border-bottom: 2px solid var(--deep);
+  border-left: 2px solid #fff; border-bottom: 2px solid #fff;
   transform: rotate(-45deg) translate(0.05rem, -0.1rem); opacity: 0;
   transition: opacity 0.12s ease;
 }
@@ -283,7 +282,7 @@ body.portal .pcheck::before {
 body.portal .pcheck::after { content: ""; position: absolute; inset: -11px; }
 body.portal .pcheck:hover { border-color: var(--accent); }
 body.portal .pcheck:checked, body.portal .pcheck[data-done="true"] {
-  background: var(--accent-bright); border-color: var(--accent-bright);
+  background: var(--deep-2); border-color: var(--deep-2);
 }
 body.portal .pcheck:checked::before, body.portal .pcheck[data-done="true"]::before { opacity: 1; }
 .pcheck-form { display: inline-flex; margin: 0; }
@@ -376,14 +375,14 @@ body.portal .pform select:focus { border-color: var(--accent); }
 body.portal .pform .helptext { font-size: var(--pp-xs); }
 /* Кнопка отправки в портале не носит печатную плашку публичной части */
 body.portal .pform button[type="submit"] {
-  border-image: none; background: var(--accent-bright); color: var(--deep);
-  border: 1px solid var(--accent-bright); text-transform: none;
+  border-image: none; background: var(--deep-2); color: #fff;
+  border: 1px solid var(--deep-2); text-transform: none;
   border-radius: var(--radius-pill);
   letter-spacing: 0; font-size: var(--pp-sm); padding: 0.4em 1.1em;
   min-height: var(--tap);
 }
 body.portal .pform button[type="submit"]:hover {
-  background: #e0ad25; border-color: #e0ad25; filter: none;
+  background: var(--deep); border-color: var(--deep); filter: none;
 }
 
 /* --------------------------------------------------------------------------

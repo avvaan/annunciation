@@ -1,50 +1,32 @@
 {% extends "base.html" %}
-{% load i18n editable %}
+{% load i18n editable photos %}
 {% block title %}{% trans "Требы" %} — {{ block.super }}{% endblock %}
 {% block meta_description %}{% trans "Крещение, венчание, отпевание, молебен, панихида, освящение дома и автомобиля." %}{% endblock %}
 {% block body_class %}has-page-head{% endblock %}
 {% block content %}
 
-<section class="page-head">
+<section class="page-head page-head--photo">
+  <div class="page-head__media">
+    {% parish_photo None "hero-gospel" sizes="100vw" eager=True %}
+  </div>
   <div class="shell">
+    <p class="eyebrow">{% trans "Богослужения по просьбе" %}</p>
     <h1>{% trans "Требы" %}</h1>
-    <p>{% trans "Богослужения, которые совершаются по просьбе: в семье, дома, на кладбище." %}</p>
+    <p>{% trans "Треба — это богослужение, которое Церковь совершает по просьбе человека или семьи: крещение младенца, венчание, отпевание, молебен о болящем, панихида в годовщину, освящение нового дома." %}</p>
   </div>
 </section>
 
 {% comment %}
-Иллюстрация здесь несёт смысл, а не заполняет пустоту: треба — это когда
-семья приходит к священнику со своим, а не приходит на общую службу. Ровно
-это на рисунке. Ставить её к каждой требе по отдельности было бы враньём —
-рисунок один, а треб семь.
+Семь треб — семью строками, а не семью карточками: у карточки описание надо
+обрезать, а здесь читают именно описание. Название слева, текст справа —
+глаз находит нужную требу по колонке названий, не читая всё подряд.
 {% endcomment %}
 <section class="band">
   <div class="shell">
-    <div class="lede-split">
-      <img class="lede-split__art"
-           src="/static/images/family-prayer-960.webp"
-           srcset="/static/images/family-prayer-480.webp 480w, /static/images/family-prayer-960.webp 960w"
-           sizes="(min-width: 60rem) 26rem, 60vw"
-           alt="" aria-hidden="true" loading="lazy" decoding="async">
-      <div class="prose">
-        {% editable "trebas" "intro" "Вступление" %}
-        <p>Треба — это богослужение, которое Церковь совершает по просьбе человека
-        или семьи: крещение младенца, венчание, отпевание, молебен о болящем,
-        панихида в годовщину, освящение нового дома.</p>
-        <p>Ниже — о чём каждая из них. Как условиться о дне и что приготовить,
-        лучше спросить у духовенства: это разговор, а не форма.</p>
-        {% endeditable %}
-      </div>
-    </div>
-  </div>
-</section>
-
-<section class="band">
-  <div class="shell">
     {% for t in trebas %}
-      <article class="treba" id="{{ t.slug }}">
+      <article class="treba-row" id="{{ t.slug }}">
         <h2>{{ t.title }}</h2>
-        <div class="prose">
+        <div class="treba-row__body">
           {% editable "trebas" t.slug t.title %}
             {% for p in t.body %}<p>{{ p }}</p>{% endfor %}
           {% endeditable %}
@@ -56,9 +38,10 @@
 
 <section class="band--deep">
   <div class="shell">
-    <h2>{% trans "Как условиться" %}</h2>
-    <p class="prose">{% trans "Позвоните или напишите в приход — согласуем день и время и скажем, что приготовить." %}</p>
-    <p>
+    <p class="eyebrow">{% trans "Как условиться" %}</p>
+    <h2>{% trans "Это разговор, а не форма" %}</h2>
+    <p style="max-width:var(--measure)">{% trans "Позвоните или напишите в приход — согласуем день и время и скажем, что приготовить." %}</p>
+    <p style="margin-top:var(--sp-4)">
       <a href="{% url 'core:contact' %}" class="btn btn--accent">{% trans "Связаться с приходом" %}</a>
     </p>
   </div>
