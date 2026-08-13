@@ -6,7 +6,7 @@
 
 **Parish commons** — the donor's own device, taken literally: a floating rounded white nav pill over a rounded-corner photo hero, gradient-caption photo cards, gold pill buttons, everywhere rounded and soft-shadowed rather than hairline and flat.
 
-Donor-pinned by the user to a WordPress theme, **fse-church** ("Church WP Theme" v1.3.9, `screenshot.png` studied directly — reachable, unlike the previous direction's reference). The user chose to take the theme's shape language *literally* (not just as inspiration) and its "green" style variation's palette (deep forest-green `#4A734C` + gold `#D4A017` + cream, closest of its six variants to a liturgical register) over its default teal/amber. Copy, stock photography and lorem-ipsum content were **not** copied — only the visual system: color, shape, type pairing, card and hero composition.
+Donor-pinned by the user to a WordPress theme, **fse-church** ("Church WP Theme" v1.3.9, `screenshot.png` studied directly — reachable, unlike the previous direction's reference). The user chose to take the theme's shape language *literally* (not just as inspiration), first the theme's "green" style variation's palette, then — at the user's later request — its **"blue"** variation instead (`styles/blue.json`: background `#0C1B33`, extra-secondary `#2C3EAF`, re-tuned here for our contrast floors), paired with the same gold and cream carried over from the first pass. Copy, stock photography and lorem-ipsum content were **not** copied — only the visual system: color, shape, type pairing, card and hero composition.
 
 Replaces the previous **"editorial parish"** direction (full-bleed photography, Old Standard TT antiqua, umber/parchment/oxblood, no rounded corners, no shadows). That world is now an anti-reference. What survives from it is product truth only: the service schedule remains the site's centre of gravity and must stay glanceable on a phone; the members-only portal (ministries + council) stays in its own plainer, denser working register rather than adopting the public site's persuasive one — though the user did ask for the portal to be "dressed up" in the same rounded/palette language, unlike the previous direction which kept it deliberately flat.
 
@@ -14,28 +14,30 @@ Still refuses the gilt-scrollwork church-template default in spirit: the donor's
 
 ## Color
 
-Strategy: **Committed** — deep forest-green bands against warm cream, one gold accent.
+Strategy: **Committed** — deep Theotokos-blue bands against warm cream, one gold accent.
+
+Originally shipped as the donor's "green" style variation (forest-green `#4A734C`); swapped to the donor's own "blue" variation at the user's later request. Only the dark-band family (`--deep`, `--deep-2`, `--mid`, `--line-deep`) and the two ink tokens moved — cream ground, surfaces and the gold accent are untouched, so this is a hue swap of one family, not a new palette strategy. Blue-and-gold also happens to be the Theotokos's own iconographic pairing (blue maphorion, gold halo/fill), which fits a parish dedicated to her Annunciation better than the forest green did.
 
 | Token | Value | Use |
 |---|---|---|
 | `--paper` | `#fbf6ed` | page ground |
 | `--paper-deep` | `#f1e7d2` | image wells, progress track, placeholder tiles |
 | `--surface` | `#ffffff` | cards, inputs, the floating nav pill |
-| `--deep` | `#1f3419` | dark bands, page-head fallback, footer |
-| `--deep-2` | `#2b4623` | cards sitting on a dark band |
-| `--mid` | `#4a734c` | hero's empty-state gradient only (body text on it falls under 4.5:1, so it never carries paragraph copy) |
-| `--ink` | `#1c2418` | body text |
-| `--ink-2` | `#5b6754` | secondary text |
+| `--deep` | `#16233f` | dark bands, page-head fallback, footer |
+| `--deep-2` | `#223963` | cards sitting on a dark band |
+| `--mid` | `#2c4f9e` | hero's empty-state gradient only (body text on it falls under 4.5:1, so it never carries paragraph copy) |
+| `--ink` | `#1a1e2a` | body text |
+| `--ink-2` | `#57616f` | secondary text |
 | `--ink-on-deep` | `#fbf6ed` | text on dark |
-| `--ink-on-deep-2` | `#c3d0bb` | secondary text on dark |
+| `--ink-on-deep-2` | `#bcc9e8` | secondary text on dark |
 | `--accent` | `#b8860f` | text-safe gold — underlines, borders, non-text UI |
 | `--accent-bright` | `#d4a017` | the donor's own gold — button/tag fills, paired with dark text, never with white text (2.4–3.3:1, short of 4.5:1) |
 | `--accent-deep` | `#7d5c0a` | gold text on cream or on `--accent-tint` (5.2–5.7:1) |
 | `--accent-tint` | `#f8ecc9` | accent background pairing, major-feast card fill |
-| `--line` / `--line-deep` | `#e4d9c1` / `#3c5934` | hairline rules, light and dark ground |
-| `--focus` | `#1f5fd0` | focus ring only |
+| `--line` / `--line-deep` | `#e4d9c1` / `#5078ab` | hairline rules, light and dark ground |
+| `--focus` | `#3d8bff` | focus ring only |
 
-Every fill/text pairing was checked against WCAG: body text ≥4.5:1, non-text UI (borders, checkmarks) ≥3:1. The one trap in this palette is `--accent-bright` (the donor's vivid gold) read as white text — it doesn't clear 4.5:1 at any weight tested, so every solid gold button/tag in both `base.css` and `portal.css` pairs it with `--deep` text instead, the same way the donor's own screenshot shows dark text on its amber buttons.
+Every fill/text pairing was checked against WCAG: body text ≥4.5:1, non-text UI (borders, checkmarks) ≥3:1. The one trap in this palette is `--accent-bright` (the donor's vivid gold) read as white text — it doesn't clear 4.5:1 at any weight tested, so every solid gold button/tag in both `base.css` and `portal.css` pairs it with `--deep` text instead, the same way the donor's own screenshot shows dark text on its amber buttons. The blue swap moved `--focus` too: the old `#1f5fd0` only held 2.68:1 against the new, darker `--deep`, short of the 3:1 floor for a focus ring, so it was lifted to `#3d8bff` (4.71:1 on `--deep`, 3.08:1 on `--paper`).
 
 ## Shape
 
@@ -84,7 +86,7 @@ Unchanged: one authored moment (hero title/lede/actions rise 1.25rem out of a 6p
 
 ## Browser surfaces
 
-Re-themed to the new palette rather than left over from the previous one: `::selection` (gold-bright on deep-green text), caret color, scrollbar track/thumb (now pill-radius'd), focus ring, link underline color, `font-variant-numeric: tabular-nums` on every date/time/year/money figure — all unchanged in mechanism, just repointed at the new tokens.
+Re-themed to the new palette rather than left over from the previous one: `::selection` (gold-bright on deep-blue text), caret color, scrollbar track/thumb (now pill-radius'd), focus ring, link underline color, `font-variant-numeric: tabular-nums` on every date/time/year/money figure — all unchanged in mechanism, just repointed at the new tokens.
 
 ## Imagery
 

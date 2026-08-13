@@ -38,7 +38,7 @@ body.portal {
    заперта вне body.portal (см. base.css), так что здесь достаточно задать
    собственный вид, ничего не перебивая. Флажок «готово», ссылка «выйти» и
    .pbtn — самостоятельные компоненты и одеваются ниже, поэтому исключены. */
-/* accent-bright + deep-green text, not white: white on the text-safe gold
+/* accent-bright + deep-blue text, not white: white on the text-safe gold
    token is 3.25:1, short of the 4.5:1 floor for button-sized text — the same
    fill-plus-dark-text pairing the public .btn--accent uses. */
 body.portal button[type="submit"]:not(.pcheck):not(.pnav__out):not(.pbtn) {
@@ -270,7 +270,7 @@ body.portal .pcheck {
   display: inline-grid; place-content: center;
   transition: border-color 0.15s ease, background 0.15s ease;
 }
-/* Checkmark drawn in deep green, not white: white-on-gold falls under the
+/* Checkmark drawn in deep blue, not white: white-on-gold falls under the
    3:1 floor for UI graphics at this token's lightness. */
 body.portal .pcheck::before {
   content: ""; width: 0.7rem; height: 0.4rem;
