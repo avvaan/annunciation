@@ -68,3 +68,32 @@ class WeeklyRhythmTests(TestCase):
             self.rule(weekday, (self.liturgy, "08:00"))
         self.assertEqual(len(weekly_rhythm()), 3)
         self.assertEqual(len(weekly_rhythm(limit=5)), 5)
+
+
+class RhythmStripCellTests(TestCase):
+    """Клетка полосы под первым экраном показывает одну службу из дня.
+
+    Выбор не произвольный: день служб идёт к своей главной — часы перед
+    литургией, вечерня перед утреней, — поэтому берётся последняя по порядку.
+    Первая по времени показала бы в воскресной клетке часы вместо литургии.
+    """
+
+    def setUp(self):
+        self.liturgy = ServiceType.objects.create(name="Литургия")
+        self.hours = ServiceType.objects.create(name="Часы", order=1)
+
+    def test_main_service_is_the_one_the_day_builds_towards(self):
+        rule = RecurringServiceRule.objects.create(weekday=6, title="Воскресное")
+        RecurringServiceItem.objects.create(rule=rule, service_type=self.hours, time="08:40", order=0)
+        RecurringServiceItem.objects.create(rule=rule, service_type=self.liturgy, time="09:00", order=1)
+
+        row = weekly_rhythm()[0]
+        self.assertEqual(row["main"]["name"], "Литургия")
+        self.assertEqual(str(row["main"]["time"]), "09:00:00")
+
+    def test_short_weekday_label_is_not_a_truncation(self):
+        """«Вс», а не «Во»: обрезать «Воскресенье» по двум буквам нельзя."""
+        rule = RecurringServiceRule.objects.create(weekday=6, title="Воскресное")
+        RecurringServiceItem.objects.create(rule=rule, service_type=self.liturgy, time="09:00")
+
+        self.assertEqual(str(weekly_rhythm()[0]["short_label"]), "Вс")

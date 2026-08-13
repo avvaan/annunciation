@@ -1,18 +1,29 @@
 /* ==========================================================================
    Приход Благовещения Пресвятой Богородицы
-   Direction: parish commons — donor-pinned to the fse-church WordPress theme's
-   shape language: a floating rounded nav pill over a rounded-corner photo
-   card, dark-blue bands, gold pill actions, warm cream ground. Book serif
-   (Lora) for display, grotesque (Inter) for reading and UI.
-   ========================================================================== */
+   Direction: parish typography, not a template. Full-bleed photography,
+   deep-blue devotional bands ruled with a lighter blue hairline, cream and
+   white alternating underneath, and air instead of frames. Replaces the
+   fse-church shape language (floating nav pill, rounded photo cards, drop
+   shadows on everything) that this file carried before.
 
+   Built to the Saint Nina design system handoff (design_handoff_annunciation),
+   whose blue override is the palette below. Two documented departures from
+   that handoff, both forced and both explained at the point of use:
+     · the type families (see Fonts) — the specified faces have no Cyrillic;
+     · --fs-body (see Type) — the handoff's 0.96rem undoes this repo's own
+       elderly-audience decision, so it lands between the two.
+   ========================================================================== */
 /* --------------------------------------------------------------------------
-   Fonts — self-hosted (no CDN round-trip; the brief pins fast loading)
-   Lora: the closest obtainable face to the donor's Hedvig Letters Serif —
-   Hedvig ships Latin-only glyphs, so it cannot carry a Russian-first site.
-   Lora is itself a Cyrillic-native book serif (Cyreal), so it keeps the same
-   warm, moderate-contrast display register without a missing-glyph fallback.
-   Inter: the donor's own body face — Cyrillic-native, used as specified.
+   Fonts — self-hosted (no CDN round-trip; the brief pins fast loading).
+
+   The handoff specifies Libre Baskerville (display) + Work Sans (body). Both
+   ship Latin and Latin-Ext only — no Cyrillic — so on a Russian-first parish
+   site every heading and every paragraph would fall back mid-page to whatever
+   serif the OS happens to have. The substitution is forced, not preferred:
+     Libre Baskerville → Lora  — also a transitional book serif, but Cyrillic-
+       native (Cyreal), so the display register survives intact.
+     Work Sans → Inter — Cyrillic-native humanist sans at the same weights
+       (300 is dropped; Inter's 400 covers the light body role).
    -------------------------------------------------------------------------- */
 @font-face {
   font-family: "Lora"; font-style: normal; font-weight: 400; font-display: swap;
@@ -105,65 +116,96 @@
   unicode-range: U+0000-00FF, U+2000-206F, U+20AC, U+2122;
 }
 
+/* --------------------------------------------------------------------------
+   Tokens
+
+   Palette is the handoff's blue override, verbatim, with one correction.
+   The handoff carries the design system's historical `--gold*` token names
+   holding blue values; here they are simply named for what they are.
+
+   The correction: #5b8fc0 (the handoff's accent) is used there for eyebrows
+   and small uppercase labels, where it measures 3.42:1 on white, 3.09:1 on
+   cream and 3.52:1 on the dark band — under the 4.5:1 floor for text on all
+   three grounds. It is kept for what it does clear (3:1 non-text graphics:
+   rules, dividers, borders) and split from two text-safe siblings.
+   -------------------------------------------------------------------------- */
 :root {
-  /* -- colour: cream ground, deep Theotokos-blue bands, one gold accent --
-     Swapped off the donor's "green" style variation to its own "blue" one
-     (fse-church styles/blue.json: background #0C1B33, extra-secondary
-     #2C3EAF) at the user's request, re-tuned for our 4.5:1/3:1 floors —
-     cream ground and the gold accent both carry over unchanged, so this
-     reads as a hue swap of the dark family, not a new direction. Blue over
-     gold also happens to be the Theotokos's own iconographic pairing,
-     fitting for a parish of the Annunciation. */
-  --paper:        #fbf6ed;
-  --paper-deep:   #f1e7d2;
+  /* -- blues -- */
+  --deep:         #15375f;   /* darkest — devotional bands, page heads */
+  --deep-2:       #1d4470;   /* navy — headings, primary button, footer rules */
+  --mid:          #3573a6;   /* button gradient end; darkened off the handoff's
+                                #3a7fb5, which put white button text at 4.30:1 */
+
+  --accent:       #5b8fc0;   /* NON-TEXT ONLY — rules, dividers, borders (3:1) */
+  --accent-deep:  #2a6f9e;   /* text-safe on light: links, eyebrows (5.43:1) */
+  --accent-bright:#3b88bb;   /* link/button hover */
+  --accent-tint:  #e6f0f9;   /* tinted fill */
+  --accent-on-deep: #8fb6dd; /* text-safe on dark: eyebrows on bands (5.68:1) */
+
+  /* -- grounds -- */
   --surface:      #ffffff;
-  --deep:         #16233f;   /* darkest blue — footer, deepest bands */
-  --deep-2:       #223963;   /* cards/tiles sitting on a dark band */
-  --mid:          #2c4f9e;   /* mid blue — hero scrim, page-head */
+  --paper:        #eef4fa;   /* cream — the cool ground that alternates with white */
+  --paper-deep:   #e3edf7;   /* wells, progress tracks, placeholders */
+  --footer-bg:    #16283a;
 
-  --ink:          #1a1e2a;
-  --ink-2:        #57616f;
-  --ink-on-deep:  #fbf6ed;
-  --ink-on-deep-2:#bcc9e8;
+  /* -- ink -- */
+  --ink:          #444444;
+  --ink-2:        #666666;
+  --ink-on-deep:  #ffffff;
+  --ink-on-deep-2:#b9c9dc;
 
-  --accent:       #b8860f;   /* gold, darkened off the donor's #D4A017 to hold 4.5:1 on cream */
-  --accent-bright:#d4a017;   /* donor's own gold — fills, large glyphs, dark grounds only */
-  --accent-deep:  #7d5c0a;   /* text-safe gold — 5.2:1+ on both paper and accent-tint */
-  --accent-tint:  #f8ecc9;
+  /* -- lines -- */
+  --line:         #cfe0ef;
+  --line-deep:    rgba(91,143,192,0.26);
 
-  --line:         #e4d9c1;
-  --line-deep:    #5078ab;
+  --focus:        #3d8bff;
 
-  --focus:        #3d8bff;   /* lifted off the old #1f5fd0 — the brand blues got darker, so the ring needed to get brighter to hold 3:1 on both */
+  --gradient-dark:    linear-gradient(120deg, #15375f 0%, #123a5e 100%);
+  --gradient-navy:    linear-gradient(135deg, #1d4470, #3573a6);
+  --gradient-divider: linear-gradient(90deg, transparent, #5b8fc0, transparent);
 
-  /* -- shape: the donor's signature — everything rounded, nothing hairline -- */
-  --radius-sm:  0.75rem;
-  --radius-md:  1.25rem;
-  --radius-lg:  1.75rem;
-  --radius-pill: 999px;
+  /* -- shape: restrained radii, navy-tinted shadows, nothing pill-shaped -- */
+  --radius-sm:   4px;
+  --radius-md:   6px;
+  --radius-lg:   8px;
+  --radius-pill: 100px;
 
-  --shadow-sm: 0 1px 2px rgba(20,24,15,0.07), 0 2px 6px rgba(20,24,15,0.05);
-  --shadow-md: 0 10px 28px -10px rgba(15,20,10,0.32);
-  --shadow-lg: 0 24px 60px -16px rgba(10,15,8,0.4);
+  --shadow-sm:    0 4px 20px rgba(28,38,71,0.07);
+  --shadow-md:    0 12px 40px rgba(28,38,71,0.12);
+  --shadow-lg:    0 16px 60px rgba(28,38,71,0.18);
+  --shadow-nav:   0 2px 12px rgba(28,38,71,0.06);
+  --shadow-accent:0 4px 20px rgba(21,55,95,0.32);
 
-  --edge: 0.875rem;   /* gutter between viewport/section edge and a floating card */
+  --edge: 1.25rem;   /* viewport gutter */
 
-  /* -- type -- */
+  /* -- type --
+     --fs-base is the one number deliberately off-spec. The handoff sets body
+     copy at 0.96rem (15.4px); this file previously ran 1.1875rem (19px) with
+     a note that the audience skews elderly. 15.4px would quietly reverse that
+     decision, so the body lands at 17px — the handoff's density, most of the
+     legibility. Everything stays in rem, so browser zoom scales all of it. */
   --font-display: "Lora", Georgia, "Times New Roman", serif;
   --font-body:    "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
 
-  --fs-xs:   0.875rem;
-  --fs-sm:   1rem;
-  --fs-base: 1.1875rem;   /* 19px — the audience skews elderly */
-  --fs-lg:   1.375rem;
-  --fs-xl:   1.75rem;
-  --fs-2xl:  2.375rem;
-  /* clamped, not fixed: a fixed 52px h1 combined with a long Cyrillic word
-     forces overflow-wrap:anywhere to split mid-word on narrow phones
-     (e.g. "Расписание богослужений" on .page-head) — the hero title already
-     solved this via --fs-hero's clamp; h1 needed the same treatment. */
-  --fs-3xl:  clamp(1.85rem, 6vw, 3.25rem);
-  --fs-hero: clamp(2rem, 5vw, 3.75rem);
+  --fs-eyebrow: 0.72rem;
+  --fs-nav:     0.8rem;
+  --fs-xs:      0.82rem;
+  --fs-sm:      0.94rem;
+  --fs-base:    1.0625rem;
+  --fs-lead:    1.12rem;
+  --fs-lg:      1.2rem;
+  --fs-xl:      1.45rem;
+  --fs-2xl:     clamp(1.6rem, 3vw, 2.4rem);
+  --fs-3xl:     clamp(1.75rem, 4.2vw, 2.7rem);
+  --fs-hero:    clamp(2.2rem, 5vw, 3.8rem);
+
+  --lh-tight:   1.18;
+  --lh-heading: 1.25;
+  --lh-body:    1.75;
+
+  --ls-eyebrow: 0.2em;
+  --ls-label:   0.12em;
+  --ls-button:  0.08em;
 
   /* -- space -- */
   --sp-1: 0.5rem;
@@ -174,15 +216,19 @@
   --sp-6: 4rem;
   --sp-7: 6rem;
 
-  --measure: 38rem;
+  --section: 5.625rem;   /* 90px — the handoff's vertical rhythm */
+  --shell:   1140px;
+  --shell-wide: 1440px;
+
+  --measure: 62ch;
   --wide: 74rem;
   --tap: 48px;
 }
 
-@media (min-width: 60rem) { :root { --edge: 1.5rem; } }
+@media (min-width: 60rem) { :root { --edge: 1.75rem; } }
 
 /* --------------------------------------------------------------------------
-   Reset + browser surfaces (selection, caret, scrollbar, focus all themed)
+   Reset + browser surfaces
    -------------------------------------------------------------------------- */
 *, *::before, *::after { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
@@ -190,942 +236,892 @@ html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
 
 body {
   margin: 0;
-  background: var(--paper);
+  background: var(--surface);
   color: var(--ink);
   font-family: var(--font-body);
   font-size: var(--fs-base);
-  line-height: 1.65;
-  caret-color: var(--accent);
+  line-height: var(--lh-body);
+  caret-color: var(--accent-deep);
   -webkit-font-smoothing: antialiased;
 }
 
-::selection { background: var(--accent-bright); color: var(--deep); }
+img, picture, video, canvas, svg { display: block; max-width: 100%; }
+button, input, select, textarea { font: inherit; color: inherit; }
 
-* { scrollbar-color: var(--ink-2) var(--paper-deep); scrollbar-width: thin; }
-::-webkit-scrollbar { width: 12px; height: 12px; }
-::-webkit-scrollbar-track { background: var(--paper-deep); }
-::-webkit-scrollbar-thumb { background: var(--ink-2); border: 3px solid var(--paper-deep); border-radius: var(--radius-pill); }
+/* Anchored sections must not land under the sticky header. */
+:target { scroll-margin-top: 6.5rem; }
 
-:focus-visible { outline: 3px solid var(--focus); outline-offset: 3px; border-radius: 0.25rem; }
+::selection { background: var(--accent); color: #fff; }
 
-img { max-width: 100%; display: block; }
+*:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
 
-/* Authored icons default to the size of their surrounding text; component
-   rules below override where a fixed size is wanted. */
-svg { width: 1em; height: 1em; vertical-align: -0.12em; flex: none; }
+.skip-link {
+  position: absolute; left: -9999px; top: 0; z-index: 100;
+  background: var(--deep); color: var(--ink-on-deep);
+  padding: var(--sp-2) var(--sp-3); text-decoration: none;
+}
+.skip-link:focus { left: var(--sp-2); top: var(--sp-2); }
 
+/* Dates, times, sums and years line up in columns only if the figures are
+   the same width — a schedule is read down the column, not across. */
+time, .rhythm__time, .sday__time, .sched-row__times, .fund__figure,
+.stat__figure, .service-row__time, .next-card__time {
+  font-variant-numeric: tabular-nums;
+}
+
+/* --------------------------------------------------------------------------
+   Typography
+   -------------------------------------------------------------------------- */
 h1, h2, h3, h4 {
   font-family: var(--font-display);
   font-weight: 700;
-  line-height: 1.12;
-  letter-spacing: -0.008em;
+  color: var(--deep-2);
+  line-height: var(--lh-heading);
   margin: 0 0 var(--sp-3);
   text-wrap: balance;
 }
-h1 { font-size: var(--fs-3xl); }
-/* Кириллические слова длинные, а системный шрифт может быть увеличен вдвое.
-   Без переноса «богослужений» шире экрана телефона уже на 320px. */
-h1, h2, h3, h4, .site-header__title, .site-footer__name { overflow-wrap: anywhere; }
+h1 { font-size: var(--fs-3xl); line-height: var(--lh-tight); }
 h2 { font-size: var(--fs-2xl); }
-h3 { font-size: var(--fs-xl); font-weight: 600; }
-h4 { font-size: var(--fs-lg); }
+h3 { font-size: var(--fs-lg); }
+h4 { font-size: var(--fs-base); }
 
 p { margin: 0 0 var(--sp-3); }
-a { color: inherit; text-decoration-thickness: 1px; text-underline-offset: 0.22em; text-decoration-color: var(--accent); }
-a:hover { text-decoration-color: var(--accent); color: var(--accent-deep); }
+p:last-child { margin-bottom: 0; }
 
-.skip-link {
-  position: absolute; left: -999px; top: 0; z-index: 200;
-  background: var(--deep); color: var(--ink-on-deep); padding: var(--sp-2) var(--sp-3);
-  border-radius: 0 0 var(--radius-sm) 0;
+a { color: var(--accent-deep); text-decoration-thickness: 1px; text-underline-offset: 0.2em; }
+a:hover, a:focus-visible { color: var(--accent-bright); }
+
+ul, ol { margin: 0 0 var(--sp-3); padding-left: 1.2em; }
+li { margin-bottom: var(--sp-1); }
+
+hr { border: 0; height: 1px; background: var(--line); margin: var(--sp-5) 0; }
+
+.meta { color: var(--ink-2); font-size: var(--fs-sm); }
+.empty { color: var(--ink-2); font-style: italic; }
+.helptext { color: var(--ink-2); font-size: var(--fs-xs); margin-top: var(--sp-1); }
+.prose { max-width: var(--measure); }
+.prose p { margin-bottom: var(--sp-3); }
+.stack > * + * { margin-top: var(--sp-4); }
+
+/* The eyebrow: small, tracked, uppercase, and never in --accent (see Tokens).
+   Its colour flips with the ground it sits on. */
+.eyebrow {
+  display: block;
+  font-family: var(--font-body);
+  font-size: var(--fs-eyebrow);
+  font-weight: 600;
+  letter-spacing: var(--ls-eyebrow);
+  text-transform: uppercase;
+  color: var(--accent-deep);
+  margin: 0 0 var(--sp-2);
 }
-.skip-link:focus { left: 0; top: 0; }
+.band--deep .eyebrow, .page-head .eyebrow, .hero .eyebrow,
+.photo-band .eyebrow, .site-footer .eyebrow { color: var(--accent-on-deep); }
+
+.lede {
+  font-family: var(--font-display);
+  font-style: italic;
+  font-size: var(--fs-lead);
+  color: var(--accent-deep);
+  max-width: var(--measure);
+}
+.band--deep .lede, .hero .lede { color: var(--accent-on-deep); }
 
 /* --------------------------------------------------------------------------
    Layout primitives
    -------------------------------------------------------------------------- */
-.shell { max-width: var(--wide); margin-inline: auto; padding-inline: var(--sp-3); }
-.prose { max-width: var(--measure); }
-.prose p, .prose li { font-size: var(--fs-base); }
+.shell { width: 100%; max-width: var(--shell); margin-inline: auto; padding-inline: var(--edge); }
 
-.band { padding-block: var(--sp-6); }
-.band + .band { padding-top: 0; }
+.band { padding-block: var(--section); background: var(--surface); }
+.band--cream { background: var(--paper); }
+
+/* The devotional band: gradient ruled top and bottom with the 3px accent.
+   This is the one place the accent is allowed to be a wide flat line. */
 .band--deep {
-  background: var(--deep); color: var(--ink-on-deep);
-  padding-block: var(--sp-7); margin-block: var(--sp-6);
-  margin-inline: var(--edge); border-radius: var(--radius-lg);
+  padding-block: var(--section);
+  background: var(--gradient-dark);
+  color: var(--ink-on-deep);
+  border-top: 3px solid var(--accent);
+  border-bottom: 3px solid var(--accent);
 }
-.band--deep h1, .band--deep h2, .band--deep h3 { color: var(--ink-on-deep); }
-.band--deep a { text-decoration-color: var(--accent-bright); }
-.band--deep a:hover { color: var(--accent-bright); }
+.band--deep h1, .band--deep h2, .band--deep h3, .band--deep h4 { color: var(--ink-on-deep); }
+.band--deep .meta, .band--deep .empty { color: var(--ink-on-deep-2); }
+.band--deep a { color: var(--accent-on-deep); }
+.band--deep a:hover, .band--deep a:focus-visible { color: #fff; }
 
-/* Полоса постоянного расписания — сразу под первым экраном.
-   У донора она во всю ширину и с прямыми углами. Здесь это выглядело бы
-   заплатой: наш герой — скруглённая карточка, вписанная в поля, и полоса
-   повторяет её обводку и отступ, иначе две соседние тёмные плашки спорят
-   формой. Высота маленькая: это подпись под фотографией, а не раздел. */
-.rhythm {
-  background: var(--deep); color: var(--ink-on-deep);
-  margin: var(--edge); border-radius: var(--radius-lg);
-  padding: var(--sp-3) var(--sp-4);
-}
-.rhythm__list {
-  list-style: none; margin: 0; padding: 0;
-  display: grid; gap: var(--sp-3);
-  max-width: var(--wide); margin-inline: auto;
-}
-.rhythm__item { display: flex; align-items: center; gap: var(--sp-2); }
-.rhythm__icon { flex: none; color: var(--accent-bright); display: inline-flex; }
-.rhythm__icon svg { width: 1.5rem; height: 1.5rem; }
-.rhythm__day {
-  display: block;
-  font-size: var(--fs-sm); letter-spacing: 0.08em; text-transform: uppercase;
-  color: var(--ink-on-deep-2);
-}
-.rhythm__services { font-size: var(--fs-base); }
-.rhythm__time { font-weight: 700; font-variant-numeric: tabular-nums; }
+.grid { display: grid; gap: var(--sp-4); }
+.grid--2 { grid-template-columns: repeat(2, 1fr); }
+.grid--3 { grid-template-columns: repeat(3, 1fr); }
+.grid--4 { grid-template-columns: repeat(4, 1fr); }
 
-/* Три колонки только когда каждой хватает места на строку текста: на планшете
-   «По воскресеньям · Литургия 9:30» в трети ширины ломается на три строки. */
-@media (min-width: 52rem) {
-  .rhythm { padding: var(--sp-3) var(--sp-5); }
-  .rhythm__list {
-    grid-auto-flow: column; grid-auto-columns: 1fr;
-    gap: var(--sp-5); align-items: center;
-  }
-  .rhythm__item + .rhythm__item {
-    border-left: 1px solid var(--line-deep); padding-left: var(--sp-5);
-  }
-}
-
-/* Разворот «рисунок и текст». Рисунок здесь плоский, с прозрачным фоном и без
-   рамки: обвести его карточкой значило бы выдать иллюстрацию за фотографию
-   прихода, а он рисованный и общий. Поэтому он лежит прямо на кремовом листе. */
-.lede-split { display: grid; gap: var(--sp-4); align-items: center; }
-.lede-split__art { width: 100%; max-width: 22rem; height: auto; justify-self: center; }
-@media (min-width: 60rem) {
-  .lede-split { grid-template-columns: 26rem 1fr; gap: var(--sp-6); }
-  .lede-split__art { max-width: none; }
-}
-
-/* Требы идут списком, а не карточками: каждая — это связный текст на два
-   абзаца, и карточка вокруг него заставила бы читать семь одинаковых плашек. */
-.treba + .treba { margin-top: var(--sp-5); padding-top: var(--sp-5); border-top: 1px solid var(--line); }
-.treba h2 { margin-bottom: var(--sp-2); }
-/* Якорь из карточки на главной: заголовок не должен уезжать под шапку. */
-.treba { scroll-margin-top: var(--sp-6); }
-
-.section-head {
-  display: flex; align-items: baseline; justify-content: space-between;
-  gap: var(--sp-3); flex-wrap: wrap;
-  margin-bottom: var(--sp-4);
-}
+/* The section heading: eyebrow, serif title, and the 54×2 accent divider
+   that the design system uses to open every section. */
+.section-head { margin-bottom: var(--sp-5); }
 .section-head h2 { margin-bottom: 0; }
+.section-head__lede { margin-top: var(--sp-2); color: var(--ink-2); max-width: var(--measure); }
+.band--deep .section-head__lede { color: var(--ink-on-deep-2); }
+.section-head--center { text-align: center; }
+.section-head--center .section-head__lede { margin-inline: auto; }
+.section-head--center .divider { margin-inline: auto; }
 
-.section-head--center { flex-direction: column; align-items: center; text-align: center; }
-.section-head--center .section-head__lede {
-  max-width: 34rem; margin: 0; color: var(--ink-2); font-size: var(--fs-base);
+/* Head + a trailing link on one line — used where a section has an "all of
+   them" escape hatch (schedule, trebas). */
+.section-head--split {
+  display: flex; flex-wrap: wrap; align-items: baseline;
+  justify-content: space-between; gap: var(--sp-3);
 }
 
-/* Ornament: the donor spends its whole ornamental budget on shape and
-   shadow, not drawn motifs — so a section break here is a plain gold rule
-   with a small centred dot, authored in CSS, not an image. */
+.divider {
+  width: 54px; height: 2px; border: 0; margin: var(--sp-3) 0 0;
+  background: var(--gradient-divider);
+}
+
+/* The old ornament slot: same job, new shape. */
 .ornament {
-  height: 1px; max-width: 5rem; margin: var(--sp-5) auto;
-  background: var(--line); position: relative; border: none;
-}
-.ornament::after {
-  content: ""; position: absolute; top: 50%; left: 50%;
-  width: 0.4rem; height: 0.4rem; border-radius: 50%;
-  background: var(--accent); transform: translate(-50%, -50%);
-}
-.band--deep .ornament, .ornament--dark { background: var(--line-deep); }
-
-/* --------------------------------------------------------------------------
-   Header / navigation — a floating rounded bar, always, over a photo or
-   over the plain page ground alike (the donor's one recognisable device).
-
-   `.site-header__bar` is the one visible card (background, radius, shadow);
-   `.nav-toggle-input` sits outside it so the checked-state selectors can
-   reach into it with `~ .site-header__bar …` (a sibling combinator, then a
-   descendant one) — the checkbox itself stays a true sibling of the card
-   the whole trick depends on, even though the toggle button and the nav it
-   opens both now live one level deeper, merged into a single panel.
-   -------------------------------------------------------------------------- */
-.site-header {
-  position: relative; z-index: 50;
-  padding: var(--edge) var(--edge) 0;
-}
-.has-hero .site-header, .has-page-head .site-header {
-  position: absolute; inset: 0 0 auto; background: transparent;
-}
-
-.site-header__bar {
-  max-width: calc(var(--wide) + 2 * var(--edge)); margin-inline: auto;
-  background: var(--surface); color: var(--ink);
-  border-radius: var(--radius-lg); box-shadow: var(--shadow-md);
-  overflow: hidden;
-}
-
-.site-header__row {
-  padding: var(--sp-2) var(--sp-2) var(--sp-2) var(--sp-4);
-  display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2) var(--sp-3);
-  /* при системном шрифте 200% имя прихода и кнопка «Меню» не встают в строку */
-  flex-wrap: wrap;
-}
-.site-header__title {
-  font-family: var(--font-display); font-weight: 700;
-  font-size: var(--fs-sm); line-height: 1.15;
-  text-decoration: none; color: var(--ink);
-  /* ch растёт вместе с кеглем, поэтому предел в ch при 200% работает против
-     себя; ограничиваем долей строки и позволяем сжиматься */
-  min-width: 0; flex: 1 1 12rem;
-}
-@media (min-width: 60rem) { .site-header__title { font-size: var(--fs-lg); flex: 0 1 auto; max-width: 24rem; } }
-.site-header__title:hover { color: var(--accent-deep); text-decoration: none; }
-
-.nav-toggle-input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
-.nav-toggle-btn {
-  display: inline-flex; align-items: center; gap: var(--sp-1);
-  font-family: var(--font-body); font-weight: 600; font-size: var(--fs-sm);
-  border-radius: var(--radius-pill);
-  border: 1px solid var(--line); padding: var(--sp-1) var(--sp-3);
-  min-height: var(--tap); cursor: pointer; user-select: none;
-  background: var(--paper); color: var(--ink);
-}
-.nav-toggle-btn svg { width: 1rem; height: 1rem; }
-.nav-toggle-input:focus-visible ~ .site-header__bar .nav-toggle-btn { outline: 3px solid var(--focus); outline-offset: 3px; }
-.nav-toggle-input:checked ~ .site-header__bar .nav-toggle-btn { background: var(--deep); color: var(--ink-on-deep); border-color: var(--deep); }
-
-.site-nav {
-  display: none; flex-direction: column;
-  background: var(--surface); color: var(--ink);
-  border-top: 1px solid var(--line);
-}
-.nav-toggle-input:checked ~ .site-header__bar .site-nav { display: flex; }
-.site-nav a {
-  display: block; padding: var(--sp-3) var(--sp-4);
-  font-family: var(--font-display); font-size: var(--fs-lg);
-  text-decoration: none; border-bottom: 1px solid var(--line);
-  min-height: var(--tap);
-}
-.site-nav a:hover, .site-nav a:focus-visible { background: var(--paper); color: var(--accent-deep); }
-
-/* Nav submenu — a native <details>/<summary>, same no-JS device as the
-   mobile menu toggle above. Mobile: an inline accordion row inside the
-   vertical nav list. Desktop: a floating rounded panel under the pill. */
-.nav-drop { border-bottom: 1px solid var(--line); }
-.nav-drop summary {
-  display: flex; align-items: center; justify-content: space-between; gap: var(--sp-2);
-  padding: var(--sp-3) var(--sp-4);
-  font-family: var(--font-display); font-size: var(--fs-lg);
-  min-height: var(--tap); cursor: pointer; list-style: none;
-}
-.nav-drop summary::-webkit-details-marker { display: none; }
-.nav-drop summary:hover, .nav-drop summary:focus-visible { background: var(--paper); color: var(--accent-deep); }
-.nav-drop summary svg { width: 1rem; height: 1rem; flex: none; transition: transform 0.15s ease; }
-.nav-drop[open] summary svg { transform: rotate(180deg); }
-.nav-drop__panel { display: flex; flex-direction: column; background: var(--paper); }
-.nav-drop__panel a {
-  display: block; padding: var(--sp-2) var(--sp-4) var(--sp-2) var(--sp-5);
-  font-family: var(--font-body); font-size: var(--fs-base);
-  border-bottom: 1px solid var(--line); min-height: var(--tap);
-}
-.nav-drop__panel a:last-child { border-bottom: none; }
-.nav-drop__panel a:hover, .nav-drop__panel a:focus-visible { color: var(--accent-deep); }
-
-.site-header__cta { padding: 0 var(--sp-4) var(--sp-3); }
-.site-header__cta .btn { width: 100%; }
-
-/* extra-specific selector: must outrank the later .btn{display:inline-flex} rule */
-.site-header__bar .site-header__donate { display: none; flex: none; margin: var(--sp-2) var(--sp-4) var(--sp-2) 0; }
-
-.lang-switch { display: flex; padding: var(--sp-3) var(--sp-4); gap: var(--sp-1); }
-.lang-switch__btn {
-  font-family: var(--font-body); font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.04em;
-  background: var(--paper); border: 1px solid var(--line); color: var(--ink-2);
-  border-radius: var(--radius-pill);
-  padding: 0 var(--sp-2); min-height: var(--tap); min-width: 3.25rem; cursor: pointer;
-}
-.lang-switch__btn:hover { color: var(--accent-deep); border-color: var(--accent); }
-.lang-switch__btn.is-active {
-  color: var(--ink-on-deep); background: var(--deep); border-color: var(--deep);
-}
-
-@media (min-width: 60rem) {
-  /* Visible, not hidden: the "Приход" submenu is an absolutely-positioned
-     panel that must float past the bar's own bottom edge. The mobile
-     accordion below this breakpoint still needs the hidden overflow to
-     mask its square-cornered rows inside the rounded card. */
-  .site-header__bar { display: flex; align-items: center; overflow: visible; }
-  .nav-toggle-btn { display: none; }
-  .site-header__cta { display: none; }
-  .site-header__row { padding-right: var(--sp-2); }
-  .site-nav {
-    display: flex !important; flex-direction: row; align-items: center; flex-wrap: wrap;
-    background: transparent; border-top: none; color: inherit;
-    flex: 1 1 auto; padding-block: var(--sp-2); gap: 0.125rem;
-  }
-  .site-nav a {
-    border-bottom: none; padding: 0.55em 0.7em; border-radius: var(--radius-pill);
-    font-family: var(--font-body); font-weight: 600; font-size: var(--fs-sm); min-height: 0;
-  }
-  .site-nav a:hover { background: var(--paper); }
-  .lang-switch { margin-left: auto; padding: 0; }
-  .lang-switch__btn { min-height: 2.25rem; }
-  .site-header__bar .site-header__donate { display: inline-flex; margin: 0 var(--sp-4) 0 var(--sp-1); }
-
-  .nav-drop { position: relative; border-bottom: none; }
-  .nav-drop summary {
-    padding: 0.55em 0.7em; border-radius: var(--radius-pill); gap: 0.3rem;
-    font-family: var(--font-body); font-weight: 600; font-size: var(--fs-sm); min-height: 0;
-  }
-  .nav-drop[open] summary { background: var(--paper); color: var(--accent-deep); }
-  .nav-drop__panel {
-    position: absolute; top: calc(100% + var(--sp-1)); left: 0; z-index: 10;
-    min-width: 13rem; padding: var(--sp-1);
-    background: var(--surface); border-radius: var(--radius-md); box-shadow: var(--shadow-md);
-  }
-  .nav-drop__panel a {
-    border-radius: var(--radius-sm); padding: 0.6em 0.9em; border-bottom: none;
-    font-family: var(--font-body); font-size: var(--fs-sm); min-height: 0;
-  }
-  .nav-drop__panel a:hover, .nav-drop__panel a:focus-visible { background: var(--paper); color: var(--accent-deep); }
+  width: 54px; height: 2px; margin: 0 auto var(--sp-4);
+  background: var(--gradient-divider);
 }
 
 /* --------------------------------------------------------------------------
-   Hero — a rounded photo card, inset from the viewport like every other
-   surface in this world, with the nav pill floating on its top edge.
-   -------------------------------------------------------------------------- */
-.hero {
-  position: relative;
-  margin: var(--edge);
-  border-radius: var(--radius-lg);
-  min-height: min(80svh, 42rem);
-  display: flex; align-items: flex-end;
-  background: var(--deep);
-  color: var(--ink-on-deep);
-  overflow: hidden;
-  box-shadow: var(--shadow-lg);
-}
-.hero__media { position: absolute; inset: 0; }
-.hero__media img { width: 100%; height: 100%; object-fit: cover; }
-.hero__media::after {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, rgba(20,30,15,0.72) 0%, rgba(20,30,15,0.28) 38%, rgba(15,22,10,0.92) 100%);
-}
-.hero__inner {
-  position: relative; z-index: 1;
-  max-width: var(--wide); margin-inline: auto; width: 100%;
-  /* top padding clears the nav pill, which floats over the photo's top edge */
-  padding: 6.5rem var(--sp-4) var(--sp-5);
-}
-.hero__title {
-  font-size: var(--fs-hero); line-height: 1.05; letter-spacing: -0.014em;
-  margin: 0 0 var(--sp-3); max-width: 15ch;
-  color: var(--ink-on-deep);
-}
-.hero__lede {
-  font-size: var(--fs-lg); max-width: 36ch; color: var(--ink-on-deep);
-  margin-bottom: var(--sp-4);
-}
-@media (min-width: 60rem) {
-  .hero__inner { padding-top: 8.5rem; padding-bottom: var(--sp-6); padding-inline: var(--sp-6); }
-}
-.hero__actions { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
-
-/* Empty hero when no photograph has been supplied yet: the scrim gradient
-   plus the deep-blue ground, so the composition still reads as intended. */
-.hero__media--empty {
-  background: radial-gradient(120% 90% at 70% 0%, var(--mid) 0%, var(--deep) 70%);
-}
-
-/* the single authored motion moment of the page */
-@media (prefers-reduced-motion: no-preference) {
-  .hero__title, .hero__lede, .hero__actions {
-    animation: hero-rise 1s cubic-bezier(0.16, 1, 0.3, 1) backwards;
-  }
-  .hero__lede { animation-delay: 0.09s; }
-  .hero__actions { animation-delay: 0.17s; }
-}
-@keyframes hero-rise {
-  from { opacity: 0; transform: translateY(1.25rem); filter: blur(6px); }
-  to   { opacity: 1; transform: none; filter: blur(0); }
-}
-
-/* Inner-page header block, for pages without a photograph — same rounded
-   card as the hero, filled with solid `--deep` rather than the hero's
-   mid-to-deep gradient: simpler, and reliably compliant regardless of what
-   the two tokens happen to be (the old green `--mid` fell to 3.4:1 under
-   body copy; the current blue one tests at 7.17:1, but nothing here should
-   depend on that holding across a future palette swap). */
-/* bottom-anchored, like the hero — the header bar's own height varies with
-   the parish name's wrap, so a fixed top padding here would clip under it
-   whenever the bar grows a line taller than the day it was tuned against. */
-.page-head {
-  background: var(--deep); color: var(--ink-on-deep);
-  margin: var(--edge); border-radius: var(--radius-lg);
-  min-height: 15rem; display: flex; align-items: flex-end;
-  /* top padding must clear the nav bar's own height, which grows with the
-     parish name's wrap (measured up to ~164px at desktop, ~80px at mobile) —
-     padded well past the worst case measured, since the bar's exact height
-     isn't available to CSS. */
-  padding: 7.5rem var(--sp-4) var(--sp-5);
-  box-shadow: var(--shadow-lg);
-}
-.page-head > * { width: 100%; }
-@media (min-width: 60rem) { .page-head { min-height: 18rem; padding: 12.5rem var(--sp-6) var(--sp-6); } }
-.page-head h1 { color: var(--ink-on-deep); margin-bottom: var(--sp-2); max-width: 20ch; }
-.page-head p { color: var(--ink-on-deep-2); max-width: var(--measure); margin-bottom: 0; }
-
-/* --------------------------------------------------------------------------
-   Расписание — центр тяжести сайта
-
-   Иерархия карточки перевёрнута: ведёт день недели, число стоит справочно.
-   Прежде самым крупным было «16.08.2026», а «Воскресенье» — самым мелким и
-   самым серым, то есть ответ был набран как сноска. Степень поста поднята
-   в шапку: раньше она стояла под временем служб, и указание про пост
-   приходило после того, как его пролистали.
-   -------------------------------------------------------------------------- */
-
-/* Ближайшая служба — отдельный вопрос, а не первый элемент списка. */
-.next-service { background: var(--deep); color: var(--ink-on-deep); padding-block: var(--sp-5); }
-.next-service__kicker {
-  font-size: var(--fs-sm); letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--ink-on-deep-2); margin-bottom: var(--sp-1);
-}
-.next-service__when, .next-service__feast, .next-service__items { overflow-wrap: anywhere; }
-.next-service__when {
-  font-family: var(--font-display); font-weight: 700;
-  font-size: var(--fs-2xl); line-height: 1.1; margin-bottom: var(--sp-1);
-}
-.next-service__feast { font-size: var(--fs-lg); color: var(--ink-on-deep-2); margin-bottom: var(--sp-3); }
-.next-service__items { list-style: none; margin: 0 0 var(--sp-3); padding: 0; max-width: 34rem; }
-.next-service__items li {
-  display: flex; gap: var(--sp-3); align-items: baseline; flex-wrap: wrap;
-  padding-block: var(--sp-1); border-top: 1px solid var(--line-deep); font-size: var(--fs-lg);
-}
-.next-service__time {
-  font-family: var(--font-display); font-weight: 700; font-size: var(--fs-xl);
-  font-variant-numeric: tabular-nums; min-width: 4.5rem; flex: none;
-}
-
-/* Заголовок месяца режет список на куски, которые человек держит в голове. */
-.month-rule {
-  font-size: var(--fs-xl); margin-bottom: var(--sp-3);
-  padding-bottom: var(--sp-1); border-bottom: 2px solid var(--accent);
-}
-.month-rule + .sdays { margin-bottom: var(--sp-6); }
-
-/* align-items:start — иначе сетка растягивает короткую карточку до высоты
-   соседней, и строка «ст. ст.», прижатая к низу, повисает в пустоте. */
-.sdays { display: grid; gap: var(--sp-3); align-items: start; }
-@media (min-width: 52rem) { .sdays { grid-template-columns: 1fr 1fr; } }
-@media (min-width: 76rem) { .sdays { grid-template-columns: 1fr 1fr 1fr; } }
-
-.sday {
-  background: var(--surface); border: 1px solid var(--line);
-  border-radius: var(--radius-md); box-shadow: var(--shadow-sm);
-  padding: var(--sp-3) var(--sp-4); display: flex; flex-direction: column;
-}
-/* Карточка сохраняет свою белую подложку и на тёмной полосе — иначе на
-   зелёном фоне она становится нечитаемым тёмным на тёмном. */
-.band--deep .sday { color: var(--ink); border-color: var(--line); }
-.band--deep .sday .sday__num,
-.band--deep .sday .sday__note,
-.band--deep .sday .sday__old,
-.band--deep .sday .sday__extra,
-.band--deep .sday .sday__none { color: var(--ink-2); }
-.band--deep .sday .sday__rel { color: var(--accent-deep); }
-.sday__head {
-  display: flex; align-items: flex-start; justify-content: space-between;
-  gap: var(--sp-2); flex-wrap: wrap; margin-bottom: var(--sp-2);
-}
-/* при системном шрифте 200% «Понедельник» в 44px не влезает в колонку —
-   слово должно переноситься, а не распирать карточку */
-.sday__when { margin: 0; display: flex; flex-wrap: wrap; align-items: baseline; gap: 0 0.6em; min-width: 0; }
-.sday__weekday, .sday__num, .sday__rel, .sday__feast, .sday__what { overflow-wrap: anywhere; min-width: 0; }
-.sday { min-width: 0; overflow-wrap: anywhere; }
-.sday__items li { flex-wrap: wrap; }
-.sday__weekday {
-  font-family: var(--font-display); font-weight: 700; font-size: var(--fs-xl); line-height: 1.1;
-}
-.sday__num { font-size: var(--fs-sm); color: var(--ink-2); font-variant-numeric: tabular-nums; }
-.sday__rel {
-  font-size: var(--fs-xs); font-weight: 700; letter-spacing: 0.06em;
-  text-transform: uppercase; color: var(--accent-deep);
-}
-.sday--today { border-color: var(--accent); border-width: 2px; }
-
-.sday__feast { font-size: var(--fs-base); margin-bottom: var(--sp-2); }
-.sday--major { border-color: var(--accent); background: var(--accent-tint); }
-.sday--major .sday__feast {
-  font-family: var(--font-display); font-weight: 700; font-size: var(--fs-lg);
-}
-
-.sday__items { list-style: none; margin: 0 0 var(--sp-2); padding: 0; }
-.sday__items li {
-  display: flex; gap: var(--sp-2); align-items: baseline;
-  padding-block: 0.35em; border-top: 1px solid var(--line);
-}
-.sday__time {
-  font-family: var(--font-display); font-weight: 700; font-size: var(--fs-lg);
-  font-variant-numeric: tabular-nums; min-width: 3.6rem; flex: none;
-}
-.sday__what { flex: 1 1 auto; min-width: 0; }
-.sday__note { display: block; font-size: var(--fs-sm); color: var(--ink-2); }
-.sday__none { color: var(--ink-2); font-style: italic; margin-bottom: var(--sp-2); }
-.sday__old { font-size: var(--fs-xs); color: var(--ink-2); margin: 0; padding-top: var(--sp-2); }
-.sday__extra { font-size: var(--fs-sm); color: var(--ink-2); margin: var(--sp-1) 0 0; }
-
-/* Три ступени поста, а не одна метка на все шесть градаций: сухоядение и
-   «рыба, вино и елей» — противоположные указания, и одинаковая плашка на
-   них прямо вводила в заблуждение. */
-.fast {
-  display: inline-flex; align-items: center; gap: 0.4em; margin: 0;
-  padding: 0.2em 0.65em; font-size: var(--fs-xs); font-weight: 700;
-  letter-spacing: 0.04em; text-transform: uppercase;
-  border: 1px solid transparent; border-radius: var(--radius-pill);
-  max-width: 100%; overflow-wrap: anywhere;
-}
-.fast svg { width: 0.95em; height: 0.95em; flex: none; }
-.fast--strict { background: var(--deep); border-color: var(--deep); color: var(--ink-on-deep); }
-.fast--fast   { border-color: var(--accent); color: var(--accent-deep); background: var(--accent-tint); }
-.fast--light  { border-color: var(--line); color: var(--ink-2); background: var(--paper); }
-.next-service .fast--strict { background: rgba(251,246,237,0.14); border-color: var(--ink-on-deep-2); color: var(--ink-on-deep); }
-.next-service .fast--fast { background: rgba(212,160,23,0.16); color: var(--accent-bright); border-color: var(--accent-bright); }
-.next-service .fast--light { color: var(--ink-on-deep-2); border-color: var(--ink-on-deep-2); background: transparent; }
-
-.fast-legend { margin-top: var(--sp-6); border-top: 1px solid var(--line); padding-top: var(--sp-3); }
-.fast-legend h2 { font-size: var(--fs-lg); }
-.fast-legend ul { list-style: none; margin: 0; padding: 0; max-width: var(--measure); }
-.fast-legend li { margin-bottom: var(--sp-2); font-size: var(--fs-sm); color: var(--ink-2); }
-.fast-legend .fast { margin-right: 0.4em; }
-
-/* --------------------------------------------------------------------------
-   Cards, tiles, lists
-   -------------------------------------------------------------------------- */
-.card {
-  background: var(--surface);
-  border: 1px solid var(--line);
-  border-radius: var(--radius-md); box-shadow: var(--shadow-sm);
-  padding: var(--sp-4);
-  margin-bottom: var(--sp-3);
-}
-.band--deep .card {
-  background: var(--deep-2); border-color: var(--line-deep); color: var(--ink-on-deep);
-}
-
-.grid { display: grid; gap: var(--sp-4); grid-template-columns: 1fr; }
-@media (min-width: 44rem) { .grid--2 { grid-template-columns: repeat(2, 1fr); } .grid--4 { grid-template-columns: repeat(2, 1fr); } }
-@media (min-width: 60rem) { .grid--3 { grid-template-columns: repeat(3, 1fr); } .grid--4 { grid-template-columns: repeat(4, 1fr); } }
-
-/* The donor's signature card: a rounded photo with its caption printed
-   straight onto a dark gradient at the foot of the image, not set below it. */
-.tile { display: block; text-decoration: none; color: inherit; }
-.tile__media {
-  position: relative; aspect-ratio: 3 / 2; overflow: hidden;
-  background: var(--paper-deep); border-radius: var(--radius-md);
-  box-shadow: var(--shadow-sm);
-}
-.tile__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.6s cubic-bezier(0.16,1,0.3,1); }
-.tile:hover .tile__media img { transform: scale(1.04); }
-.tile__media::after {
-  content: ""; position: absolute; inset: 0;
-  background: linear-gradient(180deg, transparent 40%, rgba(10,16,8,0.82) 100%);
-}
-.tile__caption {
-  position: absolute; z-index: 1; inset: auto 0 0; padding: var(--sp-4) var(--sp-3) var(--sp-3);
-  color: var(--ink-on-deep);
-}
-.tile__caption h3 { color: var(--ink-on-deep); margin-bottom: 0.2rem; }
-.tile:hover .tile__caption h3 { color: var(--accent-bright); }
-.tile__caption p { color: var(--ink-on-deep-2); font-size: var(--fs-sm); margin-bottom: 0; }
-
-/* Карточка требы: та же скруглённая белая плашка, что и .card, но целиком
-   ссылка. Без фотографии — снимка собственного крещения или отпевания у
-   прихода нет и быть не должно, а стоковый здесь читался бы как реклама.
-   Золотая полоска слева появляется при наведении: единственный отклик,
-   которого хватает, чтобы плашка не выглядела мёртвой. */
-.need {
-  display: block; text-decoration: none; color: inherit;
-  background: var(--surface);
-  border: 1px solid var(--line); border-left: 3px solid transparent;
-  border-radius: var(--radius-md); box-shadow: var(--shadow-sm);
-  padding: var(--sp-4);
-  transition: border-left-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
-}
-/* Полоска взята из --accent, а не из --accent-bright: яркое золото донора
-   держит на белом только 2.38:1, ниже порога 3:1 для нетекстовой графики,
-   и отклик на наведение пропал бы у половины читающих с экрана в солнечный
-   день. --accent — 3.25:1 и то же золото. */
-.need:hover, .need:focus-visible {
-  border-left-color: var(--accent);
-  box-shadow: var(--shadow-md); transform: translateY(-2px);
-}
-.need__title { margin-bottom: var(--sp-1); }
-.need:hover .need__title { color: var(--accent-deep); }
-.need__text { margin-bottom: 0; color: var(--ink-2); font-size: var(--fs-sm); }
-@media (prefers-reduced-motion: reduce) { .need { transition: none; } .need:hover { transform: none; } }
-
-.doc-list { list-style: none; margin: 0; padding: 0; }
-.doc-list li { border-top: 1px solid var(--line); }
-.doc-list li:last-child { border-bottom: 1px solid var(--line); }
-.doc-list a {
-  display: flex; align-items: center; gap: var(--sp-3); flex-wrap: wrap;
-  padding: var(--sp-3) 0; text-decoration: none; min-height: var(--tap);
-}
-.doc-list a:hover { color: var(--accent-deep); }
-.doc-list__period { font-size: var(--fs-sm); color: var(--ink-2); font-variant-numeric: tabular-nums; }
-.doc-list__title { font-family: var(--font-display); font-size: var(--fs-lg); flex: 1; }
-
-.meta { font-size: var(--fs-sm); color: var(--ink-2); font-variant-numeric: tabular-nums; }
-.band--deep .meta { color: var(--ink-on-deep-2); }
-
-/* --------------------------------------------------------------------------
-   Buttons — the donor's rounded pills, solid fills, soft shadow
+   Buttons
    -------------------------------------------------------------------------- */
 .btn {
   display: inline-flex; align-items: center; justify-content: center; gap: 0.5em;
-  min-height: var(--tap); padding: 0.75em 1.75em;
-  font-family: var(--font-body); font-size: var(--fs-sm); font-weight: 700;
-  border-radius: var(--radius-pill);
-  text-decoration: none; cursor: pointer;
-  color: var(--ink); background: var(--surface);
-  border: 1px solid var(--line);
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease, color 0.15s ease;
-}
-.btn:hover, .btn:focus-visible { transform: translateY(-1px); box-shadow: var(--shadow-md); }
-.btn svg { width: 1rem; height: 1rem; }
-
-.btn--accent {
-  color: var(--deep); background: var(--accent-bright); border-color: var(--accent-bright);
-}
-.btn--accent:hover, .btn--accent:focus-visible { background: #e0ad25; border-color: #e0ad25; }
-
-/* On a dark ground the donor keeps the same white pill, just outlined when
-   it is a secondary action rather than the page's one primary action. */
-.btn--light {
-  border: 1px solid var(--ink-on-deep-2); background: transparent;
-  color: var(--ink-on-deep); box-shadow: none;
-}
-.btn--light:hover, .btn--light:focus-visible { background: var(--ink-on-deep); color: var(--deep); box-shadow: var(--shadow-sm); }
-
-.btn[disabled], .btn[aria-disabled="true"] { opacity: 0.45; pointer-events: none; transform: none; }
-
-/* При системном шрифте 200% «ПОЖЕРТВОВАТЬ» с отступами по 1.75em становится
-   шире телефона и утаскивает за собой всю страницу. Кнопка должна ужиматься
-   и переносить слово. */
-.btn, button[type="submit"] {
-  max-width: 100%; overflow-wrap: anywhere; text-align: center;
-}
-
-.link-more {
-  display: inline-flex; align-items: center; gap: 0.5em;
-  font-weight: 700; font-size: var(--fs-sm);
-  text-decoration: none; border-bottom: 1px solid var(--accent); padding-bottom: 0.15em;
-}
-.link-more:hover { border-bottom-color: var(--accent-deep); color: var(--accent-deep); }
-.link-more svg { width: 0.9rem; height: 0.9rem; transition: transform 0.2s ease; }
-.link-more:hover svg { transform: translateX(0.2rem); }
-
-/* --------------------------------------------------------------------------
-   Forms
-   -------------------------------------------------------------------------- */
-form p { margin-bottom: var(--sp-3); }
-label {
-  display: block; font-size: var(--fs-sm); font-weight: 700;
-  margin-bottom: var(--sp-1);
-}
-input, textarea, select {
-  width: 100%; font: inherit; font-size: var(--fs-base);
-  padding: 0.7em 1em; min-height: var(--tap);
-  background: var(--surface); color: var(--ink);
-  border: 1px solid var(--line); border-radius: var(--radius-sm);
-}
-input:focus, textarea:focus, select:focus { border-color: var(--accent); }
-input::placeholder, textarea::placeholder { color: var(--ink-2); }
-textarea { min-height: 7rem; resize: vertical; }
-
-/* Django 5 renders a RadioSelect as a bare <div> of <div><label><input>…;
-   give each option a real row with the control beside its label, sized as a
-   tap target. */
-.radio-group > div { margin-bottom: var(--sp-1); }
-.radio-group label {
-  display: flex; align-items: center; gap: var(--sp-2);
-  font-weight: 400; margin: 0; min-height: var(--tap);
+  min-height: var(--tap);
+  padding: 0.75em 1.6em;
+  border: 1px solid transparent;
+  border-radius: var(--radius-sm);
+  font-family: var(--font-body);
+  font-size: var(--fs-xs);
+  font-weight: 600;
+  letter-spacing: var(--ls-button);
+  text-transform: uppercase;
+  text-decoration: none;
   cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, background 0.2s ease, color 0.2s ease;
 }
-input[type="radio"], input[type="checkbox"] {
-  width: 1.25rem; height: 1.25rem; min-height: 0; flex: none;
-  accent-color: var(--accent); margin: 0; padding: 0;
-}
-.helptext, .helptext li { font-size: var(--fs-sm); color: var(--ink-2); }
-ul.helptext, form ul { padding-left: 1.2em; }
-.errorlist { list-style: none; padding: 0; margin: 0 0 var(--sp-2); color: #a13a3a; font-size: var(--fs-sm); font-weight: 700; }
+.btn:hover, .btn:focus-visible { transform: translateY(-2px); }
 
-/* form submits wear the same gold pill — but not the language switch, whose
-   job is to show which language is active, not to look like a primary
-   action. Locked out of .portal, where a plain button reads as a working
-   control, not a call to action. */
+/* Primary. White on navy, not dark-on-accent: the accent blue is a 3:1
+   colour and cannot carry button text either way round. */
+.btn--accent {
+  background: var(--gradient-navy); color: #fff; border-color: transparent;
+  box-shadow: var(--shadow-accent);
+}
+.btn--accent:hover, .btn--accent:focus-visible { color: #fff; box-shadow: 0 8px 28px rgba(21,55,95,0.42); }
+
+.band--deep .btn--accent, .photo-band .btn--accent {
+  background: #fff; color: var(--deep); box-shadow: 0 4px 20px rgba(0,0,0,0.24);
+}
+.band--deep .btn--accent:hover, .band--deep .btn--accent:focus-visible,
+.photo-band .btn--accent:hover, .photo-band .btn--accent:focus-visible {
+  background: var(--paper); color: var(--deep);
+}
+
+.btn--navy { background: var(--deep); color: #fff; }
+.btn--navy:hover, .btn--navy:focus-visible { background: var(--deep-2); color: #fff; }
+
+/* Ghost — only ever on photography or a dark band. */
+.btn--light {
+  background: rgba(255,255,255,0.08); color: #fff;
+  border-color: rgba(255,255,255,0.55);
+  backdrop-filter: blur(2px);
+}
+.btn--light:hover, .btn--light:focus-visible { background: #fff; color: var(--deep); border-color: #fff; }
+
+.btn--sm { min-height: 2.5rem; padding: 0.55em 1.15em; }
+
+/* Bare <button> on the public side gets the primary look; the portal dresses
+   its own and is excluded so the two never fight. */
 body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn) {
   display: inline-flex; align-items: center; justify-content: center;
-  min-height: var(--tap); padding: 0.75em 1.75em;
-  font-family: var(--font-body); font-size: var(--fs-sm); font-weight: 700;
-  border-radius: var(--radius-pill); cursor: pointer;
-  background: var(--accent-bright); color: var(--deep); border: 1px solid var(--accent-bright);
-  box-shadow: var(--shadow-sm);
-  transition: transform 0.15s ease, box-shadow 0.15s ease, background 0.15s ease;
+  min-height: var(--tap); padding: 0.75em 1.6em;
+  border: 1px solid transparent; border-radius: var(--radius-sm);
+  background: var(--gradient-navy); color: #fff;
+  font-size: var(--fs-xs); font-weight: 600;
+  letter-spacing: var(--ls-button); text-transform: uppercase;
+  cursor: pointer; box-shadow: var(--shadow-accent);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
 }
 body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):hover,
 body:not(.portal) button[type="submit"]:not(.lang-switch__btn):not(.btn):focus-visible {
-  background: #e0ad25; transform: translateY(-1px); box-shadow: var(--shadow-md);
+  transform: translateY(-2px); box-shadow: 0 8px 28px rgba(21,55,95,0.42);
 }
 
-.messages { list-style: none; margin: 0; padding: var(--sp-3) var(--sp-3) 0; max-width: var(--wide); margin-inline: auto; }
-.message {
-  border: 1px solid var(--accent);
-  border-radius: var(--radius-sm);
-  background: var(--accent-tint); padding: var(--sp-3); margin-bottom: var(--sp-2);
-  font-weight: 700; box-shadow: var(--shadow-sm);
-}
-.message--success { border-color: #3f7a3f; background: #eaf4ea; color: #2c5a2c; }
-.message--error { border-color: #a13a3a; color: #7a2b2b; background: #fbeaea; }
-
-/* --------------------------------------------------------------------------
-   Building fund
-   -------------------------------------------------------------------------- */
-.fund { display: grid; gap: var(--sp-4); align-items: end; }
-@media (min-width: 44rem) { .fund { grid-template-columns: 1fr auto; } }
-.fund__figure {
-  font-family: var(--font-display); font-weight: 700;
-  font-size: var(--fs-2xl); font-variant-numeric: tabular-nums; line-height: 1;
-}
-.fund__of { font-family: var(--font-body); font-size: var(--fs-sm); color: var(--ink-2); }
-.band--deep .fund__of { color: var(--ink-on-deep-2); }
-.progress { height: 0.75rem; background: var(--paper-deep); border-radius: var(--radius-pill); overflow: hidden; }
-.band--deep .progress { background: var(--line-deep); }
-.progress__bar { height: 100%; background: var(--accent-bright); border-radius: var(--radius-pill); }
-
-/* --------------------------------------------------------------------------
-   Timeline (parish history)
-   -------------------------------------------------------------------------- */
-.timeline { list-style: none; margin: 0; padding: 0; }
-.timeline__item {
-  display: grid; gap: var(--sp-2);
-  padding-block: var(--sp-5);
-  border-top: 1px solid var(--line);
-}
-@media (min-width: 48rem) {
-  .timeline__item { grid-template-columns: 8rem 1fr; gap: var(--sp-5); }
-}
-.timeline__year {
-  font-family: var(--font-display); font-weight: 700; font-size: var(--fs-xl);
-  font-variant-numeric: tabular-nums; color: var(--accent-deep);
-}
-.timeline__item h3 { margin-bottom: var(--sp-2); }
-
-/* --------------------------------------------------------------------------
-   Definition pairs (school facts, clergy meta)
-   -------------------------------------------------------------------------- */
-.facts { margin: 0; }
-.facts div { display: grid; gap: 0.15rem; padding-block: var(--sp-3); border-top: 1px solid var(--line); }
-@media (min-width: 40rem) { .facts div { grid-template-columns: 14rem 1fr; gap: var(--sp-3); align-items: baseline; } }
-.facts dt { font-size: var(--fs-sm); text-transform: uppercase; letter-spacing: 0.08em; color: var(--ink-2); }
-/* --ink-2 рассчитан на кремовую подложку; на зелёном фоне контраст ниже */
-.band--deep .facts dt { color: var(--ink-on-deep-2); }
-.band--deep .facts div { border-top-color: var(--line-deep); }
-.facts dd { margin: 0; }
-
-/* --------------------------------------------------------------------------
-   Photo grid + placeholder
-   -------------------------------------------------------------------------- */
-.photo-grid { display: grid; gap: var(--sp-2); grid-template-columns: repeat(2, 1fr); }
-@media (min-width: 48rem) { .photo-grid { grid-template-columns: repeat(4, 1fr); } }
-.photo-grid img { aspect-ratio: 1; object-fit: cover; width: 100%; border-radius: var(--radius-sm); }
-
-.photo-placeholder {
-  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: var(--sp-2);
-  aspect-ratio: 1; padding: var(--sp-3); text-align: center;
-  border: 1px dashed var(--line); border-radius: var(--radius-sm); background: var(--paper-deep);
-  color: var(--ink-2); font-size: var(--fs-xs);
-}
-.photo-placeholder svg { width: 1.75rem; height: 1.75rem; opacity: 0.6; }
-
-.portrait { }
-.portrait__media { aspect-ratio: 3 / 4; overflow: hidden; background: var(--paper-deep); border-radius: var(--radius-md); box-shadow: var(--shadow-sm); margin-bottom: var(--sp-3); }
-.portrait__media img { width: 100%; height: 100%; object-fit: cover; }
-.portrait h3 { margin-bottom: 0.15rem; }
-.portrait__role { font-size: var(--fs-sm); color: var(--ink-2); text-transform: uppercase; letter-spacing: 0.08em; }
-
-/* --------------------------------------------------------------------------
-   Ministries portal — same world, working register
-   -------------------------------------------------------------------------- */
-.portal-section { padding-block: var(--sp-5); border-top: 1px solid var(--line); }
-.portal-section:first-of-type { border-top: none; }
-.portal-section h2 { font-size: var(--fs-xl); }
-
-.rota { list-style: none; margin: 0; padding: 0; }
-.rota li { display: flex; gap: var(--sp-3); flex-wrap: wrap; padding: var(--sp-2) 0; border-top: 1px solid var(--line); }
-.rota li:first-child { border-top: none; }
-.rota__date { font-weight: 700; font-variant-numeric: tabular-nums; min-width: 6rem; }
-
-.status {
+/* The inline "→" link that closes a section. */
+.link-more {
   display: inline-flex; align-items: center; gap: 0.4em;
-  font-size: var(--fs-xs); font-weight: 700; text-transform: uppercase; letter-spacing: 0.08em;
-  border: 1px solid var(--line); border-radius: var(--radius-pill); padding: 0.3em 0.8em; color: var(--ink-2);
+  font-size: var(--fs-sm); font-weight: 600;
+  color: var(--accent-deep); text-decoration: none;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 2px;
 }
-.status--accent { border-color: var(--accent); color: var(--accent-deep); background: var(--accent-tint); }
+.link-more:hover, .link-more:focus-visible { color: var(--accent-bright); border-bottom-color: var(--accent-bright); }
+.link-more svg { width: 1em; height: 1em; }
+.link-more--on-deep { color: var(--accent-on-deep); border-bottom-color: var(--accent-on-deep); }
+.link-more--on-deep:hover, .link-more--on-deep:focus-visible { color: #fff; border-bottom-color: #fff; }
 
-.empty { color: var(--ink-2); font-style: italic; font-family: var(--font-display); }
+/* --------------------------------------------------------------------------
+   Header — sticky, white, ruled with the 2px accent. Nothing collapses on
+   scroll: the bar is 64px and losing it costs more than it saves.
+   -------------------------------------------------------------------------- */
+.site-header {
+  position: sticky; top: 0; z-index: 40;
+  background: var(--surface);
+  border-bottom: 2px solid var(--accent);
+  box-shadow: var(--shadow-nav);
+}
+.site-header__bar {
+  max-width: var(--shell-wide); margin-inline: auto;
+  padding: 0.75rem var(--edge);
+  display: flex; align-items: center; gap: var(--sp-4);
+}
 
-.inline-form { display: inline; }
-.stack { display: flex; flex-direction: column; gap: var(--sp-3); }
-.row-actions { display: flex; gap: var(--sp-2); flex-wrap: wrap; align-items: center; }
+.wordmark { text-decoration: none; display: block; margin-right: auto; }
+.wordmark__name {
+  display: block;
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 1.02rem; line-height: 1.2; color: var(--deep-2);
+}
+.wordmark__sub {
+  display: block; margin-top: 2px;
+  font-size: 0.66rem; letter-spacing: 0.18em; text-transform: uppercase;
+  color: var(--ink-2); line-height: 1.3;
+}
 
-.lock-icon { width: 0.85em; height: 0.85em; vertical-align: -0.05em; color: var(--ink-2); }
+.site-nav { display: flex; align-items: center; gap: var(--sp-4); }
+.site-nav > a {
+  font-size: var(--fs-nav); font-weight: 600;
+  letter-spacing: 0.04em; text-transform: uppercase;
+  color: var(--deep-2); text-decoration: none; white-space: nowrap;
+}
+.site-nav > a:hover, .site-nav > a:focus-visible { color: var(--accent-bright); }
+.site-nav > a[aria-current="page"] { color: var(--accent-deep); }
+
+.lang-switch { display: flex; gap: 2px; margin-left: var(--sp-1); }
+.lang-switch__btn {
+  border: 1px solid var(--line); background: transparent;
+  color: var(--ink-2); border-radius: var(--radius-sm);
+  padding: 0.3em 0.55em; font-size: 0.7rem; font-weight: 600;
+  letter-spacing: 0.06em; cursor: pointer;
+}
+.lang-switch__btn.is-active { background: var(--deep-2); border-color: var(--deep-2); color: #fff; }
+
+/* Кнопка пожертвования живёт в двух местах: своя в полосе для широкого
+   экрана и запасная внутри выпадающего меню для узкого. Видна всегда
+   ровно одна. */
+.site-header__donate { flex: none; }
+.site-nav .site-header__cta { display: none; }
+
+/* Mobile disclosure. The checkbox stays because it needs no JavaScript. */
+.nav-toggle-input { position: absolute; opacity: 0; pointer-events: none; }
+.nav-toggle-btn {
+  display: none; align-items: center; gap: 0.5em;
+  min-height: var(--tap); padding: 0.4em 0.9em;
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  font-size: var(--fs-xs); font-weight: 600; text-transform: uppercase;
+  letter-spacing: var(--ls-button); color: var(--deep-2); cursor: pointer;
+}
+.nav-toggle-btn svg { width: 1.1em; height: 1.1em; }
+
+/* --------------------------------------------------------------------------
+   Hero — full-bleed photograph under a NEUTRAL scrim. The handoff calls the
+   absence of a colour layer out as a client requirement, so the gradient here
+   is pure black at three stops and nothing else.
+   -------------------------------------------------------------------------- */
+.hero {
+  position: relative;
+  min-height: 560px; height: 78vh;
+  display: grid; place-items: center;
+  text-align: center;
+  overflow: hidden;
+}
+.hero__media { position: absolute; inset: 0; }
+.hero__media img { width: 100%; height: 100%; object-fit: cover; object-position: center 45%; }
+.hero__media::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(180deg, rgba(0,0,0,.42), rgba(0,0,0,.28) 45%, rgba(0,0,0,.62));
+}
+.hero__media--empty { background: var(--gradient-dark); }
+
+.hero__inner {
+  position: relative; z-index: 1;
+  max-width: 900px; padding: var(--sp-6) var(--edge);
+  color: #fff;
+}
+.hero__kicker {
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.22em;
+  text-transform: uppercase; color: var(--accent-on-deep);
+  margin-bottom: var(--sp-3);
+}
+.hero__title {
+  font-size: var(--fs-hero); color: #fff;
+  line-height: var(--lh-tight);
+  text-shadow: 0 2px 24px rgba(0,0,0,.5);
+  margin-bottom: var(--sp-3);
+}
+.hero__scripture {
+  font-family: var(--font-display); font-style: italic;
+  font-size: var(--fs-lead); color: rgba(255,255,255,0.92);
+  max-width: 46ch; margin: 0 auto var(--sp-5);
+  text-shadow: 0 1px 12px rgba(0,0,0,.45);
+}
+.hero__lede, .hero__feast {
+  font-size: var(--fs-lead); color: rgba(255,255,255,0.92);
+  max-width: 50ch; margin: 0 auto var(--sp-4);
+}
+.hero__times { list-style: none; padding: 0; margin: 0 0 var(--sp-4); }
+.hero__times li { color: rgba(255,255,255,0.92); }
+.hero__time { font-weight: 700; }
+.hero__actions { display: flex; flex-wrap: wrap; gap: var(--sp-2); justify-content: center; }
+
+/* --------------------------------------------------------------------------
+   Stats bar — the standing rhythm of the week, immediately under the hero.
+   The hero answers "when is the next service"; this answers "when do you
+   normally serve", which is asked just as often.
+   -------------------------------------------------------------------------- */
+.rhythm { background: var(--deep); }
+.rhythm__list {
+  max-width: var(--shell-wide); margin-inline: auto;
+  list-style: none; padding: 0;
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+}
+.rhythm__item {
+  margin: 0; padding: var(--sp-4) var(--sp-3);
+  text-align: center;
+  border-left: 1px solid rgba(255,255,255,.22);
+}
+.rhythm__item:first-child { border-left: 0; }
+.rhythm__figure {
+  display: block;
+  font-family: var(--font-display); font-weight: 700;
+  font-size: var(--fs-xl); color: #fff; line-height: 1.2;
+}
+.rhythm__label {
+  display: block; margin-top: 0.35em;
+  font-size: 0.68rem; letter-spacing: var(--ls-label); text-transform: uppercase;
+  color: rgba(255,255,255,0.78);
+}
+
+/* --------------------------------------------------------------------------
+   Service rows — the dark band's left column on the home page.
+   -------------------------------------------------------------------------- */
+.service-row {
+  display: grid; grid-template-columns: 8.5rem 1fr; gap: var(--sp-3);
+  align-items: baseline;
+  padding: var(--sp-3) 0;
+  border-bottom: 1px solid var(--line-deep);
+}
+.service-row--last { border-bottom: 0; }
+.service-row--muted { opacity: 0.62; }
+.service-row__date {
+  font-size: var(--fs-xs); font-weight: 600;
+  letter-spacing: var(--ls-label); text-transform: uppercase;
+  color: var(--accent-on-deep);
+}
+.service-row__what { color: var(--ink-on-deep); }
+.service-row__what span + span::before { content: " · "; color: var(--ink-on-deep-2); }
+.service-row__time { font-weight: 700; }
+
+/* Announcement card — right column of the same band. */
+.announce {
+  background: rgba(255,255,255,0.04);
+  border-top: 3px solid var(--accent);
+  border-radius: var(--radius-md);
+  padding: var(--sp-4);
+}
+.announce h3 { color: var(--accent-on-deep); font-size: var(--fs-lg); }
+.announce p { color: var(--ink-on-deep); }
+.announce + .announce { margin-top: var(--sp-3); }
+
+/* --------------------------------------------------------------------------
+   About split — photograph left, words right, with the offset accent square
+   that the design system uses to keep a lone photo from floating.
+   -------------------------------------------------------------------------- */
+.split { display: grid; grid-template-columns: 5fr 7fr; gap: var(--sp-6); align-items: center; }
+.split__art { position: relative; }
+.split__art img { border-radius: var(--radius-md); box-shadow: var(--shadow-lg); width: 100%; }
+.split__art::after {
+  content: ""; position: absolute; width: 120px; height: 120px;
+  border: 3px solid var(--accent); bottom: -16px; right: -16px;
+  border-radius: var(--radius-sm); pointer-events: none;
+}
+.split__body > :last-child { margin-bottom: 0; }
+.split__body .lede { margin-bottom: var(--sp-3); }
+
+/* --------------------------------------------------------------------------
+   Feature cards — the numeral cards. The numeral is the ornament; there are
+   no icons on this site.
+   -------------------------------------------------------------------------- */
+.feature {
+  display: block; position: relative;
+  padding: var(--sp-4);
+  border-radius: var(--radius-md);
+  text-decoration: none;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.feature__num {
+  display: block;
+  font-family: var(--font-display); font-weight: 700;
+  font-size: 1.6rem; line-height: 1; color: var(--accent);
+  margin-bottom: var(--sp-2);
+}
+.feature__title { font-size: var(--fs-lg); margin-bottom: var(--sp-2); }
+.feature__text { font-size: var(--fs-sm); margin: 0; }
+
+/* On white/cream: the signature surface — 3px accent top-rule, soft shadow. */
+.feature--light {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--accent);
+  box-shadow: var(--shadow-sm);
+}
+.feature--light .feature__title { color: var(--deep-2); }
+.feature--light .feature__text { color: var(--ink); }
+a.feature--light:hover, a.feature--light:focus-visible { transform: translateY(-5px); box-shadow: var(--shadow-md); }
+
+/* On the dark band: the same card in reverse. */
+.feature--dark {
+  background: rgba(255,255,255,0.04);
+  border: 1px solid var(--line-deep);
+  border-top: 3px solid var(--accent);
+}
+.feature--dark .feature__num { color: var(--accent-on-deep); }
+.feature--dark .feature__title { color: #fff; }
+.feature--dark .feature__text { color: var(--ink-on-deep-2); }
+a.feature--dark:hover, a.feature--dark:focus-visible { transform: translateY(-5px); background: rgba(255,255,255,0.07); }
+
+/* --------------------------------------------------------------------------
+   Photo band — a full-bleed photograph carrying a single centred message.
+   Unlike the hero this one does take a blue scrim: it is a section, not a
+   first screen, and the blue keeps it inside the palette.
+   -------------------------------------------------------------------------- */
+.photo-band {
+  position: relative; padding-block: 6.875rem;
+  color: #fff; text-align: center; overflow: hidden;
+}
+.photo-band__media { position: absolute; inset: 0; }
+.photo-band__media img { width: 100%; height: 100%; object-fit: cover; }
+.photo-band__media::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(160deg, rgba(21,55,95,.86), rgba(18,58,94,.8));
+}
+.photo-band__inner { position: relative; z-index: 1; max-width: 760px; margin-inline: auto; padding-inline: var(--edge); }
+.photo-band h2 { color: #fff; }
+.photo-band h2 em { font-style: normal; color: var(--accent-on-deep); }
+.photo-band p { color: rgba(255,255,255,0.9); margin-bottom: var(--sp-4); }
+
+/* --------------------------------------------------------------------------
+   Page head — the dark title band every inner page opens with.
+   -------------------------------------------------------------------------- */
+.page-head {
+  background: var(--gradient-dark);
+  border-bottom: 3px solid var(--accent);
+  color: var(--ink-on-deep);
+  padding: 3.5rem 0 3rem;
+}
+.page-head h1 { color: #fff; margin-bottom: var(--sp-2); }
+.page-head p { color: var(--ink-on-deep-2); max-width: var(--measure); margin-bottom: 0; }
+
+/* Same band, but carrying a photograph behind it (trebas). */
+.page-head--photo { position: relative; padding: 6rem 0; overflow: hidden; background: var(--deep); }
+.page-head--photo .page-head__media { position: absolute; inset: 0; }
+.page-head--photo .page-head__media img { width: 100%; height: 100%; object-fit: cover; }
+.page-head--photo .page-head__media::after {
+  content: ""; position: absolute; inset: 0;
+  background: linear-gradient(120deg, rgba(21,55,95,.84), rgba(18,58,94,.78));
+}
+.page-head--photo .shell { position: relative; z-index: 1; }
 
 /* --------------------------------------------------------------------------
    Footer
    -------------------------------------------------------------------------- */
 .site-footer {
-  background: var(--deep); color: var(--ink-on-deep);
-  padding-block: var(--sp-5) var(--sp-4);
-  margin: var(--sp-6) var(--edge) 0; border-radius: var(--radius-lg);
-  position: relative;
+  background: var(--footer-bg); color: rgba(255,255,255,0.82);
+  border-top: 3px solid var(--accent);
+  padding-block: var(--sp-6) var(--sp-4);
 }
-.site-footer__emblem { display: inline-block; margin-bottom: var(--sp-3); color: var(--accent-bright); }
-.site-footer__emblem svg { width: 2.5rem; height: 2.5rem; }
-/* .meta задан для светлого фона (--ink-2); на глубоком зелёном подвала это
-   недостаточно контрастно. Тёмные полосы .band--deep это уже учитывали,
-   подвал — нет. */
-.site-footer .meta { color: var(--ink-on-deep-2); }
-.site-footer a { color: var(--ink-on-deep); }
-.site-footer a:hover { color: var(--accent-bright); }
-.site-footer__grid { display: grid; gap: var(--sp-5); padding-inline: var(--sp-4); }
-@media (min-width: 48rem) { .site-footer__grid { grid-template-columns: 1.4fr 1fr; padding-inline: var(--sp-6); } }
-.site-footer__grid > * { min-width: 0; }
-.site-footer__name { font-family: var(--font-display); font-size: var(--fs-xl); font-weight: 700; margin-bottom: var(--sp-2); }
-/* Заголовки h4 в общем подвале ломали порядок заголовков на страницах,
-   которые заканчивались на h1 или h2. Разделы подвала их больше не носят. */
-.site-footer__quick { display: flex; flex-direction: column; align-items: flex-start; margin: 0; }
-.site-footer__quick a { display: inline-flex; align-items: center; min-height: var(--tap); }
-.site-footer li { margin-bottom: 0; }
-/* строчные ссылки были 24px высотой при пальце в 44 */
-.site-footer li a, .site-footer .meta a {
-  display: inline-flex; align-items: center; min-height: var(--tap);
+.site-footer__grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr; gap: var(--sp-5); }
+.site-footer__name {
+  font-family: var(--font-display); font-weight: 700; font-size: var(--fs-lg);
+  color: #fff; margin-bottom: var(--sp-2);
 }
-.site-footer__actions { display: flex; flex-wrap: wrap; gap: var(--sp-2); margin-top: var(--sp-3); }
+.site-footer h2, .site-footer h3 { color: #fff; }
+.site-footer .meta { color: rgba(255,255,255,0.62); }
+.site-footer a { color: rgba(255,255,255,0.82); text-decoration: none; border-bottom: 1px solid rgba(255,255,255,0.22); }
+.site-footer a:hover, .site-footer a:focus-visible { color: #fff; border-bottom-color: var(--accent); }
+.site-footer__emblem { display: block; color: var(--accent); margin-bottom: var(--sp-3); }
+.site-footer__emblem svg { width: 1.6rem; height: 1.6rem; }
+.site-footer__quick { display: flex; flex-direction: column; align-items: flex-start; gap: var(--sp-2); }
+.site-footer__actions { margin-top: var(--sp-4); }
 .site-footer__legal {
-  border-top: 1px solid var(--line-deep); margin: var(--sp-5) var(--sp-4) 0; padding: var(--sp-3) 0 0;
-  color: var(--ink-on-deep-2); font-size: var(--fs-sm);
+  margin: var(--sp-5) 0 0; padding-top: var(--sp-3);
+  border-top: 1px solid rgba(255,255,255,0.08);
+  color: rgba(255,255,255,0.62); font-size: var(--fs-xs);
 }
-@media (min-width: 48rem) { .site-footer__legal { margin-inline: var(--sp-6); } }
 
 /* --------------------------------------------------------------------------
-   Editable-block affordance (staff only)
+   Schedule page — sticky sidebar beside a month-grouped table.
    -------------------------------------------------------------------------- */
+.sched { display: grid; grid-template-columns: 320px 1fr; gap: 3.5rem; align-items: start; }
+.sched__side { position: sticky; top: 6rem; }
+
+.side-card {
+  background: var(--paper);
+  border-top: 3px solid var(--deep);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--sp-4);
+}
+.side-card h2, .side-card h3 { font-size: var(--fs-lg); margin-bottom: var(--sp-2); }
+.side-card p:last-child { margin-bottom: 0; }
+
+.next-card__when { font-family: var(--font-display); font-size: var(--fs-xl); color: var(--deep-2); margin-bottom: var(--sp-1); }
+.next-card__feast { font-family: var(--font-display); font-style: italic; color: var(--accent-deep); margin-bottom: var(--sp-3); }
+.next-card__items { list-style: none; padding: 0; margin: 0; }
+.next-card__items li { display: flex; gap: var(--sp-3); margin-bottom: var(--sp-1); }
+.next-card__time { font-weight: 700; color: var(--deep-2); min-width: 3.5em; }
+
+.sched__side h2, .form-split__side h2 { font-size: var(--fs-lg); }
+.legend { margin: 0; }
+.legend dt { font-family: var(--font-display); font-weight: 700; color: var(--deep-2); margin-top: var(--sp-3); }
+.legend dd { margin: 0; color: var(--ink-2); font-size: var(--fs-sm); }
+
+.sched__month + .sched__month { margin-top: var(--sp-6); }
+.sched__month h2 { margin-bottom: 0; }
+.sched__month .divider { margin-bottom: var(--sp-4); }
+
+.sched-row {
+  display: grid; grid-template-columns: 130px 1fr 220px; gap: var(--sp-3);
+  align-items: baseline;
+  padding: var(--sp-3) 0;
+  border-top: 1px solid var(--line);
+}
+.sched-row--today { background: var(--paper); }
+.sched-row__date { font-family: var(--font-display); font-size: var(--fs-lg); color: var(--deep-2); }
+.sched-row__meta { display: block; margin-top: 2px; font-size: 0.72rem; letter-spacing: var(--ls-label); text-transform: uppercase; color: var(--ink-2); }
+.sched-row__feast { font-family: var(--font-display); color: var(--deep-2); }
+.sched-row__tags { display: block; margin-top: 2px; font-size: 0.72rem; letter-spacing: var(--ls-label); text-transform: uppercase; }
+.sched-row__tag { color: var(--ink-2); }
+.sched-row__tag--major { color: var(--accent-deep); font-weight: 600; }
+.sched-row__tag + .sched-row__tag::before { content: " · "; }
+.sched-row__times { color: var(--ink); }
+.sched-row__times span { display: block; }
+.sched-row__note { grid-column: 1 / -1; color: var(--ink-2); font-size: var(--fs-sm); margin: var(--sp-1) 0 0; }
+
+/* --------------------------------------------------------------------------
+   Trebas page — one row per rite, label left, description right.
+   -------------------------------------------------------------------------- */
+.treba-row {
+  display: grid; grid-template-columns: 260px 1fr; gap: 2.5rem;
+  padding: var(--sp-4) 0;
+  border-top: 1px solid var(--line);
+}
+.treba-row:last-of-type { border-bottom: 1px solid var(--line); }
+.treba-row h2 { font-size: var(--fs-xl); margin: 0; }
+.treba-row__body { max-width: var(--measure); }
+.treba-row__body p:nth-child(n+2) { color: var(--ink-2); }
+
+/* --------------------------------------------------------------------------
+   Forms
+   -------------------------------------------------------------------------- */
+.form-split { display: grid; grid-template-columns: 1fr 360px; gap: 3.5rem; align-items: start; }
+.form-split__side { position: sticky; top: 6rem; }
+
+label, .form-label {
+  display: block; margin-bottom: var(--sp-1);
+  font-size: var(--fs-sm); font-weight: 600; color: var(--deep-2);
+}
+legend {
+  padding: 0; margin-bottom: var(--sp-2);
+  font-size: var(--fs-eyebrow); font-weight: 600;
+  letter-spacing: var(--ls-eyebrow); text-transform: uppercase;
+  color: var(--accent-deep);
+}
+fieldset { border: 0; padding: 0; margin: 0 0 var(--sp-5); }
+
+input[type="text"], input[type="email"], input[type="tel"], input[type="url"],
+input[type="number"], input[type="date"], input[type="password"], select, textarea {
+  width: 100%;
+  border: 1px solid var(--line); border-radius: var(--radius-sm);
+  background: var(--surface); color: var(--ink);
+  padding: 0.65em 0.8em;
+  min-height: var(--tap);
+}
+textarea { min-height: 8rem; resize: vertical; line-height: 1.6; }
+input::placeholder, textarea::placeholder { color: #8ba3ba; }
+input:focus, select:focus, textarea:focus {
+  outline: none; border-color: var(--mid);
+  box-shadow: 0 0 0 3px rgba(58,127,181,.16);
+}
+input:focus-visible, select:focus-visible, textarea:focus-visible { outline: 3px solid var(--focus); outline-offset: 1px; }
+
+/* Radio pills — the "вид поминовения" row. Rendered from whatever choices the
+   Django form actually carries, so adding a kind needs no CSS. */
+/* Django 5 renders RadioSelect as div > div > label > input, so the option
+   wrapper is addressed by position rather than by tag name. */
+.radio-group { list-style: none; padding: 0; margin: 0; display: flex; flex-wrap: wrap; gap: var(--sp-2); }
+.radio-group > * { margin: 0; }
+.radio-group label {
+  display: inline-flex; align-items: center; gap: 0.55em;
+  margin: 0; padding: 0.6em 1.1em;
+  min-height: var(--tap);
+  border: 1px solid var(--line); border-radius: var(--radius-pill);
+  background: var(--paper-deep);
+  font-weight: 400; color: var(--ink); cursor: pointer;
+  transition: border-color 0.2s ease, background 0.2s ease;
+}
+.radio-group label:hover { border-color: var(--mid); }
+.radio-group input[type="radio"] { accent-color: var(--deep-2); width: 1.05em; height: 1.05em; margin: 0; }
+.radio-group:has(input:checked) label:has(input:checked) {
+  border-color: var(--deep-2); background: var(--accent-tint); font-weight: 600; color: var(--deep-2);
+}
+
+.note-form__names { display: grid; grid-template-columns: 1fr 1fr; gap: var(--sp-4); margin-bottom: var(--sp-5); }
+.note-form__contact { display: grid; grid-template-columns: repeat(3, 1fr); gap: var(--sp-3); }
+.note-form__contact p { margin: 0; }
+
+
+/* Форма на тёмной полосе. Подписи и легенды берут цвет с расчётом на белый
+   лист, и на синем фоне их просто не видно; кнопка отправки — синяя заливка
+   по синему — не отделяется от полосы. Обе беды видны только там, где форма
+   стоит внутри band--deep: страница «Впервые здесь» и подписка на рассылку. */
+.band--deep label, .band--deep .form-label { color: #fff; }
+.band--deep legend { color: var(--accent-on-deep); }
+.band--deep .helptext { color: var(--ink-on-deep-2); }
+.band--deep .radio-group label {
+  background: rgba(255,255,255,0.06); border-color: var(--line-deep); color: #fff;
+}
+.band--deep .radio-group label:has(input:checked) {
+  background: #fff; color: var(--deep); border-color: #fff;
+}
+body:not(.portal) .band--deep button[type="submit"]:not(.lang-switch__btn):not(.btn) {
+  background: #fff; color: var(--deep); box-shadow: 0 4px 20px rgba(0,0,0,0.24);
+}
+
+.honeypot, .honeypot-wrap { position: absolute; left: -9999px; width: 1px; height: 1px; overflow: hidden; }
+
+.errorlist {
+  list-style: none; padding: 0; margin: 0 0 var(--sp-2);
+  color: #a13a3a; font-size: var(--fs-sm); font-weight: 600;
+}
+.messages { list-style: none; padding: 0; margin: 0; }
+.message {
+  max-width: var(--shell); margin: var(--sp-3) auto; padding: var(--sp-3) var(--sp-4);
+  border: 1px solid var(--line); border-left-width: 4px; border-radius: var(--radius-sm);
+  background: var(--surface);
+}
+.message--success { border-color: #3f7a3f; background: #eaf4ea; color: #2c5a2c; }
+.message--error { border-color: #a13a3a; background: #fbeaea; color: #7a2b2b; }
+.inline-form { display: flex; flex-wrap: wrap; gap: var(--sp-2); align-items: flex-start; }
+
+/* --------------------------------------------------------------------------
+   Cards and the rest of the public vocabulary
+   -------------------------------------------------------------------------- */
+.card {
+  background: var(--surface);
+  border: 1px solid var(--line);
+  border-top: 3px solid var(--accent);
+  border-radius: var(--radius-md);
+  box-shadow: var(--shadow-sm);
+  padding: var(--sp-4);
+}
+.card h3 { margin-bottom: var(--sp-2); }
+.card > :last-child { margin-bottom: 0; }
+.band--deep .card {
+  background: rgba(255,255,255,0.04); border-color: var(--line-deep);
+  box-shadow: none; color: var(--ink-on-deep);
+}
+
+/* Photo tile with a caption over the image — the ministries list. */
+.tile { display: block; text-decoration: none; }
+.tile__media {
+  position: relative; overflow: hidden;
+  border-radius: var(--radius-md); box-shadow: var(--shadow-sm);
+  aspect-ratio: 4 / 3;
+}
+.tile__media img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
+.tile:hover .tile__media img, .tile:focus-visible .tile__media img { transform: scale(1.04); }
+.tile__caption {
+  position: absolute; inset: auto 0 0 0; padding: var(--sp-4) var(--sp-3) var(--sp-3);
+  background: linear-gradient(180deg, transparent, rgba(21,55,95,0.92));
+  color: #fff;
+}
+.tile__caption h3 { color: #fff; font-size: var(--fs-lg); margin-bottom: 0.25em; }
+.tile__caption p { color: rgba(255,255,255,0.86); font-size: var(--fs-sm); margin: 0; }
+.tile__caption svg { width: 0.9em; height: 0.9em; vertical-align: baseline; }
+
+/* Single service day — kept for the newcomer page, which shows exactly one. */
+.sday {
+  border: 1px solid var(--line); border-top: 3px solid var(--accent);
+  border-radius: var(--radius-md); background: var(--surface);
+  box-shadow: var(--shadow-sm); padding: var(--sp-4);
+}
+.sday__head { display: flex; flex-wrap: wrap; align-items: baseline; gap: var(--sp-2); margin-bottom: var(--sp-3); }
+.sday__num { font-family: var(--font-display); font-size: var(--fs-xl); color: var(--deep-2); }
+.sday__weekday { color: var(--ink-2); }
+.sday__rel {
+  font-size: 0.72rem; font-weight: 600; letter-spacing: var(--ls-label);
+  text-transform: uppercase; color: var(--accent-deep);
+}
+.sday__old { color: var(--ink-2); font-size: var(--fs-xs); }
+.sday__feast { font-family: var(--font-display); color: var(--deep-2); margin-bottom: var(--sp-2); }
+.sday__items { list-style: none; padding: 0; margin: 0; }
+.sday__items li { display: flex; gap: var(--sp-3); }
+.sday__time { font-weight: 700; color: var(--deep-2); min-width: 3.5em; font-variant-numeric: tabular-nums; }
+.sday__when { margin: 0; display: flex; align-items: baseline; flex-wrap: wrap; gap: 0.5em; }
+.sday__none, .sday__note, .sday__extra { color: var(--ink-2); font-size: var(--fs-sm); }
+
+/* Степень поста. Раньше это была плашка с рамкой и заливкой; в новой системе
+   пометы на расписании — набранный прописными текст, и здесь то же самое,
+   чтобы карточка дня и строка расписания говорили одним голосом. */
+.fast {
+  display: inline-flex; align-items: center; gap: 0.4em; margin: 0;
+  font-size: 0.72rem; letter-spacing: var(--ls-label); text-transform: uppercase;
+  color: var(--ink-2);
+}
+.fast svg { width: 0.95em; height: 0.95em; flex: none; }
+.fast--strict { color: var(--deep-2); font-weight: 600; }
+.band--deep .fast { color: var(--ink-on-deep-2); }
+.band--deep .fast--strict { color: #fff; }
+.sday__what { color: var(--ink); }
+
+/* Definition facts (address, phone, mail). */
+.facts { margin: 0; display: grid; gap: 0; }
+.facts div { display: grid; grid-template-columns: 10rem 1fr; gap: var(--sp-3); padding: var(--sp-2) 0; border-top: 1px solid var(--line); }
+.facts div:first-child { border-top: 0; }
+.facts dt { font-weight: 600; color: var(--ink-2); margin: 0; }
+.facts dd { margin: 0; }
+.band--deep .facts div { border-top-color: var(--line-deep); }
+.band--deep .facts dt { color: var(--ink-on-deep-2); }
+
+/* Building fund. */
+.fund { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: var(--sp-3); }
+.fund__figure { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-2xl); color: #fff; margin: 0; }
+.fund__of { font-family: var(--font-body); font-size: var(--fs-sm); font-weight: 400; color: var(--ink-on-deep-2); }
+.progress { height: 8px; border-radius: var(--radius-pill); background: rgba(255,255,255,0.18); overflow: hidden; }
+.progress__bar { height: 100%; background: var(--accent); }
+.band--deep .progress { background: rgba(255,255,255,0.18); }
+
+/* History timeline. */
+.timeline { list-style: none; padding: 0; margin: 0; }
+.timeline__item { display: grid; grid-template-columns: 7rem 1fr; gap: var(--sp-4); padding: var(--sp-3) 0; border-top: 1px solid var(--line); }
+.timeline__year { font-family: var(--font-display); font-weight: 700; font-size: var(--fs-lg); color: var(--accent-deep); }
+
+/* Clergy portrait. */
+.portrait__media { margin-bottom: var(--sp-3); border-radius: var(--radius-md); overflow: hidden; box-shadow: var(--shadow-sm); }
+.portrait__media img { width: 100%; aspect-ratio: 3/4; object-fit: cover; }
+.portrait h3 { margin-bottom: 0.15em; }
+.portrait__role { color: var(--accent-deep); font-size: var(--fs-sm); }
+
+/* Document list (bulletins, calendars). */
+.doc-list { list-style: none; padding: 0; margin: 0; }
+.doc-list li { margin: 0; border-top: 1px solid var(--line); }
+.doc-list a {
+  display: flex; align-items: center; gap: var(--sp-3);
+  padding: var(--sp-3) 0; text-decoration: none; color: var(--deep-2);
+  min-height: var(--tap);
+}
+.doc-list a:hover .doc-list__title, .doc-list a:focus-visible .doc-list__title { color: var(--accent-bright); }
+.doc-list svg { width: 1.25rem; height: 1.25rem; color: var(--accent); flex: none; }
+.doc-list__title { font-weight: 600; }
+.doc-list__period { margin-left: auto; color: var(--ink-2); font-size: var(--fs-sm); }
+
+/* Ministry rota. */
+.rota { list-style: none; padding: 0; margin: 0; }
+.rota li { display: grid; grid-template-columns: 8rem 1fr; gap: var(--sp-3); padding: var(--sp-2) 0; border-top: 1px solid var(--line); }
+.rota__date { font-weight: 600; color: var(--deep-2); font-variant-numeric: tabular-nums; }
+
+/* Photographs. */
+.photo-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: var(--sp-3); }
+.photo-grid img { border-radius: var(--radius-md); aspect-ratio: 4/3; object-fit: cover; box-shadow: var(--shadow-sm); }
+.photo-placeholder {
+  display: grid; place-content: center; justify-items: center; gap: var(--sp-2);
+  aspect-ratio: 4/3; border-radius: var(--radius-md);
+  background: var(--paper-deep); color: var(--ink-2); font-size: var(--fs-sm);
+}
+.photo-placeholder svg { width: 2rem; height: 2rem; color: var(--accent); }
+
+/* Small state chip. */
+.status {
+  display: inline-block; padding: 0.3em 0.8em;
+  border: 1px solid var(--line); border-radius: var(--radius-pill);
+  font-size: var(--fs-xs); color: var(--ink-2);
+}
+.status--accent { border-color: var(--deep-2); background: var(--accent-tint); color: var(--deep-2); font-weight: 600; }
+
+/* Accepted commemoration receipt. */
+.accepted { background: var(--paper); border-radius: var(--radius-md); padding: var(--sp-4); }
+.accepted__kind { font-weight: 600; color: var(--deep-2); }
+.accepted__names { list-style: none; padding: 0; margin: var(--sp-2) 0 0; }
+
+/* Staff-only edit affordance from {% editable %}. */
 .editable-block { position: relative; }
 .editable-block__edit {
-  display: inline-block; margin-left: var(--sp-2);
-  font-size: var(--fs-xs); text-decoration: none;
-  border: 1px solid var(--line); border-radius: var(--radius-pill); padding: 0 0.5em; color: var(--ink-2);
+  position: absolute; top: -0.4rem; right: -1.4rem;
+  text-decoration: none; opacity: 0.35; font-size: var(--fs-sm);
 }
+.editable-block:hover .editable-block__edit { opacity: 1; }
 
 /* --------------------------------------------------------------------------
-   Council portal navigation — a working bar, not the site's editorial nav
+   Responsive. The mockups are desktop-only, so these breakpoints are the
+   handoff's stated intent: two-column grids collapse under 900px, card grids
+   step 4 → 2 → 1, and the stats bar goes 4 → 2.
    -------------------------------------------------------------------------- */
-.portal-nav {
-  background: var(--surface);
-  border-bottom: 1px solid var(--line);
-  position: sticky; top: 0; z-index: 10;
-  overflow-x: auto;
-}
-.portal-nav__row { display: flex; gap: var(--sp-1); padding-block: var(--sp-1); min-width: max-content; }
-.portal-nav a {
-  display: inline-flex; align-items: center; min-height: var(--tap);
-  padding: 0 var(--sp-3); text-decoration: none; white-space: nowrap;
-  font-size: var(--fs-sm); font-weight: 700; border-radius: var(--radius-pill);
-}
-.portal-nav a:hover, .portal-nav a[aria-current="page"] {
-  color: var(--accent-deep); background: var(--accent-tint);
+@media (max-width: 74rem) {
+  .grid--4 { grid-template-columns: repeat(2, 1fr); }
+  .sched { grid-template-columns: 280px 1fr; gap: var(--sp-5); }
 }
 
-/* --------------------------------------------------------------------------
-   Commemoration note — the form is laid out like the paper note it replaces:
-   the living on the left, the departed on the right, side by side.
-   -------------------------------------------------------------------------- */
-.note-form { max-width: 56rem; }
-.note-form fieldset { border: 0; padding: 0; margin: 0 0 var(--sp-5); }
-.note-form legend {
-  padding: 0; margin-bottom: var(--sp-2);
-  font-family: var(--font-display); font-size: var(--fs-lg); font-weight: 700;
+@media (max-width: 60rem) {
+  :root { --section: 3.75rem; }
+
+  .site-header__bar { flex-wrap: wrap; gap: var(--sp-2) var(--sp-3); }
+  .nav-toggle-btn { display: inline-flex; }
+  .site-nav {
+    display: none; order: 3; flex-basis: 100%;
+    flex-direction: column; align-items: stretch; gap: 0;
+    border-top: 1px solid var(--line); padding-top: var(--sp-2);
+  }
+  .nav-toggle-input:checked ~ .site-header__bar .site-nav { display: flex; }
+  .site-nav > a { padding: var(--sp-2) 0; min-height: var(--tap); display: flex; align-items: center; }
+  .lang-switch { margin: var(--sp-2) 0 0; }
+  .site-header__donate { display: none; }
+  .site-nav .site-header__cta { display: block; margin-top: var(--sp-2); }
+  .site-nav .site-header__cta .btn { width: 100%; }
+
+  .hero { height: auto; min-height: 0; padding-block: var(--sp-6); }
+
+  .grid--2, .grid--3, .split, .sched, .form-split,
+  .note-form__names, .note-form__contact { grid-template-columns: 1fr; }
+  .split { gap: var(--sp-5); }
+  .split__art::after { display: none; }
+  .sched__side, .form-split__side { position: static; }
+
+  .service-row { grid-template-columns: 1fr; gap: 0.25rem; }
+  .sched-row { grid-template-columns: 1fr; gap: 0.25rem; }
+  .sched-row__times span { display: inline; }
+  .sched-row__times span + span::before { content: " · "; }
+  .treba-row { grid-template-columns: 1fr; gap: var(--sp-2); }
+  .timeline__item, .rota li, .facts div { grid-template-columns: 1fr; gap: 0.25rem; }
+
+  .site-footer__grid { grid-template-columns: 1fr; gap: var(--sp-4); }
 }
 
-.note-form__names { display: grid; gap: var(--sp-4); margin-bottom: var(--sp-5); }
-@media (min-width: 44rem) { .note-form__names { grid-template-columns: 1fr 1fr; } }
-/* A note holds a column of names, not a paragraph — a monospaced-ish rhythm
-   and generous leading make a long list scannable while typing it. */
-.note-form__names textarea { min-height: 12rem; line-height: 1.9; }
-.note-form__names .helptext { margin-top: var(--sp-1); }
-
-.note-form__contact { display: grid; gap: 0 var(--sp-3); }
-@media (min-width: 44rem) { .note-form__contact { grid-template-columns: repeat(3, 1fr); } }
-
-/* The honeypot must be reachable by a bot reading the markup and by nothing
-   else — off-canvas rather than display:none, which some bots skip. */
-.honeypot-wrap {
-  position: absolute; left: -9999px; top: -9999px;
-  width: 1px; height: 1px; overflow: hidden;
+@media (max-width: 40rem) {
+  .grid--4 { grid-template-columns: 1fr; }
+  .rhythm__list { grid-template-columns: repeat(2, 1fr); }
+  .rhythm__item:nth-child(odd) { border-left: 0; }
+  .rhythm__item:nth-child(n+3) { border-top: 1px solid rgba(255,255,255,.22); }
+  .hero__actions .btn { width: 100%; }
 }
 
-/* --------------------------------------------------------------------------
-   Первый экран главной — время ближайшей службы, а не второе имя прихода
-   -------------------------------------------------------------------------- */
-.hero__title, .hero__lede, .hero__feast, .hero__times { overflow-wrap: anywhere; }
-.hero__kicker {
-  font-size: var(--fs-sm); letter-spacing: 0.1em; text-transform: uppercase;
-  color: var(--ink-on-deep-2); margin-bottom: var(--sp-1);
-}
-.hero__feast { font-size: var(--fs-lg); color: var(--ink-on-deep-2); margin-bottom: var(--sp-3); max-width: var(--measure); }
-.hero__times { list-style: none; margin: 0 0 var(--sp-4); padding: 0; max-width: 30rem; }
-.hero__times li {
-  display: flex; gap: var(--sp-3); align-items: baseline; flex-wrap: wrap;
-  padding-block: var(--sp-1); border-top: 1px solid rgba(251,246,237,0.25);
-  font-size: var(--fs-lg);
-}
-.hero__time {
-  font-family: var(--font-display); font-weight: 700; font-size: var(--fs-xl);
-  font-variant-numeric: tabular-nums; min-width: 4.2rem; flex: none;
-}
-
-/* Ссылка-действие на тёмном фоне: золото по зелёному читается, а текст
-   должен быть светлым, а не наследовать чернила светлого фона. */
-.link-more--on-deep { color: var(--ink-on-deep); border-bottom-color: var(--accent-bright); }
-.link-more--on-deep:hover { color: var(--accent-bright); border-bottom-color: var(--accent-bright); }
-.hero__actions { display: flex; flex-wrap: wrap; gap: var(--sp-3); align-items: center; }
-
-/* --------------------------------------------------------------------------
-   Подтверждение записки — имена набраны так, как их прочтут
-   -------------------------------------------------------------------------- */
-.accepted { display: grid; gap: var(--sp-5); }
-@media (min-width: 44rem) { .accepted { grid-template-columns: 1fr 1fr; align-items: start; } }
-.accepted h2 { font-size: var(--fs-lg); padding-bottom: var(--sp-1); border-bottom: 2px solid var(--accent); }
-.accepted__names { list-style: none; margin: 0; padding: 0; counter-reset: n; }
-.accepted__names li {
-  counter-increment: n; display: flex; gap: var(--sp-2); align-items: baseline;
-  font-family: var(--font-display); font-size: var(--fs-lg);
-  padding-block: 0.3em; border-bottom: 1px solid var(--line);
-}
-.accepted__names li::before {
-  content: counter(n) "."; font-family: var(--font-body); font-size: var(--fs-xs);
-  color: var(--ink-2); min-width: 1.6rem; flex: none; text-align: right;
-  font-variant-numeric: tabular-nums;
-}
-.accepted__kind {
-  margin-top: var(--sp-4); padding: var(--sp-3) var(--sp-4);
-  border-radius: var(--radius-md);
-  border: 1px solid var(--line); background: var(--accent-tint);
-  font-size: var(--fs-sm); max-width: var(--measure);
+@media (prefers-reduced-motion: reduce) {
+  * { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  .btn:hover, .btn:focus-visible,
+  a.feature--light:hover, a.feature--dark:hover { transform: none; }
 }

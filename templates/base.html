@@ -10,7 +10,7 @@
 <meta property="og:image" content="{{ request.scheme }}://{{ request.get_host }}{% block og_image %}/static/images/og-image.png{% endblock %}">
 <meta property="og:type" content="website">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="theme-color" content="#16233f">
+<meta name="theme-color" content="#15375f">
 <link rel="icon" type="image/svg+xml" href="/static/images/favicon.svg">
 <link rel="preload" as="font" type="font/woff2" href="/static/fonts/lora-700-normal-cyrillic.woff2" crossorigin>
 <link rel="preload" as="font" type="font/woff2" href="/static/fonts/inter-400-normal-cyrillic.woff2" crossorigin>
@@ -18,11 +18,11 @@
 </head>
 <body class="{% block body_class %}{% endblock %}">
 <!--
-THESIS: A parish commons rebuilt on the donor template's own device — a floating rounded nav pill and rounded photo cards — so the site reads as an inviting, modern parish home rather than a flat civic notice board. Refuses both the gilt-scrollwork church-template default and this donor's own lorem-ipsum genericness.
-OWN-WORLD: Cream ground (#fbf6ed) against deep Theotokos-blue bands (#16233f), one gold accent (#d4a017, text-safe as #7d5c0a) for feasts, fasts and primary action. Lora — a Cyrillic-native book serif standing in for the donor's Latin-only Hedvig Letters Serif — carries every heading; Inter, the donor's own face, carries the reading. Rounded corners and soft shadows everywhere; nothing hairline or flat.
-STORY: A parishioner arrives, recognises the next service inside a warm, present photograph, and finds it without scrolling past a word of marketing.
-FIRST VIEWPORT: A rounded-corner full-photo hero card inset from the viewport edge; the white nav pill floats on its top edge; display headline bottom-left with the next service's date, feast and times; one gold pill action (Расписание). The next three services begin immediately below the fold.
-FORM: Donor-pinned by the user to the fse-church WordPress theme (Church WP Theme v1.3.9) — taken literally per the user's choice: floating rounded nav, rounded photo cards with gradient-caption overlays, gold pill buttons, its "blue" style variation's palette (swapped from "green" at the user's later request).
+THESIS: A parish site built out of parish typography and parish photography — full-bleed images, deep-blue devotional bands, serif headings, air instead of frames — so it reads as a church that has been here a while rather than as a template someone filled in. Refuses both the gilt-scrollwork church-template default and the WordPress-marketing look (floating nav pill, rounded photo cards, shadows everywhere) this build carried before.
+OWN-WORLD: Cool cream (#eef4fa) and white alternating under deep-blue bands (#15375f→#123a5e) ruled top and bottom with a 3px lighter blue (#5b8fc0); one accent family, no second colour. Lora — a Cyrillic-native book serif standing in for the handoff's Latin-only Libre Baskerville — carries every heading and every italic lead; Inter stands in for Work Sans and carries the reading. Ornament is typographic only: serif numerals on cards and a 54×2 accent divider under each section heading. No icons on the public pages, no emoji.
+STORY: A parishioner arrives, sees the church itself rather than a stock photograph, and finds the next service, the standing weekly rhythm, and how to ask for a baptism without scrolling past a word of marketing.
+FIRST VIEWPORT: A white sticky bar with a two-line wordmark over a 78vh photograph of the baptismal font under a neutral scrim — no colour layer, per the client's own requirement; centred serif title, the Annunciation greeting in italic, three actions. The standing week (Вс 09:00 · Сб 17:00 · Ср 18:00) begins immediately below the fold.
+FORM: Built to the Saint Nina design-system handoff supplied by the parish, taken at its stated high fidelity — its blue override, its 90px section rhythm, its 1140px measure, its card and band construction — with two documented departures, both forced: Cyrillic-capable type in place of Latin-only faces, and a body size that keeps this build's existing elderly-audience decision.
 FINISH: unreviewed and undocumented is unfinished; this build ends with the finish review, the verdict, and DESIGN.md.
 -->
 <a class="skip-link" href="#main">{% trans "Перейти к содержимому" %}</a>
@@ -30,31 +30,29 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
 <header class="site-header">
   <input type="checkbox" id="nav-toggle" class="nav-toggle-input">
   <div class="site-header__bar">
-    <div class="site-header__row">
-      <a href="{% url 'core:home' %}" class="site-header__title">{{ site_settings.parish_name }}</a>
-      <label for="nav-toggle" class="nav-toggle-btn">
-        {% include "_icons.html" with icon="menu" %}{% trans "Меню" %}
-      </label>
-    </div>
+    {% comment %}
+    Двухстрочный вордмарк вместо одной длинной строки: «Приход Благовещения
+    Пресвятой Богородицы» в один ряд с шестью пунктами меню не помещается ни
+    на одном ноутбуке, и раньше он отжимал навигацию на вторую строку.
+    {% endcomment %}
+    <a href="{% url 'core:home' %}" class="wordmark">
+      <span class="wordmark__name">{{ site_settings.parish_name_short|default:site_settings.parish_name }}</span>
+      <span class="wordmark__sub">{{ site_settings.city }}</span>
+    </a>
+
+    <label for="nav-toggle" class="nav-toggle-btn">
+      {% include "_icons.html" with icon="menu" %}{% trans "Меню" %}
+    </label>
+
     <nav class="site-nav" aria-label="{% trans "Основная навигация" %}">
-      <a href="{% url 'services:schedule' %}">{% trans "Расписание" %}</a>
-      <a href="{% url 'commemorations:submit' %}">{% trans "Записки" %}</a>
-      <a href="{% url 'ministries:ministry_list' %}">{% trans "Служения" %}</a>
-      <details class="nav-drop">
-        <summary>{% trans "Приход" %}{% include "_icons.html" with icon="chevron" %}</summary>
-        <div class="nav-drop__panel">
-          <a href="{% url 'core:first_visit' %}">{% trans "Впервые здесь?" %}</a>
-          <a href="{% url 'core:trebas' %}">{% trans "Требы" %}</a>
-          <a href="{% url 'publications:list' %}">{% trans "Календарь" %}</a>
-          <a href="{% url 'school:page' %}">{% trans "Русская школа" %}</a>
-          <a href="{% url 'core:about' %}">{% trans "О приходе" %}</a>
-          <a href="{% url 'core:clergy' %}">{% trans "Духовенство" %}</a>
-          <a href="{% url 'building:project' %}">{% trans "Строительство" %}</a>
-          <a href="{% url 'core:contact' %}">{% trans "Контакты" %}</a>
-        </div>
-      </details>
+      <a href="{% url 'services:schedule' %}"{% if request.resolver_match.namespace == "services" %} aria-current="page"{% endif %}>{% trans "Расписание" %}</a>
+      <a href="{% url 'commemorations:submit' %}"{% if request.resolver_match.namespace == "commemorations" %} aria-current="page"{% endif %}>{% trans "Записки" %}</a>
+      <a href="{% url 'core:trebas' %}"{% if request.resolver_match.url_name == "trebas" %} aria-current="page"{% endif %}>{% trans "Требы" %}</a>
+      <a href="{% url 'ministries:ministry_list' %}"{% if request.resolver_match.namespace == "ministries" %} aria-current="page"{% endif %}>{% trans "Служения" %}</a>
+      <a href="{% url 'core:first_visit' %}"{% if request.resolver_match.url_name == "first_visit" %} aria-current="page"{% endif %}>{% trans "Впервые здесь" %}</a>
+      <a href="{% url 'core:about' %}"{% if request.resolver_match.url_name == "about" %} aria-current="page"{% endif %}>{% trans "О церкви" %}</a>
       <div class="site-header__cta">
-        <a href="{% url 'core:donation' %}" class="btn btn--accent">{% trans "Пожертвовать" %}</a>
+        <a href="{% url 'core:donation' %}" class="btn btn--accent btn--sm">{% trans "Пожертвовать" %}</a>
       </div>
       <form action="{% url 'set_language' %}" method="post" class="lang-switch">
         {% csrf_token %}
@@ -63,7 +61,8 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         <button type="submit" name="language" value="en" class="lang-switch__btn{% if LANGUAGE_CODE == "en" %} is-active{% endif %}">EN</button>
       </form>
     </nav>
-    <a href="{% url 'core:donation' %}" class="btn btn--accent site-header__donate">{% trans "Пожертвовать" %}</a>
+
+    <a href="{% url 'core:donation' %}" class="btn btn--accent btn--sm site-header__donate">{% trans "Пожертвовать" %}</a>
   </div>
 </header>
 
@@ -84,28 +83,42 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         <span class="site-footer__emblem" aria-hidden="true">{% include "_icons.html" with icon="cross" %}</span>
         <p class="site-footer__name">{{ site_settings.parish_name }}</p>
         <p class="meta">
-          {{ site_settings.city }}{% if site_settings.address %}<br>{{ site_settings.address }}{% endif %}
-          {% if site_settings.phone %}<br><a href="tel:{{ site_settings.phone }}">{{ site_settings.phone }}</a>{% endif %}
-          {% if site_settings.email %}<br><a href="mailto:{{ site_settings.email }}">{{ site_settings.email }}</a>{% endif %}
+          {% if site_settings.address %}{{ site_settings.address }}<br>{% endif %}{{ site_settings.city }}
         </p>
       </div>
+
       <div>
-        {% comment %}
-        Раньше подвал повторял одиннадцатью ссылками то же самое меню, что
-        стоит в шапке, и занимал больше половины страницы. Оставлены только
-        три вещи, за которыми сюда действительно доходят, и одно действие.
-        {% endcomment %}
+        <p class="eyebrow">{% trans "Связаться" %}</p>
+        <p class="meta">
+          {% if site_settings.phone %}<a href="tel:{{ site_settings.phone }}">{{ site_settings.phone }}</a><br>{% endif %}
+          {% if site_settings.email %}<a href="mailto:{{ site_settings.email }}">{{ site_settings.email }}</a>{% endif %}
+        </p>
+        <div class="site-footer__actions">
+          <a href="{% url 'core:donation' %}" class="btn btn--accent btn--sm">{% trans "Пожертвовать" %}</a>
+        </div>
+      </div>
+
+      {% comment %}
+      Меню в шапке — шесть пунктов, как в макете. Остальные страницы прихода
+      от этого не должны стать недостижимыми, поэтому они собраны здесь: это
+      единственное место, откуда на них теперь есть ссылка.
+      {% endcomment %}
+      <div>
+        <p class="eyebrow">{% trans "Быстрые ссылки" %}</p>
         <p class="site-footer__quick">
           <a href="{% url 'services:schedule' %}">{% trans "Расписание богослужений" %}</a>
           <a href="{% url 'commemorations:submit' %}">{% trans "Подать записку" %}</a>
+          <a href="{% url 'publications:list' %}">{% trans "Календарь и бюллетень" %}</a>
+          <a href="{% url 'school:page' %}">{% trans "Русская школа" %}</a>
+          <a href="{% url 'building:project' %}">{% trans "Строительство храма" %}</a>
+          <a href="{% url 'core:clergy' %}">{% trans "Духовенство" %}</a>
           <a href="{% url 'core:contact' %}">{% trans "Как нас найти" %}</a>
         </p>
-        <div class="site-footer__actions">
-          <a href="{% url 'core:donation' %}" class="btn btn--accent">{% trans "Пожертвовать" %}</a>
-        </div>
       </div>
     </div>
-    <p class="site-footer__legal">{{ site_settings.parish_name }} · {{ site_settings.city }}</p>
+    <p class="site-footer__legal">
+      {{ site_settings.parish_name }} · {{ site_settings.city }} · {% trans "Православная Церковь в Америке" %}
+    </p>
   </div>
 </footer>
 </body>

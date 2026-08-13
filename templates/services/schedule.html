@@ -1,73 +1,113 @@
 {% extends "base.html" %}
-{% load i18n %}
+{% load i18n l10n %}
 {% block title %}{% trans "Расписание богослужений" %} — {{ block.super }}{% endblock %}
 {% block body_class %}has-page-head{% endblock %}
 {% block content %}
 
 <section class="page-head">
   <div class="shell">
+    {% if months %}
+      {# Период, который реально лежит в таблице, а не «текущий месяц». #}
+      {% with last_month=months|last %}
+        <p class="eyebrow">
+          {{ months.0.label }}{% if months|length > 1 %} — {{ last_month.label }}{% endif %} {{ last_month.year|unlocalize }}
+        </p>
+      {% endwith %}
+    {% endif %}
     <h1>{% trans "Расписание богослужений" %}</h1>
+    <p>{% trans "Часы и литургия по воскресеньям, всенощное бдение накануне праздников. Расписание уточняется в церковном бюллетене." %}</p>
   </div>
 </section>
 
-{% if next_day %}
-  {% comment %}
-  Первое, за чем сюда приходят: когда ближайшая служба. Раньше ответ
-  приходилось искать в общем списке, сверяясь с сегодняшним числом.
-  {% endcomment %}
-  <section class="next-service">
-    <div class="shell">
-      <p class="next-service__kicker">{% trans "Ближайшее богослужение" %}</p>
-      <p class="next-service__when">
-        {% if next_day.relative_label %}{{ next_day.relative_label }}, {% endif %}{{ next_day.date|date:"j E" }}
-      </p>
-      {% if next_day.feast_title %}<p class="next-service__feast">{{ next_day.feast_title }}</p>{% endif %}
-      <ul class="next-service__items">
-        {% for item in next_day.items.all %}
-          <li><span class="next-service__time">{{ item.time|time:"H:i" }}</span>
-            <span>{{ item.service_type.name }}</span></li>
-        {% endfor %}
-      </ul>
-      {% if next_day.fasting_tier %}
-        <p class="fast fast--{{ next_day.fasting_tier }}">
-          {% include "_icons.html" with icon="fast" %}{{ next_day.get_fasting_level_display }}
-        </p>
-      {% endif %}
-    </div>
-  </section>
-{% endif %}
-
 <section class="band">
   <div class="shell">
-    {% for month in months %}
-      <h2 class="month-rule">
-        {{ month.label }}{% if month.show_year %} {{ month.year }}{% endif %}
-      </h2>
-      <div class="sdays">
-        {% for day in month.days %}{% include "services/_service_day.html" with day=day %}{% endfor %}
-      </div>
-    {% empty %}
-      <p class="empty">{% trans "Расписание пока не заполнено." %}</p>
-    {% endfor %}
+    <div class="sched">
 
-    {% if days %}
-      <div class="fast-legend">
-        <h2>{% trans "Условные обозначения" %}</h2>
-        <ul>
-          <li><span class="fast fast--strict">{% include "_icons.html" with icon="fast" %}{% trans "Строгий пост" %}</span>
-            {% trans "и сухоядение — без рыбы, вина и растительного масла." %}</li>
-          <li><span class="fast fast--fast">{% include "_icons.html" with icon="fast" %}{% trans "Пост" %}</span>
-            {% trans "— постная пища; «вино и елей» означает послабление." %}</li>
-          <li><span class="fast fast--light">{% include "_icons.html" with icon="fast" %}{% trans "Рыба, вино и елей" %}</span>
-            {% trans "— день поста с наибольшим послаблением." %}</li>
-          <li>{% trans "«Ст. ст.» — дата по юлианскому календарю, на 13 дней раньше." %}</li>
-        </ul>
-      </div>
-    {% endif %}
+      {% comment %}
+      Слева — то, за чем на страницу заходят чаще всего: когда ближайшая
+      служба и что означают пометы о посте. Колонка липкая, поэтому ответ
+      остаётся на экране, пока человек листает месяц.
+      {% endcomment %}
+      <aside class="sched__side">
+        {% if next_day %}
+          <div class="side-card">
+            <p class="eyebrow">{% trans "Ближайшая служба" %}</p>
+            <p class="next-card__when">
+              {% if next_day.relative_label %}{{ next_day.relative_label }}, {% endif %}{{ next_day.date|date:"j E" }}
+            </p>
+            {% if next_day.feast_title %}<p class="next-card__feast">{{ next_day.feast_title }}</p>{% endif %}
+            <ul class="next-card__items">
+              {% for item in next_day.items.all %}
+                <li><span class="next-card__time">{{ item.time|time:"H:i" }}</span> <span>{{ item.service_type.name }}</span></li>
+              {% endfor %}
+            </ul>
+          </div>
+        {% endif %}
 
-    <p style="margin-top:var(--sp-5)"><a href="{% url 'publications:list' %}" class="link-more">
-      {% trans "Календарь и бюллетень в PDF" %}{% include "_icons.html" with icon="arrow" %}
-    </a></p>
+        {% if days %}
+          <p class="eyebrow" style="margin-top:var(--sp-5)">{% trans "Условные обозначения" %}</p>
+          <dl class="legend">
+            <dt>{% trans "Строгий пост" %}</dt>
+            <dd>{% trans "Сухоядение — без рыбы, вина и растительного масла." %}</dd>
+            <dt>{% trans "Пост" %}</dt>
+            <dd>{% trans "Постная пища; «вино и елей» означает послабление." %}</dd>
+            <dt>{% trans "Рыба, вино и елей" %}</dt>
+            <dd>{% trans "День поста с наибольшим послаблением." %}</dd>
+            <dt>{% trans "Ст. ст." %}</dt>
+            <dd>{% trans "Дата по юлианскому календарю, на 13 дней раньше." %}</dd>
+          </dl>
+        {% endif %}
+
+        <p style="margin-top:var(--sp-5)">
+          <a href="{% url 'publications:list' %}" class="btn btn--navy">{% trans "Календарь в PDF" %}</a>
+        </p>
+      </aside>
+
+      <div class="sched__body">
+        {% for month in months %}
+          <section class="sched__month">
+            <h2>{{ month.label }}{% if month.show_year %} {{ month.year|unlocalize }}{% endif %}</h2>
+            <hr class="divider">
+
+            {% for day in month.days %}
+              <div class="sched-row{% if day.is_today %} sched-row--today{% endif %}">
+                <div>
+                  <span class="sched-row__date">{{ day.date|date:"j M" }}</span>
+                  <span class="sched-row__meta">
+                    {{ day.weekday_short }} · {% trans "ст. ст." %} {{ day.old_style_date|date:"j" }}
+                  </span>
+                </div>
+
+                <div>
+                  {% if day.feast_title %}
+                    <span class="sched-row__feast">{{ day.feast_title }}</span>
+                  {% endif %}
+                  {% if day.is_major or day.fasting_tier %}
+                    <span class="sched-row__tags">
+                      {% if day.is_major %}<span class="sched-row__tag sched-row__tag--major">{% trans "Двунадесятый праздник" %}</span>{% endif %}
+                      {% if day.fasting_tier %}<span class="sched-row__tag">{{ day.get_fasting_level_display }}</span>{% endif %}
+                    </span>
+                  {% endif %}
+                </div>
+
+                <div class="sched-row__times">
+                  {% for item in day.items.all %}
+                    <span>{{ item.time|time:"H:i" }} {{ item.service_type.name }}</span>
+                  {% empty %}
+                    <span class="meta">{% trans "Служб нет" %}</span>
+                  {% endfor %}
+                </div>
+
+                {% if day.note %}<p class="sched-row__note">{{ day.note }}</p>{% endif %}
+              </div>
+            {% endfor %}
+          </section>
+        {% empty %}
+          <p class="empty">{% trans "Расписание пока не заполнено." %}</p>
+        {% endfor %}
+      </div>
+
+    </div>
   </div>
 </section>
 

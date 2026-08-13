@@ -10,25 +10,28 @@ from services.models import ServiceDay, weekly_rhythm
 from .forms import ContactForm, InquiryForm
 from .models import Announcement, ClergyMember, DonationPage, FirstVisitPage
 from .trebas import TREBAS
+from .worship import PARISH_LIFE, WORSHIP
 
 
 def home(request):
     announcements = Announcement.objects.filter(is_active=True)
+    # Четыре строки в тёмной полосе, а не три: последняя показана приглушённой
+    # и обрезает список визуально, вместо того чтобы обрывать его на ровном
+    # месте и делать вид, что дальше ничего нет.
     upcoming_days = list(
         ServiceDay.objects.filter(is_published=True, date__gte=datetime.date.today())
         .prefetch_related("items__service_type")
         .order_by("date")[:4]
     )
-    # Первый экран должен отвечать на вопрос, с которым сюда заходят, а не
-    # повторять название прихода второй раз подряд. Ближайшая служба — это
-    # первый день, где службы действительно есть.
     next_day = next((d for d in upcoming_days if d.items.all()), None)
     return render(request, "core/home.html", {
         "announcements": announcements,
-        "upcoming_days": upcoming_days[:3],
+        "upcoming_days": upcoming_days,
         "next_day": next_day,
         "weekly_rhythm": weekly_rhythm(),
         "trebas": TREBAS,
+        "parish_life": PARISH_LIFE,
+        "worship": WORSHIP,
         "building_project": BuildingProject.get_solo(),
         "school_page": RussianSchoolPage.get_solo(),
         "first_visit": FirstVisitPage.get_solo(),
