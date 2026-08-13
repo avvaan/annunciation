@@ -2,7 +2,7 @@
    Приход Благовещения Пресвятой Богородицы
    Direction: parish commons — donor-pinned to the fse-church WordPress theme's
    shape language: a floating rounded nav pill over a rounded-corner photo
-   card, dark-green bands, gold pill actions, warm cream ground. Book serif
+   card, dark-blue bands, gold pill actions, warm cream ground. Book serif
    (Lora) for display, grotesque (Inter) for reading and UI.
    ========================================================================== */
 
@@ -106,21 +106,25 @@
 }
 
 :root {
-  /* -- colour: cream ground, deep forest-green bands, one gold accent --
-     Donor palette (fse-church "green" style variation): background #4A734C,
-     accent #D4A017, cream #fbf6ed — closest of its six variants to a
-     liturgical green-and-gold register, per the user's choice. */
+  /* -- colour: cream ground, deep Theotokos-blue bands, one gold accent --
+     Swapped off the donor's "green" style variation to its own "blue" one
+     (fse-church styles/blue.json: background #0C1B33, extra-secondary
+     #2C3EAF) at the user's request, re-tuned for our 4.5:1/3:1 floors —
+     cream ground and the gold accent both carry over unchanged, so this
+     reads as a hue swap of the dark family, not a new direction. Blue over
+     gold also happens to be the Theotokos's own iconographic pairing,
+     fitting for a parish of the Annunciation. */
   --paper:        #fbf6ed;
   --paper-deep:   #f1e7d2;
   --surface:      #ffffff;
-  --deep:         #1f3419;   /* darkest green — footer, deepest bands */
-  --deep-2:       #2b4623;   /* cards/tiles sitting on a dark band */
-  --mid:          #4a734c;   /* mid green — hero scrim, page-head */
+  --deep:         #16233f;   /* darkest blue — footer, deepest bands */
+  --deep-2:       #223963;   /* cards/tiles sitting on a dark band */
+  --mid:          #2c4f9e;   /* mid blue — hero scrim, page-head */
 
-  --ink:          #1c2418;
-  --ink-2:        #5b6754;
+  --ink:          #1a1e2a;
+  --ink-2:        #57616f;
   --ink-on-deep:  #fbf6ed;
-  --ink-on-deep-2:#c3d0bb;
+  --ink-on-deep-2:#bcc9e8;
 
   --accent:       #b8860f;   /* gold, darkened off the donor's #D4A017 to hold 4.5:1 on cream */
   --accent-bright:#d4a017;   /* donor's own gold — fills, large glyphs, dark grounds only */
@@ -128,9 +132,9 @@
   --accent-tint:  #f8ecc9;
 
   --line:         #e4d9c1;
-  --line-deep:    #3c5934;
+  --line-deep:    #5078ab;
 
-  --focus:        #1f5fd0;
+  --focus:        #3d8bff;   /* lifted off the old #1f5fd0 — the brand blues got darker, so the ring needed to get brighter to hold 3:1 on both */
 
   /* -- shape: the donor's signature — everything rounded, nothing hairline -- */
   --radius-sm:  0.75rem;
@@ -475,7 +479,7 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent-deep); }
 .hero__actions { display: flex; flex-wrap: wrap; gap: var(--sp-2); }
 
 /* Empty hero when no photograph has been supplied yet: the scrim gradient
-   plus the deep-green ground, so the composition still reads as intended. */
+   plus the deep-blue ground, so the composition still reads as intended. */
 .hero__media--empty {
   background: radial-gradient(120% 90% at 70% 0%, var(--mid) 0%, var(--deep) 70%);
 }
@@ -494,8 +498,11 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent-deep); }
 }
 
 /* Inner-page header block, for pages without a photograph — same rounded
-   card as the hero, filled with the deep green (the mid green under body
-   copy only holds 3.4:1, short of the 4.5:1 floor for the paragraph text). */
+   card as the hero, filled with solid `--deep` rather than the hero's
+   mid-to-deep gradient: simpler, and reliably compliant regardless of what
+   the two tokens happen to be (the old green `--mid` fell to 3.4:1 under
+   body copy; the current blue one tests at 7.17:1, but nothing here should
+   depend on that holding across a future palette swap). */
 /* bottom-anchored, like the hero — the header bar's own height varies with
    the parish name's wrap, so a fixed top padding here would clip under it
    whenever the bar grows a line taller than the day it was tuned against. */
