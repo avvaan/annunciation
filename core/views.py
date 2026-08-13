@@ -5,10 +5,11 @@ from django.shortcuts import redirect, render
 
 from building.models import BuildingProject
 from school.models import RussianSchoolPage
-from services.models import ServiceDay
+from services.models import ServiceDay, weekly_rhythm
 
 from .forms import ContactForm, InquiryForm
 from .models import Announcement, ClergyMember, DonationPage, FirstVisitPage
+from .trebas import TREBAS
 
 
 def home(request):
@@ -26,6 +27,8 @@ def home(request):
         "announcements": announcements,
         "upcoming_days": upcoming_days[:3],
         "next_day": next_day,
+        "weekly_rhythm": weekly_rhythm(),
+        "trebas": TREBAS,
         "building_project": BuildingProject.get_solo(),
         "school_page": RussianSchoolPage.get_solo(),
         "first_visit": FirstVisitPage.get_solo(),
@@ -75,6 +78,10 @@ def donation(request):
 def about(request):
     clergy = ClergyMember.objects.filter(is_active=True)
     return render(request, "core/about.html", {"clergy": clergy})
+
+
+def trebas(request):
+    return render(request, "core/trebas.html", {"trebas": TREBAS})
 
 
 def contact(request):

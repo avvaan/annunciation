@@ -46,6 +46,31 @@
   </div>
 </section>
 
+{% comment %}
+Первый экран отвечает «когда ближайшая служба» — конкретная дата, конкретный
+праздник. Полоса отвечает на другой вопрос, который задают не реже: «а вообще
+когда у вас служат». Постоянный ритм, а не ближайший день, поэтому она и стоит
+сразу за героем: сначала «сегодня в 9:00», потом «и так каждое воскресенье».
+Пусто — значит недельный шаблон ещё не заполнен, и полосы просто нет.
+{% endcomment %}
+{% if weekly_rhythm %}
+<section class="rhythm" aria-label="{% trans "Постоянное расписание" %}">
+  <ul class="rhythm__list">
+    {% for row in weekly_rhythm %}
+      <li class="rhythm__item">
+        <span class="rhythm__icon" aria-hidden="true">{% include "_icons.html" with icon="clock" %}</span>
+        <span class="rhythm__text">
+          <span class="rhythm__day">{{ row.label }}</span>
+          <span class="rhythm__services">
+            {% for s in row.services %}{% if not forloop.first %} · {% endif %}{{ s.name }} <span class="rhythm__time">{{ s.time|time:"H:i" }}</span>{% endfor %}
+          </span>
+        </span>
+      </li>
+    {% endfor %}
+  </ul>
+</section>
+{% endif %}
+
 <section class="band">
   <div class="shell">
     <div class="section-head">
@@ -83,6 +108,33 @@
   </div>
 </section>
 {% endif %}
+
+{% comment %}
+Треба — почти всегда повод, по которому человек впервые звонит в приход:
+родился ребёнок, умер близкий, переехали в новый дом. Раньше такой человек не
+находил на сайте ни слова об этом и шёл искать в поиске. Карточки короткие
+нарочно: здесь достаточно узнать, что у прихода это есть и как называется, —
+подробности на странице, куда ведёт карточка.
+{% endcomment %}
+<section class="band">
+  <div class="shell">
+    <div class="section-head">
+      <h2>{% trans "Требы" %}</h2>
+      <a href="{% url 'core:trebas' %}" class="link-more">
+        {% trans "Подробно о каждой" %}{% include "_icons.html" with icon="arrow" %}
+      </a>
+    </div>
+    {# Семь карточек: по четыре в ряд это 4+3, по три — 3+3+1 и одна сирота. #}
+    <div class="grid grid--4">
+      {% for t in trebas %}
+        <a class="need" href="{% url 'core:trebas' %}#{{ t.slug }}">
+          <h3 class="need__title">{{ t.title }}</h3>
+          <p class="need__text">{{ t.blurb }}</p>
+        </a>
+      {% endfor %}
+    </div>
+  </div>
+</section>
 
 <section class="band">
   <div class="shell">

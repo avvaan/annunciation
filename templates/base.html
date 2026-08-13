@@ -44,6 +44,7 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
         <summary>{% trans "Приход" %}{% include "_icons.html" with icon="chevron" %}</summary>
         <div class="nav-drop__panel">
           <a href="{% url 'core:first_visit' %}">{% trans "Впервые здесь?" %}</a>
+          <a href="{% url 'core:trebas' %}">{% trans "Требы" %}</a>
           <a href="{% url 'publications:list' %}">{% trans "Календарь" %}</a>
           <a href="{% url 'school:page' %}">{% trans "Русская школа" %}</a>
           <a href="{% url 'core:about' %}">{% trans "О приходе" %}</a>

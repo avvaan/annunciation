@@ -259,6 +259,62 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent-deep); }
 .band--deep a { text-decoration-color: var(--accent-bright); }
 .band--deep a:hover { color: var(--accent-bright); }
 
+/* Полоса постоянного расписания — сразу под первым экраном.
+   У донора она во всю ширину и с прямыми углами. Здесь это выглядело бы
+   заплатой: наш герой — скруглённая карточка, вписанная в поля, и полоса
+   повторяет её обводку и отступ, иначе две соседние тёмные плашки спорят
+   формой. Высота маленькая: это подпись под фотографией, а не раздел. */
+.rhythm {
+  background: var(--deep); color: var(--ink-on-deep);
+  margin: var(--edge); border-radius: var(--radius-lg);
+  padding: var(--sp-3) var(--sp-4);
+}
+.rhythm__list {
+  list-style: none; margin: 0; padding: 0;
+  display: grid; gap: var(--sp-3);
+  max-width: var(--wide); margin-inline: auto;
+}
+.rhythm__item { display: flex; align-items: center; gap: var(--sp-2); }
+.rhythm__icon { flex: none; color: var(--accent-bright); display: inline-flex; }
+.rhythm__icon svg { width: 1.5rem; height: 1.5rem; }
+.rhythm__day {
+  display: block;
+  font-size: var(--fs-sm); letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--ink-on-deep-2);
+}
+.rhythm__services { font-size: var(--fs-base); }
+.rhythm__time { font-weight: 700; font-variant-numeric: tabular-nums; }
+
+/* Три колонки только когда каждой хватает места на строку текста: на планшете
+   «По воскресеньям · Литургия 9:30» в трети ширины ломается на три строки. */
+@media (min-width: 52rem) {
+  .rhythm { padding: var(--sp-3) var(--sp-5); }
+  .rhythm__list {
+    grid-auto-flow: column; grid-auto-columns: 1fr;
+    gap: var(--sp-5); align-items: center;
+  }
+  .rhythm__item + .rhythm__item {
+    border-left: 1px solid var(--line-deep); padding-left: var(--sp-5);
+  }
+}
+
+/* Разворот «рисунок и текст». Рисунок здесь плоский, с прозрачным фоном и без
+   рамки: обвести его карточкой значило бы выдать иллюстрацию за фотографию
+   прихода, а он рисованный и общий. Поэтому он лежит прямо на кремовом листе. */
+.lede-split { display: grid; gap: var(--sp-4); align-items: center; }
+.lede-split__art { width: 100%; max-width: 22rem; height: auto; justify-self: center; }
+@media (min-width: 60rem) {
+  .lede-split { grid-template-columns: 26rem 1fr; gap: var(--sp-6); }
+  .lede-split__art { max-width: none; }
+}
+
+/* Требы идут списком, а не карточками: каждая — это связный текст на два
+   абзаца, и карточка вокруг него заставила бы читать семь одинаковых плашек. */
+.treba + .treba { margin-top: var(--sp-5); padding-top: var(--sp-5); border-top: 1px solid var(--line); }
+.treba h2 { margin-bottom: var(--sp-2); }
+/* Якорь из карточки на главной: заголовок не должен уезжать под шапку. */
+.treba { scroll-margin-top: var(--sp-6); }
+
 .section-head {
   display: flex; align-items: baseline; justify-content: space-between;
   gap: var(--sp-3); flex-wrap: wrap;
@@ -685,6 +741,32 @@ a:hover { text-decoration-color: var(--accent); color: var(--accent-deep); }
 .tile__caption h3 { color: var(--ink-on-deep); margin-bottom: 0.2rem; }
 .tile:hover .tile__caption h3 { color: var(--accent-bright); }
 .tile__caption p { color: var(--ink-on-deep-2); font-size: var(--fs-sm); margin-bottom: 0; }
+
+/* Карточка требы: та же скруглённая белая плашка, что и .card, но целиком
+   ссылка. Без фотографии — снимка собственного крещения или отпевания у
+   прихода нет и быть не должно, а стоковый здесь читался бы как реклама.
+   Золотая полоска слева появляется при наведении: единственный отклик,
+   которого хватает, чтобы плашка не выглядела мёртвой. */
+.need {
+  display: block; text-decoration: none; color: inherit;
+  background: var(--surface);
+  border: 1px solid var(--line); border-left: 3px solid transparent;
+  border-radius: var(--radius-md); box-shadow: var(--shadow-sm);
+  padding: var(--sp-4);
+  transition: border-left-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+}
+/* Полоска взята из --accent, а не из --accent-bright: яркое золото донора
+   держит на белом только 2.38:1, ниже порога 3:1 для нетекстовой графики,
+   и отклик на наведение пропал бы у половины читающих с экрана в солнечный
+   день. --accent — 3.25:1 и то же золото. */
+.need:hover, .need:focus-visible {
+  border-left-color: var(--accent);
+  box-shadow: var(--shadow-md); transform: translateY(-2px);
+}
+.need__title { margin-bottom: var(--sp-1); }
+.need:hover .need__title { color: var(--accent-deep); }
+.need__text { margin-bottom: 0; color: var(--ink-2); font-size: var(--fs-sm); }
+@media (prefers-reduced-motion: reduce) { .need { transition: none; } .need:hover { transform: none; } }
 
 .doc-list { list-style: none; margin: 0; padding: 0; }
 .doc-list li { border-top: 1px solid var(--line); }
