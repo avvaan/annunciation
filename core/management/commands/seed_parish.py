@@ -37,11 +37,11 @@ class Command(BaseCommand):
         "address": ("9795 Old St. Augustine Road, Jacksonville, FL 32257",) * 2,
         "phone": ("(904) 361-3445",) * 2,
         "email": ("aocjax@gmail.com",) * 2,
+        # Первый экран — стих, а не абзац о приходе: под названием храма
+        # стоит то, чему он посвящён. Абзац живёт ниже, в блоке «о церкви».
         "hero_lede": (
-            "Русскоязычный православный приход в Джексонвилле. Богослужения "
-            "совершаются на церковнославянском, часть — по-английски.",
-            "A Russian-speaking Orthodox parish in Jacksonville. Services are served "
-            "in Church Slavonic, with parts in English.",
+            "«Радуйся, Благодатная! Господь с Тобою» — Лк. 1:28",
+            "“Rejoice, O Full of Grace! The Lord is with thee.” — Luke 1:28",
         ),
     }
 

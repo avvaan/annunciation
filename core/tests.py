@@ -82,3 +82,32 @@ class FoundedYearTests(TestCase):
         # «1 994» — это то, что даёт локаль, если год пропустить как число.
         self.assertNotIn("1&nbsp;994", home)
         self.assertNotIn("1 994", home)
+
+
+class WordmarkTests(TestCase):
+    """Вордмарк в шапке — две строки, собранные из самого названия.
+
+    Крупно первые два слова, мелко остальное. Обрезать название до одного
+    слова нельзя: «Благовещение» не говорит, чей это храм.
+    """
+
+    def split(self, name):
+        s = SiteSettings.get_solo()
+        s.parish_name = name
+        s.save()
+        return s.wordmark_top, s.wordmark_rest
+
+    def test_full_name_splits_after_two_words(self):
+        top, rest = self.split("Приход Благовещения Пресвятой Богородицы")
+        self.assertEqual(top, "Приход Благовещения")
+        self.assertEqual(rest, "Пресвятой Богородицы")
+
+    def test_short_name_leaves_nothing_for_the_second_line(self):
+        """Приход с коротким названием не должен получить « · Город» с
+        висящим разделителем — шаблон печатает разделитель только при остатке."""
+        top, rest = self.split("Благовещение")
+        self.assertEqual(top, "Благовещение")
+        self.assertEqual(rest, "")
+
+        html = self.client.get(reverse("core:home")).content.decode()
+        self.assertNotIn("> · ", html)
