@@ -422,6 +422,12 @@ hr { border: 0; height: 1px; background: var(--line); margin: var(--sp-5) 0; }
   background: var(--paper); color: var(--deep);
 }
 
+/* Второе действие на первом экране. В макете оно светлее первого, а не
+   темнее: три кнопки идут по убыванию веса — заливка, светлая заливка,
+   контур. Белый по #2a6f9e — 5.43:1. */
+.btn--alt { background: var(--accent-deep); color: #fff; }
+.btn--alt:hover, .btn--alt:focus-visible { background: var(--accent-bright); color: #fff; }
+
 .btn--navy { background: var(--deep); color: #fff; }
 .btn--navy:hover, .btn--navy:focus-visible { background: var(--deep-2); color: #fff; }
 

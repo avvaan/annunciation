@@ -36,8 +36,10 @@ FINISH: unreviewed and undocumented is unfinished; this build ends with the fini
     на одном ноутбуке, и раньше он отжимал навигацию на вторую строку.
     {% endcomment %}
     <a href="{% url 'core:home' %}" class="wordmark">
-      <span class="wordmark__name">{{ site_settings.parish_name_short|default:site_settings.parish_name }}</span>
-      <span class="wordmark__sub">{{ site_settings.city }}</span>
+      <span class="wordmark__name">{{ site_settings.wordmark_top }}</span>
+      <span class="wordmark__sub">
+        {% if site_settings.wordmark_rest %}{{ site_settings.wordmark_rest }} · {% endif %}{{ site_settings.city }}
+      </span>
     </a>
 
     <label for="nav-toggle" class="nav-toggle-btn">

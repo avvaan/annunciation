@@ -77,6 +77,18 @@ class SiteSettings(SingletonModel):
         verbose_name = "Настройки сайта"
         verbose_name_plural = "Настройки сайта"
 
+    # Вордмарк в шапке — две строки: крупно первые два слова названия,
+    # мелко прописными всё остальное вместе с городом. Полное название в
+    # одну строку не помещается рядом с шестью пунктами меню, а обрезать
+    # его до «Благовещения» значит потерять, чей это храм.
+    @property
+    def wordmark_top(self):
+        return " ".join(self.parish_name.split()[:2])
+
+    @property
+    def wordmark_rest(self):
+        return " ".join(self.parish_name.split()[2:])
+
     def __str__(self):
         return "Настройки сайта"
 
